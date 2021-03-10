@@ -1,0 +1,710 @@
+/*============================
+            Header
+==============================*/
+.navbar-header {
+    position: relative;
+}
+
+#mobile-nav-open-btn {
+    visibility: visible;
+    font-size: 30px;
+    color: #6255a5;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+    display: none;
+    right: 0%;
+}
+
+.navbar-movable #mobile-nav-open-btn {
+    right: 6%;
+}
+
+#mobile-nav {
+   
+    width: 100%;
+    height: 0%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.9);
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+    overflow-y: hidden;
+}
+
+#mobile-nav img {
+    width: 35px;
+    height: 35px;
+}
+
+#mobile-nav-close-btn {
+    font-family: "Open Sans", sans-serif;
+    font-size: 70px;
+    color: #212226;
+    font-weight: 400;
+    cursor: pointer;
+    position: absolute;
+    top: -9px;
+    right: 13px;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+#mobile-nav-content {
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+    position: relative;
+    top: 10%;
+}
+
+#mobile-nav ul li {
+    margin-bottom: 20px;
+}
+
+#mobile-nav ul li a:hover,
+#mobile-nav ul li a:focus {
+    color: #6255a5;
+    border: none !important;
+    border-bottom: 3px solid #6255a5;
+}
+
+#mobile-nav ul li #btn {
+    margin-bottom: 20px;
+    background-color: #6255a5;
+    color: #fff;
+}
+
+#mobile-nav a {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    color: #212226;
+    font-weight: 400;
+    display: inline;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+/*===============================
+           1200 and up
+================================*/
+@media (min-width: 1200px) {
+    .extra-margin1 {
+        position: relative;
+        transform: translateX(185px);
+    }
+
+    .extra-margin2 {
+        position: relative;
+        transform: translateX(95px);
+    }
+
+    .extra-margin3 {
+        position: relative;
+        transform: translateX(55px);
+    }
+
+    .extra-margin4 {
+        position: relative;
+        transform: translateX(80px);
+    }
+
+}
+
+/*===============================
+            Upto 391
+================================*/
+@media (min-width: 1200px) {
+    .select-input-margin {
+        margin-right: 0px;
+    }
+
+}
+
+/*===============================
+            991 To 1200
+================================*/
+@media (min-width: 991px) and (max-width: 1200px) {
+
+    .stats-of-notes p {
+        margin-bottom: 0;
+        min-height: 80px;
+    }
+
+    .action-btn {
+        font-size: 16px;
+        line-height: 18px;
+        height: 35px;
+        margin-right: 5px;
+        padding: 0 7px;
+
+    }
+
+    ul.navbar-nav > li > a {
+        font-size: 14px !important;
+    }
+
+    .userprofile-user-icon {
+        margin: 0 10px;
+    }
+
+    .responsive-hidepassword-padding-bottom-90pct {
+        padding-bottom: 135%;
+    }
+
+}
+
+/*===============================
+            Upto 991
+================================*/
+@media (max-width: 991px) {
+    .top-table {
+        text-align: center;
+    }
+
+    .top-table .justify-content-end {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        justify-content: center !important;
+    }
+
+    .upload-profile-pic .uploadmypic h6 {
+        font-size: 15px;
+    }
+
+    #searchpage-notes .book-title {
+        min-height: 100px;
+    }
+
+    .review-text {
+        text-align: center;
+    }
+
+    .rate {
+        -webkit-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+
+    #mobile-nav-open-btn {
+        display: block;
+    }
+
+    .navbar-header {
+        width: 100%;
+    }
+
+    .margin-top {
+        margin-top: 20px;
+    }
+
+    .addbutton {
+        margin-bottom: 20px;
+    }
+
+    .seller-info {
+        margin-left: 33%;
+        margin-bottom: 0;
+    }
+
+    .seller-text span {
+        margin-left: 14%;
+    }
+
+    .seller-search {
+        margin-top: 30px;
+    }
+
+    #dashboard .stats-of-notes > div:first-child p {
+        margin-bottom: 52px;
+    }
+}
+
+/*===============================
+            Upto 767
+================================*/
+@media (max-width: 767px) {
+
+    .dashboard-title h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .stats-of-notes .right-dashboard {
+        min-height: 170px;
+    }
+
+    #dashboard #btn {
+        width: 100%;
+    }
+
+    #publish-notes h3 {
+        text-align: center;
+    }
+
+    .action-btn {
+        font-size: 14px;
+        line-height: 16px;
+        height: 30px;
+        margin-right: 5px;
+        padding: 0 5px;
+        width: 80px;
+    }
+
+    #publish-notes #btn {
+        margin-right: 0;
+    }
+
+    #exampleModal .model-data p {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    #progress-notes .justify-content-end,
+    #publish-notes .justify-content-end {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        justify-content: center !important;
+    }
+
+    #exampleModal .model-data h2 {
+        font-size: 18px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    #exampleModal .model-data h3 {
+        font-size: 16px;
+        text-align: left
+    }
+
+    #exampleModal .model-data img {
+        height: 30px;
+        width: 30px;
+    }
+
+    #exampleModal {
+        margin-top: 100px;
+    }
+
+    .label,
+    .exampleInputEmail1:focus,
+    .exampleInputPassword1:focus {
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    .label1 {
+        font-size: 15px;
+        line-height: 17px;
+    }
+    
+   .hidepassword img.searchimage.doup {
+    position: absolute;
+    left: 5%;
+    top: 27%;
+    height: 18px;
+}
+
+    .hidepassword img {
+        top: 30%;
+        right: 3%;
+        height: 12px;
+    }
+
+    h2 {
+        font-size: 25px;
+        line-height: 28px;
+    }
+
+    h3 {
+        font-size: 23px;
+        line-height: 26px;
+    }
+
+    p {
+        font-size: 11px;
+        line-height: 15px;
+    }
+
+    #login-page button,
+    #forgotpassword button,
+    #note-details button {
+        height: 40px;
+        font-size: 15px;
+    }
+
+    #forgotpassword Input::placeholder,
+    #login-page Input::placeholder {
+        font-size: 13px;
+    }
+
+    #login-page .checkbox Input {
+        width: 20px;
+    }
+
+    #login-page .checkbox label {
+        margin-left: 10px;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    #login-page #login-head p {
+        margin-bottom: 15px;
+    }
+
+    #forgotpassword #forgotpassword-head p {
+        margin-bottom: 15px;
+    }
+
+    #login-form {
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    #login-form Input[type=email] {
+        margin-bottom: 15px;
+    }
+
+    #login-form .checkbox {
+        font-size: 12px;
+        line-height: 16px;
+        margin-left: 20px;
+    }
+
+    #login-form .text {
+        font-size: 12px;
+        line-height: 16px;
+        margin-top: 10px;
+    }
+
+    #login-form .myforgotlabel {
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    .errorpass p {
+        font-size: 10px;
+        line-height: 15px;
+    }
+
+    .checkbox {
+        margin-bottom: 15px;
+    }
+
+
+    #forgotpassword-form {
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    #forgotpassword-form #btn {
+        margin-top: 5px;
+    }
+
+
+    #userprofile-img h2 {
+        font-size: 25px;
+        line-height: 28px;
+    }
+
+    .user-details-form .heading h3 {
+        font-size: 20px;
+        line-height: 23px;
+    }
+
+    .user-details-form Input::placeholder,
+    .user-details-form select,
+        {
+        font-size: 13px;
+    }
+
+    /* Footer */
+
+    footer .f-div {
+        margin-top: 0;
+        padding-top: 10px;
+    }
+    
+    footer .copy{
+        position: relative;
+        text-align: center;
+    }
+    ul.social-list li {
+        display: inline-block;
+        padding: 0;
+    }
+
+    footer p {
+        margin: 0;
+        
+    }
+
+    ul.social-list li a {
+        border: none;
+        text-align: center;
+        width: 35px;
+        height: 35px;
+        background-color: #6255a5;
+        display: inline-block;
+        line-height: 35px;
+        color: #fff;
+        -webkit-transform: translateY(-26px);
+        transform: translateY(-26px);
+        border-radius: 50%;
+    }
+
+    .domargin {
+        margin-bottom: 20px;
+    }
+
+    .rate {
+        -webkit-transform: translateX(25%) !important;
+        transform: translateX(25%) !important;
+    }
+
+    #dashboard .stats-of-notes > div:first-child p {
+        margin-bottom: 52px;
+    }
+
+    .seller-text span {
+        margin-left: 18%;
+    }
+
+}
+
+/*===============================
+            Upto 577
+================================*/
+@media (max-width: 577px) {
+
+    .rate {
+        -webkit-transform: translateX(50%) !important;
+        transform: translateX(50%) !important;
+    }
+
+    .docenter {
+        text-align: center;
+    }
+
+    #note-details h3,
+    #notes-preview h3 {
+        text-align: center;
+    }
+
+    .stats-of-notes {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        justify-content: center !important;
+    }
+
+    .stats-of-notes .right-dashboard {
+        margin-bottom: 20px;
+        min-height: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #exampleModal .model-data {
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #dashboard .stats-of-notes > div:first-child p {
+        margin-bottom: 30px;
+    }
+
+    
+
+    .right-data {
+        
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    #note-details img {
+        margin-top: 20px;
+    }
+
+    .left-data {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+}
+
+/*===============================
+            Upto 450
+================================*/
+@media (max-width: 450px) {
+
+    #note-details .left-data h5 {
+        font-size: 16px !important;
+
+    }
+
+    #progress-notes Input[type=email],
+    #publish-notes Input[type=email] {
+        width: 100%;
+    }
+
+    #note-details .right-data h5,
+    .numofreview {
+        font-size: 16px !important;
+    }
+
+}
+
+/*===============================
+            Upto 410
+================================*/
+@media (max-width: 410px) {
+
+
+    ul.social-list li a {
+        width: 30px;
+        height: 30px;
+        padding-bottom: 30px;
+    }
+
+    ul.social-list li {
+        padding-top: 5px;
+
+    }
+
+    #forgotpasswordword-form,
+    #changepasswordword-form h2 {
+
+        font-size: 18px;
+    }
+
+    #dashboard #btn {
+        width: 130px;
+        margin: 0;
+    }
+}
+    
+/*===============================
+            Upto 391
+================================*/
+@media (max-width: 391px) {
+    #note-details .left-data h5 {
+        font-size: 14px !important;
+
+    }
+
+    #note-details .right-data h5,
+    .numofreview {
+        font-size: 14px !important;
+    }
+
+    #notes-preview .rate-fa i {
+        font-size: 13px;
+    }
+
+    .seller-info {
+        margin-left: 25%;
+        margin-bottom: 0;
+    }
+
+    #progress-notes #btn,
+    #publish-notes #btn {
+        width: 90%;
+    }
+}
+
+@media (max-width: 359px) {
+    #login-form .myforgotlabel {
+        font-size: 10px;
+        line-height: 12px;
+    }
+
+    ul.social-list li a {
+        width: 25px;
+        height: 25px;
+    }
+
+    .seller-info {
+        margin-left: 25%;
+        margin-bottom: 0;
+    }
+
+    .seller-text span {
+        margin-left: 20%;
+    }
+
+    .seller-search {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 323px){
+    footer p{
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width: 432px){
+    #note-details .left-data h5
+    { 
+        font-size:14px !important; 
+    }
+    
+    #note-details .right-data h5
+    { 
+        font-size:14px !important; 
+    }
+}
+
+@media (max-width: 372px){
+    #note-details .left-data h5
+    { 
+        font-size:10px !important; 
+    }
+    
+    #note-details .right-data h5
+    { 
+        font-size:10px !important; 
+    }
+}
+
+@media (max-width: 450px){
+ .f-only p {
+         font-size:12px !important ; 
+         margin: 0;
+    }}
+
+
+@media (max-width: 391px){
+.f-only ul{
+       margin-top: 30px;
+       padding-left: 0;
+       text-align: left !important;
+    }}
+
+
+@media (max-width: 767px){
+    
+     .f-only .f-div{
+         margin-top: 41px;
+     }
+
+     .f-only p {
+        font-size: 15px;
+         margin: 0;
+     }
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+
+    <!-- title -->
+    <title>Login</title>
+
+    <!-- icon -->
+    <link rel="Icon" href="img/favicon/favicon.ico">
+
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+
+    <!-- bootstrap css  -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- responsive css -->
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+<body>
+
+    <!-- login -->
+    <section id="login">
+        <div id="login-page" class="container">
+
+            <!-- logo -->
+            <div class="row justify-content-center">
+                <div id="loginlogo" class="text-center">
+
+                    <img src="img/pre-login/top-logo.png" class="img-fluid" alt="Login">
+                </div>
+            </div>
+
+
+
+
+            <div class="row justify-content-center">
+
+                <div class="col-12 col-md-12 col-sm-11 col-lg-9 col-xl-8">
+
+
+                    <div id="login-form">
+
+                        <!-- heading -->
+                        <div id="login-heading" class="text-center">
+                            <h2>Login</h2>
+                            <p>Enter your email address and password to login</p>
+                        </div>
+
+                        <!-- form -->
+                        <form>
+
+                            <div class="form-group">
+                                <label class="label" for="exampleInputEmail1">Email</label>
+                                <input type="email" class="form-control exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email">
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6">
+                                            <label class="label exampleInputPassword1">Password</label>
+                                        </div>
+
+
+                                        <div class="col-6 col-sm-6 col-md-6 text-right">
+                                            <label class="myforgotlabel">Forgot Password?</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- eye icon  -->
+                                <div class="hidepassword">
+                                    <input id="password-field" type="password" class="form-control exampleInputPassword1 errorborder" name="password" placeholder="Enter your password">
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+
+                                <!-- error msg -->
+                                <div class="errorpass">
+                                    <p>The password that you've entered is incorrect</p>
+                                </div>
+                            </div>
+
+                            <!--checkbox -->
+
+                            <div class="form-group form-check checkbox">
+                                <input type="checkbox" class="form-check-input exampleCheck">
+                                <label class="checkbox1" for="exampleCheck">Remember Me</label>
+                            </div>
+
+                            <!-- button -->
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>login</b></button>
+                        </form>
+
+                        <p class="text-center text">Don't have an account?<span>Sign Up</span></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- login ends -->
+
+    <!-- JQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

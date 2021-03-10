@@ -1,0 +1,1505 @@
+
+/* common items */
+
+html {
+    height: 100%;
+    width: 100%;
+
+}
+
+body {
+    height: 100%;
+    width: 100%;
+
+}
+
+
+#login {
+    min-height: 100%;
+    width: 100%;
+    background-image: url("../img/pre-login/banner-with-overlay.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+
+.text {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.text span {
+    color: #6255a5;
+}
+
+.label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+}
+
+#btn {
+    background-color: #6255a5;
+    height: 50px;
+    border-radius: 3px;
+    color: #fff;
+    margin-top: 10px;
+    border: none;
+    font-style: "Open Sans";
+    font-size: 18px;
+    line-height: 22px;
+    width: 100%;
+}
+
+.exampleInputEmail1,
+.exampleInputPassword1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #000;
+}
+
+.exampleInputEmail1::-webkit-input-placeholder,
+.exampleInputPassword1::-webkit-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #8a8a8a;
+}
+
+.exampleInputEmail1:-ms-input-placeholder,
+.exampleInputPassword1:-ms-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #8a8a8a;
+}
+
+.exampleInputEmail1::placeholder,
+.exampleInputPassword1::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+    color: #8a8a8a;
+}
+
+h2 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 38px;
+    color: #6255a5;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    line-height: 38px;
+    color: #6255a5;
+}
+
+p {
+    margin-bottom: 30px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 19px;
+    color: #333333;
+}
+
+
+Input[type=email],
+Input[type=password],
+Input[type=text],
+Input[type=date] {
+    border: 1px solid #6255a5;
+    height: 50px;
+    border-radius: 3px;
+}
+
+Input[type=checkbox] {
+    border: 1px solid #d1d1d1;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+}
+
+
+.hidepassword {
+    position: relative;
+}
+
+.hidepassword img {
+    position: absolute;
+    top: 35%;
+    right: 4%;
+}
+
+.hidepassword span {
+    position: absolute;
+    top: 35%;
+    right: 4%;
+}
+
+.hidepassword img.searchimage {
+    position: absolute;
+    left: 2%;
+}
+
+.hidepassword img.searchimage.doup {
+    position: absolute;
+    left: 5%;
+    top: 24.5%;
+}
+
+.hidepassword i {
+    position: absolute;
+    top: 32%;
+    right: 3%;
+}
+
+.content-box-md {
+    margin: 60px 0;
+}
+
+.hidepassword-image {
+    position: relative;
+}
+
+.hidepassword-image .uploadmypic {
+    position: absolute;
+    top: 45% !important;
+    left: 50%;
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+}
+
+/* header info */
+
+.givecolor {
+    color: #6255a5;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #6255a5;
+    color: #fff;
+}
+#mobile-nav .dropdown-item:hover,
+#mobile-nav .dropdown-item:focus{
+   background-color: transparent;
+   color:#6255a5 ;
+    
+}
+
+.dropdown-menu {
+    -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20 0 rgba(0, 0, 0, 0.1);
+    border: none;
+   
+}
+
+.navbar { 
+    
+    height: 100px;
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+
+ul.navbar-nav > li > a {
+    font-family: "Open Sans", sans-serif;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+ul.navbar-nav > li > a:hover,
+ul.navbar-nav > li > a:focus {
+    background: none;
+    color: #6255a5;
+    border-bottom: 3px solid #6255a5;
+
+}
+
+.userprofile-user-icon {
+    
+    height: 40px;
+    width: 40px;
+    margin: 0 15px;
+}
+
+.white-nav-top {
+    background: #fff;
+    -webkit-box-shadow: 0 8px 6px -9px #999;
+    box-shadow: 0 8px 6px -9px #999;
+    z-index: 2;
+}
+
+
+.white-nav-top ul.navbar-nav > li > a:hover,
+.white-nav-top ul.navbar-nav > li > a:focus {
+    border-bottom: 3px solid #6255a5;
+    color: #6255a5;
+}
+
+
+.white-nav-top ul.navbar-nav > li > a {
+    color: #000;
+}
+
+#mynavbtn {
+    border-radius: 3px;
+    background-color: #fff;
+    font-style: "Open Sans";
+    font-size: 16px !important;
+    color: #6255a5;
+    width: 89px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+
+.white-nav-top #mynavbtn {
+    background-color: #6255a5;
+    color: #fff;
+}
+
+/* footer info */
+footer {
+    width: 100%;
+    height: 100px;
+    border-top: 1px solid #ced4da;
+
+}
+
+footer .f-div{
+    margin-top: 40px;
+}
+
+
+ul.social-list li {
+    display: inline-block;
+    padding: 0 3px;
+}
+
+footer p {
+    margin: 0;
+}
+
+ul.social-list li a {
+    border: none;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    background-color: #6255a5;
+    display: inline-block;
+    line-height: 35px;
+    color: #fff;
+    border-radius: 50%;
+}
+
+/*===============================
+           login page css
+================================*/
+
+#login-page {
+    padding: 2% 10%;
+}
+
+
+#login-form {
+    margin-top: 25px;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.errorborder {
+    border: 1px solid #ff5e5e !important;
+
+}
+
+#login-form Input[type=email] {
+    margin-bottom: 30px;
+}
+
+
+
+#login-form .checkbox1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-left: 22px;
+    margin-top: 8px;
+}
+
+#login-form .myforgotlabel {
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #6255a5;
+}
+
+#login-form .container {
+    padding: 0;
+}
+
+.errorpass p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 20px;
+    color: #FF3636;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    margin-bottom: 30px;
+}
+
+/*=====================================
+            forgot pass css 
+=======================================*/
+
+
+#forgotpassword {
+    padding: 10%;
+}
+
+
+#forgotpassword-form {
+    margin-top: 25px;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+
+/*=====================================
+           change pass css
+=======================================*/
+
+#changepassword {
+    padding: 4% 10%;
+}
+
+
+#changepassword-form {
+    margin-top: 25px;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#changepass-form Input[type=password] {
+    margin-bottom: 30px;
+}
+
+/*=====================================
+            signup css
+=======================================*/     
+
+#signup-page {
+    padding: 10%;
+}
+
+
+
+#signup-form {
+    margin-top: 25px;
+    padding: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.extra {
+    margin-bottom: 30px;
+}
+
+#signup-page .text2 p {
+    margin-bottom: 10px;
+    color: #28a745;
+}
+
+#signup-head p span {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #333333;
+    margin-bottom: 0;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
+
+/*=====================================
+           user profile css
+=======================================*/
+
+#userprofile-img {
+    height: 250px;
+    width: 100%;
+    margin-top: 100px;
+    position: relative;
+    background-size: 100% 100%;
+    background-image: url("../img/User-Profile/banner-with-overlay.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#userprofile-img h2 {
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 40px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.heading h3 {
+    margin-bottom: 40px;
+    font-size: 34px;
+}
+
+#personal-details .marginright {
+    margin-right: 15px;
+}
+
+#personal-details .marginright .hidepassword img {
+    position: absolute;
+    top: 36%;
+    right: 4%;
+}
+
+
+.user-profile Input[type=email],
+.user-profile Input[type=password],
+.user-profile Input[type=text],
+.user-profile Input[type=date] {
+    border: 1px solid #ced4da;
+}
+
+.user-profile Input[type=date]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    z-index: 888;
+}
+
+.selectfield {
+    height: 50px;
+}
+
+.upload-profile-pic Input[type=file] {
+    height: 110px;
+    position: relative;
+    color: transparent;
+}
+
+Input[type=file]::-webkit-file-upload-button {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+    height: 90px;
+    width: 120px;
+    z-index: 999;
+    opacity: 0;
+}
+
+
+.upload-profile-pic .uploadmypic {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
+}
+
+.upload-profile-pic .uploadmypic h6 {
+    color: #ced4da !important;
+    font-size: 18px;
+}
+
+/*=================================
+            email varificaton css
+===================================*/
+#ev {
+    min-height: 100%;
+    min-width: 100%;
+    background-color: #000;
+    position: relative;
+}
+
+
+#ev .background {
+    left: 50%;
+    top: 50%;
+    padding: 30px;
+    background-color: #fff;
+    position: absolute;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+#ev .background h2 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    margin-top: 50px;
+    line-height: 30px;
+}
+
+#ev .background h4 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #333333;
+}
+
+
+#ev .background p {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+
+#ev .background #btn {
+    width: 540px;
+}
+
+/*=================================
+           home page css
+===================================*/
+
+#top-img {
+    height: 620px;
+    width: 100%;
+    position: relative;
+    background-image: url("../img/home/banner-with-overlay.jpg");
+    background-repeat: no-repeat;
+
+    background-size: cover;
+}
+
+#top-img .top-text {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#top-img .top-text .bold-text h1 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 54px;
+    color: #ffffff;
+}
+
+#top-img .top-text .spare-text p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    margin: 0;
+    font-weight: 400;
+    line-height: 30px;
+    color: #ffffff;
+}
+
+#top-img .top-text #btn {
+    border: 1px solid #fff;
+    background-color: transparent;
+    width: 172px;
+    height: 50px;
+
+}
+
+
+#home-about .content-box-md {
+    margin: 60px 0;
+}
+
+#home-about h2 {
+    margin-bottom: 0;
+}
+
+#home-about p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    margin: 0;
+    color: #333333;
+}
+
+#home-about .r p {
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+/* How Its Work*/
+#home-how.content-box-md-2 {
+    padding: 60px 0;
+    background-color: #f9f9f9;
+}
+
+#home-how h2 {
+    margin-bottom: 0;
+}
+
+#home-how .home-box {
+    margin-top: 60px;
+}
+
+#home-how .home-box .myimg2 img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#home-how .home-box .myimg2 {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    position: relative;
+    -webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+#home-how .box-home #btn {
+    background-color: #6255a5;
+    font-size: 18px;
+    font-weight: 600;
+    width: 172px;
+    margin-top: 0;
+}
+
+#home-how h3 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+#home-how p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+
+#home-customer.content-box-md {
+    margin: 60px 0;
+}
+
+#home-customer .feedback-box {
+    border-right: 3px;
+    -webkit-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    text-align: left;
+}
+
+#home-customer .feedback-box p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+#home-customer .feedback-box h3 {
+    margin-bottom: 10px;
+}
+
+
+#home-customer .feedback-box .feedback-text p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #333333;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+#home-customer .feedbacks {
+    margin: 60px 0;
+}
+
+#home-customer .feedbacks .first-r-f {
+    margin-bottom: 30px;
+}
+
+
+/*===========================
+           search page css
+=============================*/
+
+#searchfilter h3 {
+    margin-bottom: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+select {
+    background-image: url("../img/user-profile/down-arrow.png") !important;
+    background-position: calc(100% - 10px) 20px, calc(100% - 10px) 1px, 100%;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
+
+
+select:enabled {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+    padding-right: 32px;
+
+}
+
+select.form-control {
+    height: 50px;
+}
+
+.search-bar {
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    background-position: left;
+}
+
+#searchfilter .div-filter {
+    padding: 30px;
+    background-color: #f9f9f9;
+}
+
+
+#searchfilter .div-filter input {
+    border: 1px solid #d1d1d1;
+}
+
+#searchfilter .div-filter input:-ms-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+
+#searchfilter .div-filter input::-webkit-input-placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+
+#searchfilter .div-filter input::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8a8a8a;
+}
+
+#searchfilter .upperfilter {
+    margin-bottom: 20px;
+}
+
+#searchfilter .hidepassword img {
+    position: absolute;
+    top: 33%;
+    right: 4%;
+}
+
+#notes h3 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 30px;
+    font-family: "Open Sans", sans-serif;
+
+}
+
+#notes .bookclass {
+    border: 1px solid #d1d1d1;
+    margin-bottom: 30px;
+}
+
+#notes .bookclass .bookclass-content h6 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 26px;
+    color: #6255a5;
+    margin-bottom: 30px;
+}
+
+#notes .bookclass img {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+#notes .bookclass .bookclass-content .book-details p.inappropriate-mark span {
+    color: #df3434;
+}
+
+#notes .bookclass .bookclass-content .book-details p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+#notes .book-heading {
+    min-height: 80px;
+}
+
+.review-text {
+    margin-top: 15px;
+}
+
+.rate {
+    float: left;
+}
+
+.rate:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+}
+
+.rate:not(:checked) > label {
+    float: right;
+    width: 0.8em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
+}
+
+.rate:not(:checked) > label:before {
+    content: '★';
+}
+
+.rate > input:checked ~ label {
+    color: #ffc700;
+}
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+
+.pagination {
+    margin-bottom: 60px;
+}
+
+.pagination .selected a {
+    background: #6255a5;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 50%;
+    line-height: 20px;
+
+}
+
+.pagination li a {
+    color: #333333;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0 5px;
+    border: none;
+}
+
+/*===============================
+            notes details css
+================================*/
+
+#notes-detail {
+    margin-top: 160px;
+}
+
+#notes-detail .heading h3,
+#notes-preview .heading h3 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.content-box-md hr {
+    margin: 0;
+}
+
+#notes-detail h2 {
+    margin-bottom: 15px;
+}
+
+#notes-preview h5 {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 600;
+    margin-bottom: 5px;
+
+}
+
+#notes-detail h5 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+#notes-preview p,
+#notes-detail p {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+
+}
+
+#notes-preview p {
+    margin-top: 5px;
+}
+
+#notes-preview .customer-reviews {
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    padding: 30px;
+}
+
+#notes-preview {
+    margin-bottom: 60px;
+}
+
+#notes-detail p {
+    margin-bottom: 10px;
+}
+
+#notes-detail #btn {
+    margin-top: 0;
+    width: 204px;
+}
+
+.inappropriate p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #df3434;
+    margin-bottom: 0 !important;
+    margin-top: 10px !important;
+}
+
+#notes-detail .left-data h5 {
+    font-size: 18px;
+    line-height: 36px;
+    font-weight: 400;
+    color: #333333;
+    margin-bottom: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+#notes-detail .right-data h5,
+.numofreview {
+    font-size: 18px !important;
+    line-height: 36px !important;
+    color: #6255a5 !important;
+    font-weight: 600 !important;
+    font-style: normal;
+    margin-bottom: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+
+.responsive-hidepassword {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+}
+
+.responsive-hidepassword img,
+.responsive-hidepassword object,
+.responsive-hidepassword iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+#Iframe-Cicis-Menu-To-Go {
+    max-width: 666.67px;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.responsive-hidepassword-padding-bottom-90pct {
+    padding-bottom: 112%;
+}
+
+.rate-fa i {
+    font-size: 18px;
+}
+
+.rate-fa i.giverate {
+
+    color: #ffc700;
+}
+
+#exampleModal h3 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    color: #333333;
+}
+
+#exampleModal h2 {
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#exampleModal p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+    margin-bottom: 30px;
+    margin-top: 0 !important;
+}
+
+#exampleModal p.para-4 {
+    margin-bottom: 0;
+}
+
+#exampleModal {
+    margin-top: 150px;
+}
+
+#exampleModal .modal-header {
+    border: none;
+}
+
+#exampleModal .model-data {
+    padding-bottom: 30px;
+    padding-left: 40px;
+    padding-right: 55px;
+}
+
+/*===============================
+            dashboard css
+================================*/
+#dashboard {
+    margin: 150px 0 60px 0;
+}
+
+#dashboard h3 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34px;
+    margin: 0;
+}
+
+.dashboard-title {
+    margin-bottom: 20px;
+}
+
+
+.dashboard-heading h2 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 38px;
+    color: #6255a5;
+
+}
+
+.bothpadding {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+.right-dashboard {
+    border: 1px solid #d1d1d1;
+    padding: 30px 30px 0px 30px;
+}
+
+.myearning .col-md-4,
+.myearning .col-md-8 {
+    border: 1px solid #d1d1d1;
+    padding: 30px 30px 0 30px;
+}
+
+.myearning h4 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #6255a5;
+}
+
+
+.myearning h5 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25px;
+    color: #6255a5;
+    margin-top: 10px;
+}
+
+.myearning p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+
+.stats-of-notes h4 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #6255a5;
+}
+
+
+.stats-of-notes p {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #333333;
+}
+
+
+.stats-of-notes h4 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34px;
+    color: #6255a5;
+}
+
+#progress-notes h3,
+#publish-notes h3 {
+    font-family: "Open Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+}
+
+
+#progress-notes Input[type=email],
+#publish-notes Input[type=email] {
+    width: 322px;
+    border: 1px solid #d1d1d1;
+    margin-bottom: 20px;
+}
+
+#progress-notes #btn,
+#publish-notes #btn {
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 117px;
+}
+
+
+#dashboard #btn {
+    width: 150px;
+    margin: 0;
+}
+
+.btn-merge #btn {
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+
+
+/*===============================
+            table info
+================================*/
+
+.table-responsive {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+table {
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    margin-bottom: 50px !important;
+}
+
+table th {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #333333;
+}
+
+table td {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #333333;
+
+}
+
+table tr {
+    height: 75px;
+    white-space: nowrap;
+}
+
+table tbody tr:hover {
+    -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+/*===============================
+            add notes css
+================================*/
+#selling-info .hidepassword-image input {
+    height: 130px;
+}
+
+textarea.form-control {
+    height: 153px;
+}
+
+Input[type=radio] {
+    height: 35px;
+    width: 35px;
+}
+
+input[type='radio']:checked:after {
+    width: 22px;
+    height: 22px;
+    border-radius: 15px;
+    top: 6.2px;
+    left: 6.7px;
+    position: relative;
+    background-color: #6255a5;
+    content: ' ';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+.radiopadding {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.radiopadding .label {
+    -webkit-transform: translateY(30%);
+    transform: translateY(30%);
+    margin-left: 10px;
+}
+
+/*===============================
+            my-downloads css
+================================*/
+
+.mydownloads {
+    margin-top: 160px !important;
+}
+
+.mydownloads h3 {
+    font-size: 34px !important;
+    font-weight: 600 !important;
+    line-height: 38px !important;
+}
+
+.fa-ellipsis-v {
+    color: #d1d1d1;
+}
+
+.change-color {
+    color: #6255a5;
+}
+
+#exampleModal .add-review h2 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+/*===============================
+            faq css                           
+================================*/
+
+
+.faqs h3 {
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+.card-body {
+    display: none;
+    border: 1px solid #d1d1d1;
+    margin-bottom: 15px;
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+.card-body h4 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    font-family: "Open Sans";
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.card-body p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    font-family: "Open Sans";
+    color: #333333;
+    margin: 0;
+    width: 90%;
+}
+
+.que3,
+.que5,
+.que7 {
+    margin-bottom: 0;
+}
+
+.ans3,
+.ans5,
+.ans7 {
+    margin-bottom: 0 ! important;
+}
+
+
+.card-header h4 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    font-family: "Open Sans";
+    color: #333333;
+}
+
+.card-header {
+    margin-bottom: 15px;
+    border-bottom: none;
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+/*===============================
+            contact us css
+================================*/
+.contact-us .heading h3 {
+    margin-bottom: 10px;
+}
+
+.contact-us .heading p {
+    margin-bottom: 50px !important;
+}
+
+.contact-us textarea {
+    height: 275px;
+}
+
+.contact-us #btn {
+    width: 150px;
+    margin-top: 0;
+}
+
+.contact-us .form-group {
+    margin-bottom: 30px;
+}
+
+.contact-us .label {
+    margin-bottom: 10px;
+}
