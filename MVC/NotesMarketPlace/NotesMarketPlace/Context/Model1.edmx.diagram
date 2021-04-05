@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5e54697fed544ffb99a71c31d8b455ea" Name="Diagram1">
+        <EntityTypeShape EntityType="database1Model.AdminDetail" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.ContactUs" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Countries" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Downloads" Width="1.5" PointX="5.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.NoteCategories" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.NoteDetail" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.NotesAttachments" Width="1.5" PointX="10.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.NotesReview" Width="1.5" PointX="7.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.NoteTypes" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.ReferenceData" Width="1.5" PointX="6" PointY="34.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.SpamReport" Width="1.5" PointX="10.5" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Stats" Width="1.5" PointX="5.25" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.SystemConfiguration" Width="1.5" PointX="2.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.UserProfileDetail" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.UserRole" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="database1Model.Users" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
+        <AssociationConnector Association="database1Model.FK_AdminDetail_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_Downloads_NoteDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_Downloads_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_Downloads_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NotesReview_Downloads" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_SpamReport_Downloads" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_NoteCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_NoteTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_ReferenceData" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NoteDetail_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NotesAttachments_NoteDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NotesReview_NoteDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_SpamReport_NoteDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_NotesReview_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_UserProfileDetail_ReferenceData" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_SpamReport_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_Stats_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_UserProfileDetail_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="database1Model.FK_Users_UserRole" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

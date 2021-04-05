@@ -1,0 +1,424 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+
+    <!-- title -->
+    <title>FAQ</title>
+
+    <!-- icon -->
+    <link rel="Icon" href="~/Content/Front/img/favicon/favicon.ico">
+
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="~/Content/Front/css/font-awesome/css/font-awesome.min.css">
+
+    <!-- bootstrap css  -->
+    <link rel="stylesheet" href="~/Content/Front/css/bootstrap/bootstrap.min.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="~/Content/Front/css/style.css">
+
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~/Content/Front/css/responsive.css">
+
+</head>
+
+<body data-target=".navbar">
+
+    <!-- header details -->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg white-nav-top white-navbar">
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <!-- mobile menu open  -->
+                    <span id="mobile-nav-open-btn">&#9776;</span>
+
+                    <!-- logo -->
+                    <a class="navbar-brand" href=""><img class="img-fluid" src="~/Content/Front/img/pre-login/logo.png"></a>
+                </div>
+
+                <!-- menu bar -->
+                <div class="collapse navbar-collapse justify-content-end default-header" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("SearchNotes","SearchNotes")">Search Notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Dashboard","SellNotes")">Sell Your Notes</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("FAQ","FAQ")">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ContactUs","ContactUs")">Contact Us</a>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="mynavbtn" href="@Url.Action("Logout", "SignUp")">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="mynavbtn" href="@Url.Action("Login", "SignUp")">Login</a>
+                            </li>
+                        }
+                        </ul>
+                </div>
+
+                <!-- mobile menu -->
+                <div id="mobile-nav">
+                    <!-- mobile menu close -->
+                    <span id="mobile-nav-close-btn">&times;</span>
+
+                    <div id="mobile-nav-content">
+                        <ul class="navbar-nav">
+                            <li>
+                                <a href="@Url.Action("SearchNotes","SearchNotes")"><span>Search Notes</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Dashboard","Dashboard")"><span>Sell Your Notes</span></a>
+                            </li>
+                          
+                            <li>
+                                <a href="@Url.Action("FAQ","FAQ")"><span>FAQ</span></a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("ContactUs","ContactUs")"><span>Contact Us</span></a>
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                            <li>
+                                <button type="submit" class="btn text-center" id="mynavbtn" onclick="location.href='@Url.Action("Logout", "SignUp")'">Logout</button>
+                            </li>
+                            }
+                              else
+                             {
+                        <li>
+                            <button type="submit" class="btn text-center" id="mynavbtn" onclick="location.href='@Url.Action("Login", "SignUp")'">Login</button>
+                        </li>
+
+                                }
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+    </header>
+    <!-- header ends -->
+    <!-- Heading -->
+    <section>
+        <div id="userprofile-img">
+            <div class="centerh2">
+
+                <h2>Frequently Asked Questions</h2>
+
+            </div>
+        </div>
+    </section>
+    <!-- Heading Ends-->
+    <!-- faq start -->
+    <!-- second section -->
+    <section class="content-box-md faqs">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head">
+                        <h3>General Questions</h3>
+                    </div>
+
+                    <!-- first que -->
+                    <div class="card-header que1">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What is Marketplace-Notes?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata1" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans1">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What is Marketplace-Notes?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata1" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>Notes Marketplace is an online marketplace for university students to buy and sell their course notes.</p>
+                    </div>
+
+
+
+
+                    <!-- second que -->
+                    <div class="card-header que2">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What do the University say?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata2" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans2">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What do the University say?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata2" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis dignissimos voluptates nesciunt quia nobis commodi placeat esse adipisci minima tempora quidem consectetur fugiat dolorum, amet odio quasi mollitia. Fugit, quidem..</p>
+                    </div>
+
+                    <!-- third que -->
+                    <div class="card-header que3">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>Is this legal?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata3" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans3">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>Is this legal?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata3" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt commodi facere laboriosam debitis molestiae mollitia sint assumenda dicta, perferendis ipsam suscipit quibusdam optio dolores voluptatem iusto, error laudantium ullam rerum.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- seccond section ends-->
+    <!-- third section -->
+    <section class="content-box-md FAQ">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head">
+                        <h3>Uploaders</h3>
+                    </div>
+
+                    <!-- fourth que -->
+                    <div class="card-header que4">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What can't I sell?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata4" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans4">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What can't I sell?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata4" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>
+                            We won't approve materials that have been created by your university or another third party. We also
+                            do not accept assignments, essays, practical’s or take-home exams. We love notes though.
+                        </p>
+                    </div>
+                    <!--  fifth que  -->
+                    <div class="card-header que5">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What notes can I sell?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata5" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans5">
+                        <div class="row">
+                            <div class="col-md-6 col-10">
+                                <h4>What notes can I sell?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata5" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- third section ends-->
+    <!-- fourth section  -->
+    <section class="content-box-md FAQ">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head">
+                        <h3>Downloaders</h3>
+                    </div>
+
+                    <!--  sixth que  -->
+                    <div class="card-header que6">
+                        <div class="row">
+                            <div class="col-md-6 col-10 ">
+                                <h4>How do I buy Notes?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata6" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans6">
+                        <div class="row">
+                            <div class="col-md-6 col-10 ">
+                                <h4>How do I buy Notes?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata6" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>
+                            Search for the notes you are after using the 'SEARCH NOTES' tab at the at the top right of every page.
+                            You can then filter results by university, category, course information etc. To purchase, go to detail page
+                            of note and click on download button. If notes are free to download – it will download over the browser
+                            and if notes are paid, Once Seller will allow download you can have notes at my downloads grid for
+                            actual download.
+                        </p>
+                    </div>
+                    <!-- seventh que -->
+                    <div class="card-header que7">
+                        <div class="row">
+                            <div class="col-md-6 col-10 ">
+                                <h4>Can I edit the notes I purchased?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="showdata7" type="button">
+                                    <img src="~/Content/Front/img/FAQ/add.png">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body ans7">
+                        <div class="row">
+                            <div class="col-md-6 col-10 ">
+                                <h4>Can I edit the notes I purchased?</h4>
+                            </div>
+                            <div class="col-md-6 col-2 text-right">
+                                <a class="hidedata7" type="button">
+                                    <img src="~/Content/Front/img/FAQ/minus.png">
+                                </a>
+                            </div>
+                        </div>
+                        <p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- fourth section ends-->
+    <!-- faq ends-->
+    <!-- footer -->
+    <footer>
+        <div class="f-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+
+                        <p>
+                            Copyright &copy; Tatvasoft All Rights Reserved.
+                        </p>
+
+                    </div>
+                    <div class="col-md-6 col-12 text-right">
+
+                        <ul class="social-list">
+                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer ends -->
+  
+
+    <script src="~/Scripts/Front/js/popper.min.js"></script>
+
+    <!-- JQuery -->
+    <script src="~/Scripts/Front/js/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Scripts/Front/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/Scripts/Front/js/script.js"></script>
+</body>
+
+</html>

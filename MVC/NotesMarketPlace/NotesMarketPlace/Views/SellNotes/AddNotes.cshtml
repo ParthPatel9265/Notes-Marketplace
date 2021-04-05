@@ -1,0 +1,338 @@
+﻿@model NotesMarketPlace.Models.AddNotes
+@{
+    ViewBag.Title = "Add Notes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<!-- start section -->
+<section>
+    <div id="userprofile-img">
+        <div class="centerh2">
+
+            <h2>Add Notes</h2>
+
+        </div>
+    </div>
+</section>
+
+@using (Html.BeginForm("AddNotes", "SellNotes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+
+    <!-- first section -->
+    <section id="basic-details" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Basic Note Details</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- title -->
+                                <div class="form-group">
+                                    <label class="label">Title *</label>
+
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your Notes title", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "form-error" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <!-- category -->
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Category *</label>
+                                    <div class="hidepassword">
+
+                                        @Html.DropDownListFor(model => model.Category, new SelectList(Model.NoteCategoryList, "ID", "Name", Model.Category), new { @class = "form-control select-field", placeholder = "Select your Notes category", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "form-error" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- Display pic -->
+                                <div class="form-group">
+                                    <div class="upload-profile-pic">
+                                        <label class="label" for="exampleInputEmail1">Display Picture</label>
+
+                                        @Html.TextBoxFor(model => model.DisplayPicture, new { @class = "form-control exampleInputEmail1", type = "file", accept = ".jpg , .jpeg , .png" })
+                                        @Html.ValidationMessageFor(model => model.DisplayPicture, "", new { @class = "form-error" })
+
+
+                                        <div class="uploadmypic text-center">
+                                            <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
+                                            <h6>Upload a picture</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- date of birth -->
+                                <div class="form-group">
+                                    <div class="upload-profile-pic">
+                                        <label class="label" for="exampleInputEmail1">Upload Notes *</label>
+
+                                        @Html.TextBoxFor(model => model.UploadNotes, new { @class = "form-control exampleInputEmail1", type = "file", required = "required", accept = ".pdf", multiple = "multiple" })
+                                        @Html.ValidationMessageFor(model => model.UploadNotes, "", new { @class = "form-error" })
+
+                                        <div class="uploadmypic text-center">
+                                            <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
+                                            <h6>Upload Your Notes</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <!-- type -->
+                                <div class="form-group">
+                                    <label class="label">Type</label>
+
+                                    <!-- Drop down arrow icon -->
+                                    <div class="hidepassword">
+                                        @Html.DropDownListFor(model => model.NoteType, new SelectList(Model.NoteTypeList, "ID", "Name", Model.NoteType), new { @class = "form-control select-field", placeholder = "Select your notes type" })
+                                        @Html.ValidationMessageFor(model => model.NoteType, "", new { @class = "form-error" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+
+                                <!-- pages -->
+                                <div class="form-group">
+                                    <label class="label">Number of Pages</label>
+
+                                    @Html.TextBoxFor(model => model.NumberofPages, new { @class = "form-control exampleInputEmail1", placeholder = "Enter number of note pages" })
+                                    @Html.ValidationMessageFor(model => model.NumberofPages, "", new { @class = "form-error" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- description-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="textarea-input">
+                                        <label class="label" for="exampleInputEmail1">Description *</label>
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Enter your notes description", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "form-error" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- start section ends -->
+    <!--institute details -->
+    <section id="study-details" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Institution Information</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+
+                                <!-- country -->
+
+                                <div class="form-group">
+                                    <label class="label">Country</label>
+                                    <div class="hidepassword">
+
+                                        @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "ID", "Name", Model.Country), new { @class = "form-control select-field", placeholder = "Select country" })
+                                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "form-error" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <!-- Institution -->
+
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Institution Name</label>
+                                    @Html.TextBoxFor(model => model.UniversityName, new { @class = "form-control exampleInputEmail1", id = "institution-name", placeholder = "Enter your institution name" })
+                                    @Html.ValidationMessageFor(model => model.UniversityName, "", new { @class = "form-error" })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- institute details ends-->
+    <!-- Course Detail -->
+    <section id="Address-details" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Course Details</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="label">Course Name</label>
+                                    @Html.TextBoxFor(model => model.Course, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your course name" })
+                                    @Html.ValidationMessageFor(model => model.Course, "", new { @class = "form-error" })
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Course Code</label>
+                                    @Html.TextBoxFor(model => model.CourseCode, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your course code" })
+                                    @Html.ValidationMessageFor(model => model.CourseCode, "", new { @class = "form-error" })
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Professor / Lecturer</label>
+                                    @Html.TextBoxFor(model => model.Professor, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your professor name" })
+                                    @Html.ValidationMessageFor(model => model.Professor, "", new { @class = "form-error" })
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Course Detail ends -->
+    <!-- sell info -->
+    <section id="selling-info" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Selling Information</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+
+
+                        <div class="form-group">
+                            <label class="label">Sell For *</label>
+                            <div class="row radiopadding">
+                                <div class="col-md-4 col-sm-5 col-4">
+                                    <div class="row">
+                                        @Html.RadioButtonFor(model => model.IsPaid, "false", new { @class = "form-control exampleInputEmail1", name = "sell" })
+
+                                        <label class="label">Free</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-6">
+                                    <div class="row">
+
+
+                                        @Html.RadioButtonFor(model => model.IsPaid, "true", new { @class = "form-control exampleInputEmail1", name = "sell" })
+
+                                        <label class="label">Paid</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label" for="exampleInputEmail1">Sell Price *</label>
+
+                            @Html.TextBoxFor(model => model.SellingPrice, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your Notes price"})
+                            @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "form-error" })
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <div class="upload-profile-pic">
+                                <label class="label" for="exampleInputEmail1">Notes Preview</label>
+
+                                <div class="hidepassword-image">
+
+                                    @Html.TextBoxFor(model => model.NotesPreview, new { @class = "form-control exampleInputEmail1", type = "file", accept = ".pdf" })
+                                    @Html.ValidationMessageFor(model => model.NotesPreview, "", new { @class = "form-error" })
+                                    <div class="uploadmypic text-center">
+                                        <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
+                                        <h6>Upload a file</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Button -->
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-6">
+                        <button type="submit" class="btn btn-primary btn-block login-btn text-uppercase text-center" id="btn"><b>SAVE</b></button>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-6">
+                        <button type="submit" class="btn btn-primary btn-block login-btn text-uppercase text-center" id="btn" onclick="location.href=@Url.Action("PublishNote", new { id = @Model.ID })"><b>PUBLISH</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+
+    <!-- sell info ends -->

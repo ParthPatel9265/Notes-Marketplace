@@ -1,0 +1,246 @@
+﻿@model NotesMarketPlace.Models.ContactUs
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+
+    <!-- title -->
+    <title>Contact Us</title>
+
+    <!-- icon -->
+    <link rel="Icon" href="~/Content/Front/img/favicon/favicon.ico">
+
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="~/Content/Front/css/font-awesome/css/font-awesome.min.css">
+
+    <!-- bootstrap css  -->
+    <link rel="stylesheet" href="~/Content/Front/css/bootstrap/bootstrap.min.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="~/Content/Front/css/style.css">
+
+    <!-- responsive css -->
+    <link rel="stylesheet" href="~/Content/Front/css/responsive.css">
+
+    <style>
+        .form-error {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body data-target=".navbar">
+
+    <!-- header details -->
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg white-nav-top white-navbar">
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <!-- mobile menu open  -->
+                    <span id="mobile-nav-open-btn">&#9776;</span>
+
+                    <!-- logo -->
+                    <a class="navbar-brand" href=""><img class="img-fluid" src="~/Content/Front/img/pre-login/logo.png"></a>
+                </div>
+
+                <!-- menu bar -->
+                <div class="collapse navbar-collapse justify-content-end default-header" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("SearchNotes","SearchNotes")">Search Notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Dashboard","SellNotes")">Sell Your Notes</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("FAQ","FAQ")">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ContactUs","ContactUs")">Contact Us</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="mynavbtn" href="@Url.Action("Logout", "SignUp")">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="mynavbtn" href="@Url.Action("Login", "SignUp")">Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <!-- mobile menu -->
+                <div id="mobile-nav">
+                    <!-- mobile menu close -->
+                    <span id="mobile-nav-close-btn">&times;</span>
+
+                    <div id="mobile-nav-content">
+                        <ul class="navbar-nav">
+                            <li>
+                                <a href="@Url.Action("SearchNotes","SearchNotes")"><span>Search Notes</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Dashboard","SellNotes")"><span>Sell Your Notes</span></a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("FAQ","FAQ")"><span>FAQ</span></a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("ContactUs","ContactUs")"><span>Contact Us</span></a>
+                            </li>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <button type="submit" class="btn text-center" id="mynavbtn" onclick="location.href='@Url.Action("Logout", "SignUp")'">Logout</button>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <button type="submit" class="btn text-center" id="mynavbtn" onclick="location.href='@Url.Action("Login", "SignUp")'">Login</button>
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+    </header>
+    <!-- header ends -->
+    <!-- Heading -->
+    <section>
+        <div id="userprofile-img">
+            <div class="centerh2">
+
+                <h2>Contact Us</h2>
+
+            </div>
+        </div>
+    </section>
+    <!-- Heading -->
+    <!-- form -->
+    
+        @using (Html.BeginForm("ContactUs", "ContactUs", FormMethod.Post, new { @class = "user-details-form" }))
+        {
+
+            <section id="personal-details" class="user-profile  contact-us content-box-md">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading">
+                                <h3>Get In Touch</h3>
+                                <p>Let us know how to get back to you</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-md-6 col-sm-12">
+
+
+                            <div class="form-group">
+                                <label class="label">Full Name *</label>
+
+                                @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "form-error" })
+                                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your full name" })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="label">Email Address *</label>
+
+                                @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
+                                @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
+                            </div>
+
+                            <div class="form-group">
+                                <label class="label">Subject *</label>
+
+                                @Html.ValidationMessageFor(x => x.Subjects, "", new { @class = "form-error" })
+                                @Html.TextBoxFor(x => x.Subjects, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your subject" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+
+                                <div class="textarea-input">
+                                    <label class="label" for="exampleInputEmail1">Comments/Questions *</label>
+
+                                    @Html.ValidationMessageFor(x => x.Comments, "", new { @class = "form-error" })
+                                    @Html.TextAreaFor(x => x.Comments, new { @class = "form-control exampleInputEmail1", @placeholder = "Comments..." })
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-6">
+                            <button type="submit" class="btn btn-primary btn-block text-uppercase text-center" id="btn"><b>submit</b></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    <!-- contact us form -->
+    <!-- footer -->
+    <footer class="footer-at-end">
+        <div class="f-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+
+                        <p>
+                            Copyright &copy; Tatvasoft All Rights Reserved.
+                        </p>
+
+                    </div>
+                    <div class="col-md-6 col-12 text-right">
+
+                        <ul class="social-list">
+                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer ends-->
+    <!-- JQuery -->
+    <script src="~/Scripts/Front/js/jquery.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="~/Scripts/Front/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/Scripts/Front/js/script.js"></script>
+</body>
+
+</html>
