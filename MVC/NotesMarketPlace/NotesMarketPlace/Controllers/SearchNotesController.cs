@@ -5,16 +5,21 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-
+using System.IO;
+using System.IO.Compression;
+using System.Net.Mail;
+using System.Net;
+using PagedList;
+using PagedList.Mvc;
 namespace NotesMarketPlace.Controllers
 {
     public class SearchNotesController : Controller
     {
         readonly private database1Entities dobj = new database1Entities();
 
-        [HttpGet]
+        [HttpGet] 
         [Route("SearchNotes")]
-        public ActionResult SearchNotes(string search, string type, string category, string university, string course, string country, string ratings, int page = 1)
+        public ActionResult SearchNotes(string search, string type, string category, string university, string course, string country, string ratings, int? page )
         {
             
             ViewBag.SearchNotes = "active";
@@ -67,7 +72,7 @@ namespace NotesMarketPlace.Controllers
             // for country detail
             if (!String.IsNullOrEmpty(country))
             {
-                noteslist = noteslist.Where(x => x.Country.ToString().ToLower().Contains(country.ToLower()));
+                noteslist = noteslist.Where(x => x.Country.ToString().ToLower().Contains(country.ToLower())); 
             }
 
             List<SearchNotes> searchnoteslist = new List<SearchNotes>();
@@ -78,7 +83,7 @@ namespace NotesMarketPlace.Controllers
                 {
                     var review = dobj.NotesReview.Where(x => x.NoteID == item.ID && x.IsActive == true).Select(x => x.Ratings);
                  
-                    var totalreview = review.Count();
+                    var totalreview = review.Count(); 
                    
                     var avgreview = totalreview > 0 ? Math.Ceiling(review.Average()) : 0;
                  
@@ -127,15 +132,12 @@ namespace NotesMarketPlace.Controllers
                 }
             }
 
-            ViewBag.PageNumber = page;
-            ViewBag.TotalPages = Math.Ceiling(searchnoteslist.Count() / 9.0);
-            IEnumerable<SearchNotes> result = searchnoteslist.AsEnumerable().Skip((page - 1) * 9).Take(9);
             ViewBag.ResultCount = searchnoteslist.Count();
-            return View(result);
+           
+            return View(searchnoteslist.ToList().AsQueryable().ToPagedList(page ?? 1, 9));
         }
 
 
-      
         [Authorize]
         [HttpGet] 
         [Route("SearchNotes/NoteDetail/{id}")]
@@ -149,9 +151,10 @@ namespace NotesMarketPlace.Controllers
             {
                 return HttpNotFound();
             }
-           
+            var seller = dobj.Users.Where(x => x.ID == NoteDetail.SellerID).FirstOrDefault();
+          
             IEnumerable<ReviewsModel> reviews = from review in dobj.NotesReview
-                                                join users in dobj.Users on review.ReviewedByID equals users.ID
+                                                join users in dobj.Users on review.ReviewedByID equals users.ID 
                                                 join userprofile in dobj.UserProfileDetail on review.ReviewedByID equals userprofile.UserID
                                                 where review.NoteID == id && review.IsActive == true
                                                 orderby review.Ratings descending
@@ -174,6 +177,8 @@ namespace NotesMarketPlace.Controllers
                 notesdetail.UserID = user.ID;
             }
             notesdetail.SellerNote = NoteDetail;
+            notesdetail.Seller = seller.FirstName + " " + seller.LastName;
+            notesdetail.Buyer = user.FirstName;
             notesdetail.NotesReview = reviews;
             notesdetail.AverageRating = Convert.ToInt32(avgreview);
             notesdetail.TotalReview = reviewcounts;
@@ -208,5 +213,237 @@ namespace NotesMarketPlace.Controllers
                 return RedirectToAction("Login", "SignUp");
             }
         }
+
+        [Authorize]
+        [Route("SearchNotes/NoteDetail/{noteid}/Download")]
+        public ActionResult DownloadNotes(int noteid)
+        {
+            //find note 
+            var note = dobj.NoteDetail.Find(noteid);
+       
+            if (note == null)
+            {
+                return HttpNotFound();
+            }
+
+            var noteattachement = dobj.NotesAttachments.Where(x => x.NoteID == note.ID).FirstOrDefault();
+           
+            var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
+
+            // variable for attachement path
+            string path;
+
+            if (note.SellerID == user.ID)
+            {
+                // get attachement path
+                path = Server.MapPath(noteattachement.FilePath);
+
+                DirectoryInfo dir = new DirectoryInfo(path);
+               
+                // create zip of attachement
+                using (var memoryStream = new MemoryStream())
+                {
+                    using (var ziparchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                    {
+                        foreach (var item in dir.GetFiles())
+                        {
+                            // file path is attachement path + file name
+                            string filepath = path + item.ToString();
+                            ziparchive.CreateEntryFromFile(filepath, item.ToString());
+                        }
+                    }
+                    // return zip
+                    return File(memoryStream.ToArray(), "application/zip", note.Title + ".zip");
+                }
+            }
+
+            // if note is free then we need to add entry in download table with allow download is true
+       
+            if (note.IsPaid == false)
+            {
+
+                // if user has already downloaded note then get download object
+                var downloadfreenote = dobj.Downloads.Where(x => x.NoteID == noteid && x.Downloader == user.ID && x.IsSellerHasAllowedDownload == true && x.AttachmentPath != null).FirstOrDefault();
+              
+                // user is not downloaded note
+                if (downloadfreenote == null)
+                {
+                    
+                    Downloads download = new Downloads
+                    {
+                        NoteID = note.ID,
+                        Seller = note.SellerID,
+                        Downloader = user.ID,
+                        IsSellerHasAllowedDownload = true,
+                        AttachmentPath = noteattachement.FilePath,
+                        IsAttachmentDownloaded = true,
+                        AttachmentDownloadedDate = DateTime.Now,
+                        IsPaid = note.IsPaid,
+                        PurchasedPrice = note.SellingPrice,
+                        NoteTitle = note.Title,
+                        NoteCategory = note.NoteCategories.Name,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = user.ID,
+                    };
+
+                    
+                    dobj.Downloads.Add(download);
+                    dobj.SaveChanges();
+
+                    path = Server.MapPath(download.AttachmentPath);
+                }
+
+                // if user is already downloaded note then get attachement path
+                else
+                {
+                    path = Server.MapPath(downloadfreenote.AttachmentPath);
+                }
+
+                DirectoryInfo dir = new DirectoryInfo(path);
+             
+                
+                //zip of attachment 
+         
+                using (var memoryStream = new MemoryStream())
+                {
+                    using (var ziparchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                    {
+                        foreach (var item in dir.GetFiles())
+                        {
+                            // file path is attachement path + file name
+                            string filepath = path + item.ToString();
+                            ziparchive.CreateEntryFromFile(filepath, item.ToString());
+                        }
+                    }
+                    // return zip
+                    return File(memoryStream.ToArray(), "application/zip", note.Title + ".zip");
+                }
+            }
+           
+
+            //paid note
+            else
+            {
+                // get download object
+                var downloadpaidnote = dobj.Downloads.Where(x => x.NoteID == noteid && x.Downloader == user.ID && x.IsSellerHasAllowedDownload == true && x.AttachmentPath != null).FirstOrDefault();
+
+                // if user is not already downloaded
+                if (downloadpaidnote != null)
+                {
+                    // if user is download note first time then we need to update following record in download table 
+                    if (downloadpaidnote.IsAttachmentDownloaded == false)
+                    {
+                        downloadpaidnote.IsAttachmentDownloaded = true;
+                        downloadpaidnote.AttachmentDownloadedDate = DateTime.Now;
+                        downloadpaidnote.ModifiedDate = DateTime.Now;
+                        downloadpaidnote.ModifiedBy = user.ID;
+
+                        // update ans save data in database
+                        dobj.Entry(downloadpaidnote).State = EntityState.Modified;
+                        dobj.SaveChanges();
+                    }
+
+                    path = Server.MapPath(downloadpaidnote.AttachmentPath);
+
+                    DirectoryInfo dir = new DirectoryInfo(path);
+
+                    //  zip of attachement
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        using (var ziparchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                        {
+                            foreach (var item in dir.GetFiles())
+                            {
+                                // file path is attachement path + file name
+                                string filepath = path + item.ToString();
+                                ziparchive.CreateEntryFromFile(filepath, item.ToString());
+                                
+                            }
+                        }
+                       
+                        return File(memoryStream.ToArray(), "application/zip", note.Title + ".zip");
+                    }
+                }
+                return RedirectToAction("NoteDetail", "SearchNotes", new { id = noteid });
+            }
+        }
+
+
+        [Authorize]
+        [Route("SearchNotes/NoteDetail/{noteid}/Request")]     
+        public ActionResult RequestPaidNotes(int noteid)
+        {
+            // get note
+            var note = dobj.NoteDetail.Find(noteid);
+            int ID = noteid;
+            NoteStats noteobj = new NoteStats();
+            
+            
+            // get logged in user
+            var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
+
+            // create download object
+            Downloads download = new Downloads
+            {
+                NoteID = note.ID,
+                Seller = note.SellerID,
+                Downloader = user.ID,
+                IsSellerHasAllowedDownload = false,
+                IsAttachmentDownloaded = false,
+                IsPaid = note.IsPaid,
+                PurchasedPrice = note.SellingPrice,
+                NoteTitle = note.Title,
+                NoteCategory = note.NoteCategories.Name,
+                CreatedDate = DateTime.Now,
+                CreatedBy = user.ID,
+            };
+
+            // add,save database 
+            dobj.Downloads.Add(download);
+            dobj.SaveChanges();
+
+            TempData["value"] = "Records";
+            //mail 
+            //Mailforpaid(download, user);
+
+            return RedirectToAction("NoteDetail", new { id = note.ID });
+        }
+        public void Mailforpaid(Downloads download, NotesMarketPlace.Context.Users user)
+        {
+
+            var downloader = dobj.Users.Where(x => x.ID == download.Downloader).FirstOrDefault();
+            var seller = dobj.Users.Where(x => x.ID == download.Seller).FirstOrDefault();
+
+            var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+           
+            var fromEmail = new MailAddress(email);
+            var toEmail = new MailAddress(seller.EmailID);
+            var fromEmailPassword = "****"; // Replace with actual password
+            string subject = seller.FirstName + "wants to purchase your notes";
+
+            string body = "Hello" + seller.FirstName + "," +
+                "<br/><br/>We would like to inform you that," + downloader.FirstName + "wants to purchase your notes.Please see" +
+                "<br/>Buyer Requests tab and allow download access to Buyer if you have received the payment from" +
+                "<br/>him."+
+                "<br/><br/>Regards,<br/>Notes Marketplace";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
+        }
+        }
     }
-}

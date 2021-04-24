@@ -10,6 +10,8 @@ namespace NotesMarketPlace.Models
     { 
             public int? UserID { get; set; }
             public NoteDetail SellerNote { get; set; }
+            public string Seller { get; set; }
+            public string Buyer { get; set; }
             public IEnumerable<ReviewsModel> NotesReview { get; set; }
             public int? AverageRating { get; set; }
             public int? TotalReview { get; set; }

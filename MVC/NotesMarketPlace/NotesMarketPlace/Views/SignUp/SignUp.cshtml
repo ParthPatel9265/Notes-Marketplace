@@ -75,67 +75,69 @@
                                 <p><span><i class="fa fa-check-circle"></i> Your account has been successfully created.</span></p>
                             </div>
                         }
-                            <!-- Form -->
+                        <!-- Form -->
 
 
-                            @using (Html.BeginForm("SignUp", "SignUp", FormMethod.Post))
-                            {
+                        @using (Html.BeginForm("SignUp", "SignUp", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                              <label class="label" for="exampleInputEmail1">First Name *</label>
+                              
+                                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your first name"})
+                                @Html.ValidationMessageFor(x => x.FirstName,"", new { @class = "form-error label" })
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="label" for="exampleInputEmail1">First Name *</label>
+                            <!-- Last Name -->
+                    <div class="form-group">
+                        <label class="label" for="exampleInputEmail1">Last Name *</label>
 
-                                    @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "form-error" })
-                                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your first name" })
-                                </div>
 
-                                <!-- Last Name -->
-                                <div class="form-group">
-                                    <label class="label" for="exampleInputEmail1">Last Name *</label>
+                        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your last name" })
+                        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "form-error label" })
+                    </div>
 
-                                    @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "form-error" })
-                                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your last name" })
-                                </div>
+                            <!-- Email -->
+                    <div class="form-group">
+                        <label class="label" for="exampleInputEmail1">Email *</label>
 
-                                <!-- Email -->
-                                <div class="form-group">
-                                    <label class="label" for="exampleInputEmail1">Email *</label>
 
-                                    @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
-                                    @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
-                                </div>
+                        @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
+                        @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error label" })
+                    </div>
 
-                                <!-- Password-->
-                                <div class="form-group">
-                                    <label class="label exampleInputPassword1">Password</label>
+                            <!-- Password-->
+                    <div class="form-group">
+                        <label class="label exampleInputPassword1">Password</label>
 
-                                    <!-- Icon -->
-                                    <div class="hidepassword">
+                        <!-- Icon -->
+                        <div class="hidepassword">
 
-                                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "form-error" })
-                                        @Html.PasswordFor(x => x.Password, new { @class = "form-control exampleInputEmail1 exampleInputPassword1", @id = "signup-pass-new-1", @placeholder = "Enter your password" })
 
-                                        <span toggle="#signup-pass-new-1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control exampleInputEmail1 exampleInputPassword1", @id = "signup-pass-new-1", @placeholder = "Enter your password" })
 
-                                    </div>
-                                </div>
+                            <span toggle="#signup-pass-new-1" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 
-                                <!-- Confirm Password-->
-                                <div class="form-group">
-                                    <label class="label exampleInputPassword1">Confirm Password</label>
-                                    <!-- Icon -->
-                                    <div class="hidepassword">
-                                        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control exampleInputEmail1 extra exampleInputPassword1", @id = "signup-pass-new-2", @placeholder = "Re-enter your password" })
-                                        <span toggle="#signup-pass-new-2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                                        @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "form-error" })
-                                    </div>
-                                </div>
+                        </div>@Html.ValidationMessageFor(x => x.Password, "", new { @class = "form-error label" })
+                    </div>
 
-                                <!-- LOGIN Button -->
-                                <button type="submit" class="btn text-center" id="btn"><b>SIGN UP</b></button>
-                            }
-                            <p class="text-center text">Already have an account? <a href="@Url.Action("Login","SignUp")"><span>Login</span></a></p>
+                            <!-- Confirm Password-->
+                    <div class="form-group">
+                        <label class="label exampleInputPassword1">Confirm Password</label>
+                        <!-- Icon -->
+                        <div class="hidepassword">
+                            @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control exampleInputEmail1 exampleInputPassword1", @id = "signup-pass-new-2", @placeholder = "Re-enter your password" })
+                            <span toggle="#signup-pass-new-2" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 
-                        </div>
+                        </div> @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "form-error label" })
+                    </div>
+
+                            <!-- LOGIN Button -->
+                            <button type="submit" class="btn text-center" id="btn"><b>SIGN UP</b></button>
+                        }
+                        <p class="text-center text">Already have an account? <a href="@Url.Action("Login","SignUp")"><span>Login</span></a></p>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,6 +145,11 @@
     <!-- SignUp Page End -->
     <!-- JQuery -->
     <script src="~/Scripts/Front/js/jquery.min.js"></script>
+
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="~/Scripts/Front/js/bootstrap/bootstrap.min.js"></script>

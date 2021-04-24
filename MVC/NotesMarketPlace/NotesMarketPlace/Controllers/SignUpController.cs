@@ -1,6 +1,6 @@
 ﻿using NotesMarketPlace.Context;
 using System;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -10,11 +10,11 @@ using System.Web.Security;
 using NotesMarketPlace.Models;
 
 namespace NotesMarketPlace.Controllers
-{
+{ 
     public class SignUpController : Controller
     {
         database1Entities dbobj = new database1Entities();
-        // GET: SignUp
+     
         [HttpGet]
         [Route("SignUp")]
         public ActionResult SignUp()
@@ -22,8 +22,8 @@ namespace NotesMarketPlace.Controllers
             return View();
         }
 
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("SignUp")]
         public ActionResult SignUp(Models.Users model)
         {
@@ -32,10 +32,10 @@ namespace NotesMarketPlace.Controllers
                 var isExist = IsEmailExist(model.EmailID);
                 if (isExist)
                 {
-                    ModelState.AddModelError("EmailID", "Email already exist");
+                    ModelState.AddModelError("EmailID","Email already exist");
                     return View(model);
                 }
-
+              
                 Context.Users obj = new Context.Users();
                 obj.RoleID = 3;
                 obj.FirstName = model.FirstName;
@@ -45,17 +45,18 @@ namespace NotesMarketPlace.Controllers
                 obj.IsEmailVerified = model.IsEmailVerified;
                 obj.IsActive = true;
                 obj.CreatedDate = DateTime.Now;
-               
                 obj.SecretCode = Guid.NewGuid();
 
                 dbobj.Users.Add(obj);
                 dbobj.SaveChanges();
                 SendVerificationLinkEmail(model.EmailID, model.FirstName, obj.SecretCode.ToString());
-                TempData["Success"] = "Your account has been successfully created.";
-
+                TempData["Success"] = "Your account has been created.";
+               
             }
-            ModelState.Clear();
-            return RedirectToAction("SignUp");
+           
+                ModelState.Clear();
+                return RedirectToAction("SignUp");
+            
         }
 
         [NonAction]
@@ -132,7 +133,7 @@ namespace NotesMarketPlace.Controllers
         [Route("Login")]
         public ActionResult Login(Models.Users user, string ReturnUrl = "")
         {
-            //string message = "";
+           
             using (database1Entities dbobj = new database1Entities())
             {
                 var v = dbobj.Users.Where(a => a.EmailID == user.EmailID).FirstOrDefault();
@@ -161,7 +162,7 @@ namespace NotesMarketPlace.Controllers
                             }
                             else
                             {
-                                return RedirectToAction("Dashboard", "Dashboard");
+                                return RedirectToAction("Dashboard", "SellNotes");
                             }
                         }
                         else
@@ -233,7 +234,7 @@ namespace NotesMarketPlace.Controllers
         {
             var fromEmail = new MailAddress("parthpatel9265@gmail.com");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "******"; // Replace with actual password
+            var fromEmailPassword = "*****"; 
             string subject = "Note Marketplace - Forgot Password";
 
             string body = "Hello," +
@@ -295,37 +296,6 @@ namespace NotesMarketPlace.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult UserPic()
-        {
-            
-            var user = dbobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
-           
-            var profile = dbobj.UserProfileDetail.Where(x => x.UserID == user.ID).FirstOrDefault();
-            byte[] photo;
-          
-            if (profile != null)
-            {
-                if (profile.ProfilePicture != null)
-                {
-                    string imgPath = Server.MapPath(profile.ProfilePicture);
-                    photo = System.IO.File.ReadAllBytes(imgPath);
-                }
-                else
-                {
-                    string imgPath = Server.MapPath("~/Content/Default/defaultbook.jpg");
-                    photo = System.IO.File.ReadAllBytes(imgPath);
-                }
-            }
-           
-            else
-            {
-                string imgPath = Server.MapPath("~/Content/Default/defaultuser.jpg");
-                photo = System.IO.File.ReadAllBytes(imgPath);
-            }
-          
-            return File(photo, "image/jpeg");
-        }
 
     }
 }

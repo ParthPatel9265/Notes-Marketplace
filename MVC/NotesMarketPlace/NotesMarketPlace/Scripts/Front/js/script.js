@@ -1,4 +1,3 @@
-
 /* ==================================
             toggle password
 ==================================== */
@@ -37,7 +36,7 @@ $(function () {
             $(".nav-scroll").addClass("white-nav-top");
 
             // Show dark logo
-            $(".nav-scroll .navbar-brand img").attr("src", "img/pre-login/logo.png");
+            $(".nav-scroll .navbar-brand img").attr("src", "/Content/Front/img/pre-login/logo.png");
 
         } else {
 
@@ -45,7 +44,7 @@ $(function () {
             $(".nav-scroll").removeClass("white-nav-top");
 
             // Show logo
-            $(".nav-scroll .navbar-brand img").attr("src", "img/pre-login/top-logo.png");
+            $(".nav-scroll .navbar-brand img").attr("src", "/Content/Front/img/pre-login/top-logo.png");
 
         }
     }
@@ -86,8 +85,65 @@ $(document).ready(function () {
     }
 });
 
+/* ==================================
+           Add notes
+====================================*/
 
+$(document).ready(function () {
+    $("#add-paid input[name='IsPaid']").change(function () {
+        if ($("#paid").is(":checked")) {
+            $("#price").removeAttr("disabled");
+            $("#price").focus();
+            $("#note-preview").attr("required", "required");
+        } else {
+            $("#price").val(0);
+            $("#price").attr("disabled", "disabled");
+            $("#note-preview").removeAttr("required");
+        }
+    });
+});
 
+$(document).ready(function () {
+    $("#edit-paid input[name='IsPaid']").change(function () {
+        if ($("#paid").is(":checked")) {
+            $("#price").removeAttr("disabled");
+            $("#price").focus();
+        } else {
+            $("#price").val(0);
+            $("#price").attr("disabled", "disabled");
+        }
+    });
+});
+
+/* ==================================
+           search notes
+====================================*/
+
+$(document).ready(function () {
+
+    $("#searchfilter #type").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #search").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #category").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #university").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #course").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #country").change(function () {
+        this.form.submit();
+    });
+    $("#searchfilter #rating").change(function () {
+        this.form.submit();
+    });
+
+});
 
 
 

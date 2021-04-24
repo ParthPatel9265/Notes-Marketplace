@@ -8,18 +8,16 @@ using System.Net;
 using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
-
 namespace NotesMarketplace.Controllers
 {
     public class BuyerRequestController : Controller
     {
-        readonly private database1Entities dobj = new database1Entities();
+         database1Entities dobj = new database1Entities();
 
-      
 
         [Authorize]
         [Route("BuyerRequest")]
-        public ActionResult BuyerRequest(string search, string sort, int page=1 )
+        public ActionResult BuyerRequest(string search, string sort, int? page )
         {
           
             ViewBag.BuyerRequest = "active";
@@ -32,34 +30,46 @@ namespace NotesMarketplace.Controllers
             NotesMarketPlace.Context.Users user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
 
            
-            IEnumerable<BuyerRequest> buyerrequest = (from download in dobj.Downloads
+            IEnumerable<BuyerRequest> buyerrequest = from download in dobj.Downloads
                                                               join users in dobj.Users on download.Downloader equals users.ID
                                                               join userprofile in dobj.UserProfileDetail on download.Downloader equals userprofile.UserID
                                                               where download.Seller == user.ID && download.IsSellerHasAllowedDownload == false && download.AttachmentPath == null
-                           select new BuyerRequest { TblDownload = download, TblUser = users, TblUserProfile = userprofile });
+                           select new BuyerRequest
+                           {
+                               NoteID = download.NoteID,
+                               DownloadID = download.ID,
+                               Title = download.NoteTitle,
+                               Category = download.NoteCategory,
+                               Buyer = users.EmailID,
+                               PhoneNo = userprofile.CountryCode + " " + userprofile.PhoneNumber,
+                               SellType = download.IsPaid == true ? "Paid" : "Free",
+                               SellingPrice = download.PurchasedPrice,
+                               DownloadedDate = download.CreatedDate.Value
+                           };
 
             
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToLower();
                 buyerrequest = buyerrequest.Where(
-                                                    x => x.TblDownload.NoteTitle.ToLower().Contains(search) ||
-                                                         x.TblDownload.NoteCategory.ToLower().Contains(search) ||
-                                                         x.TblUser.EmailID.ToLower().Contains(search) ||
-                                                         x.TblDownload.PurchasedPrice.ToString().ToLower().Contains(search) ||
-                                                         x.TblUserProfile.PhoneNumber.ToLower().Contains(search)
+                                                    x => x.Title.ToLower().Contains(search) ||
+                                                         x.Category.ToLower().Contains(search) ||
+                                                         x.Buyer.ToLower().Contains(search) ||
+                                                         x.SellingPrice.ToString().ToLower().Contains(search) ||
+                                                         x.PhoneNo.ToLower().Contains(search)||
+                                                         x.SellType.ToLower().Contains(search)
                                                  );
             }
 
             
             buyerrequest = SortTableBuyerRequest(sort, buyerrequest);
-            
-            ViewBag.TotalPages = (Math.Ceiling(buyerrequest.Count() / 10.0));
 
-            buyerrequest = buyerrequest.Skip((page - 1) * 10).Take(10);
-
-
-            return View(buyerrequest);
+            var buyer = new List<BuyerRequest>();
+            buyer = buyerrequest.ToList();
+  
+            return View(buyer.ToList().AsQueryable().ToPagedList(page ?? 1, 10));
+              
+              
         }
 
         private IEnumerable<BuyerRequest> SortTableBuyerRequest(string sort,IEnumerable<BuyerRequest> table)
@@ -68,77 +78,77 @@ namespace NotesMarketplace.Controllers
             {
                 case "Title_Asc":
                     {
-                       table = table.OrderBy(x => x.TblDownload.NoteTitle);
+                       table = table.OrderBy(x => x.Title);
                         break;
                     }
                 case "Title_Desc":
                     {
-                        table =table.OrderByDescending(x => x.TblDownload.NoteTitle);
+                        table =table.OrderByDescending(x => x.Title);
                         break;
                     }
                 case "Category_Asc":
                     {
-                        table = table.OrderBy(x => x.TblDownload.NoteCategory);
+                        table = table.OrderBy(x => x.Category);
                         break;
                     }
                 case "Category_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblDownload.NoteCategory);
+                        table = table.OrderByDescending(x => x.Category);
                         break;
                     }
                 case "Buyer_Asc":
                     {
-                        table = table.OrderBy(x => x.TblUser.EmailID);
+                        table = table.OrderBy(x => x.Buyer);
                         break;
                     }
                 case "Buyer_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblUser.EmailID);
+                        table = table.OrderByDescending(x => x.Buyer);
                         break;
                     }
                 case "Phone_Asc":
                     {
-                        table = table.OrderBy(x => x.TblUserProfile.PhoneNumber);
+                        table = table.OrderBy(x => x.PhoneNo);
                         break;
                     }
                 case "Phone_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblUserProfile.PhoneNumber);
+                        table = table.OrderByDescending(x => x.PhoneNo);
                         break;
                     }
                 case "Type_Asc":
                     {
-                        table = table.OrderBy(x => x.TblDownload.IsPaid);
+                        table = table.OrderBy(x => x.SellType);
                         break;
                     }
                 case "Type_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblDownload.IsPaid);
+                        table = table.OrderByDescending(x => x.SellType);
                         break;
                     }
                 case "Price_Asc":
                     {
-                        table = table.OrderBy(x => x.TblDownload.PurchasedPrice);
+                        table = table.OrderBy(x => x.SellingPrice);
                         break;
                     }
                 case "Price_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblDownload.PurchasedPrice);
+                        table = table.OrderByDescending(x => x.SellingPrice);
                         break;
                     }
                 case "DownloadedDate_Asc":
                     {
-                        table = table.OrderBy(x => x.TblDownload.CreatedDate);
+                        table = table.OrderBy(x => x.DownloadedDate);
                         break;
                     }
                 case "DownloadedDate_Desc":
                     {
-                        table = table.OrderByDescending(x => x.TblDownload.CreatedDate);
+                        table = table.OrderByDescending(x => x.DownloadedDate);
                         break;
                     }
                 default:
                     {
-                        table = table.OrderByDescending(x => x.TblDownload.CreatedDate);
+                        table = table.OrderByDescending(x => x.DownloadedDate);
                         break;
                     }
             }
@@ -168,7 +178,7 @@ namespace NotesMarketplace.Controllers
                 dobj.SaveChanges();
 
                 
-                AllowDownloadTemplate(download, user);
+                //AllowDownloadTemplate(download, user);
 
                 return RedirectToAction("BuyerRequest");
 
@@ -184,10 +194,9 @@ namespace NotesMarketplace.Controllers
         {
             
             var downloader = dobj.Users.Where(x => x.ID == download.Downloader).FirstOrDefault();
-          
-            SystemConfiguration s = new SystemConfiguration();
 
-            var fromEmail = new MailAddress(s.EmailID1);
+            var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+            var fromEmail = new MailAddress(email);
             var toEmail = new MailAddress(downloader.EmailID);
             var fromEmailPassword = "*****"; // Replace with actual password
             string subject = seller.FirstName + "Allows you to download a note";

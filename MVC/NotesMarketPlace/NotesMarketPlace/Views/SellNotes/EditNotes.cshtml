@@ -1,17 +1,17 @@
-﻿@model NotesMarketPlace.Models.EditNotes
+﻿@using NotesMarketPlace.Context
+@model NotesMarketPlace.Models.EditNotes
 @{
     ViewBag.Title = "Edit Notes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-
 <!-- start section -->
 <section>
     <div id="userprofile-img">
         <div class="centerh2">
 
-            <h2>Add Notes</h2>
+            <h2>Edit Notes</h2>
 
         </div>
     </div>
@@ -55,14 +55,14 @@
 
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <!-- category -->
+                                 @*category*@ 
                                 <div class="form-group">
                                     <label class="label" for="exampleInputEmail1">Category *</label>
                                     <div class="hidepassword">
 
-                                        @Html.DropDownListFor(model => model.Category, new SelectList(Model.NoteCategoryList, "ID", "Name", Model.Category), new { @class = "form-control select-field", placeholder = "Select your Notes category", required = "required" })
-                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "form-error" })
-                                    </div>
+                                        @Html.DropDownListFor(model => model.Category, new SelectList(Model.NoteCategoryList, "ID", "Name", Model.Category), "Select note category", new { @class = "form-control select-field", placeholder = "Select your Notes category", required = "required" })
+
+                                    </div> @Html.ValidationMessageFor(model => model.Category, "", new { @class = "form-error" })
                                 </div>
 
                             </div>
@@ -94,9 +94,9 @@
                                     <div class="upload-profile-pic">
                                         <label class="label" for="exampleInputEmail1">Upload Notes *</label>
 
-                                        @Html.TextBoxFor(model => model.UploadNotes, new { @class = "form-control exampleInputEmail1", type = "file", required = "required", accept = ".pdf", multiple = "multiple" })
+                                        @Html.TextBoxFor(model => model.UploadNotes, new { @class = "form-control exampleInputEmail1", type = "file",accept = ".pdf", multiple = "multiple" })
                                         @Html.ValidationMessageFor(model => model.UploadNotes, "", new { @class = "form-error" })
-
+                                       
                                         <div class="uploadmypic text-center">
                                             <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
                                             <h6>Upload Your Notes</h6>
@@ -115,7 +115,7 @@
 
                                     <!-- Drop down arrow icon -->
                                     <div class="hidepassword">
-                                        @Html.DropDownListFor(model => model.NoteType, new SelectList(Model.NoteTypeList, "ID", "Name", Model.NoteType), new { @class = "form-control select-field", placeholder = "Select your notes type" })
+                                        @Html.DropDownListFor(model => model.NoteType, new SelectList(Model.NoteTypeList, "ID", "Name", Model.NoteType),"Select note type", new { @class = "form-control select-field", placeholder = "Select your notes type" })
                                         @Html.ValidationMessageFor(model => model.NoteType, "", new { @class = "form-error" })
 
                                     </div>
@@ -177,7 +177,7 @@
                                     <label class="label">Country</label>
                                     <div class="hidepassword">
 
-                                        @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "ID", "Name", Model.Country), new { @class = "form-control select-field", placeholder = "Select country" })
+                                        @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "ID", "Name", Model.Country),"Select country", new { @class = "form-control select-field", placeholder = "Select country" })
                                         @Html.ValidationMessageFor(model => model.Country, "", new { @class = "form-error" })
                                     </div>
                                 </div>
@@ -271,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="edit-paid">
                     <div class="col-md-6 col-sm-6">
 
 
@@ -280,18 +280,20 @@
                             <div class="row radiopadding">
                                 <div class="col-md-4 col-sm-5 col-4">
                                     <div class="row">
-                                        @Html.RadioButtonFor(model => model.IsPaid, "false", new { @class = "form-control exampleInputEmail1", name = "sell" })
 
-                                        <label class="label">Free</label>
+                                 
+                                        @Html.RadioButtonFor(model => model.IsPaid, "false", new { @class = "form-control exampleInputEmail1", id = "free" })
+
+                                        <label class="label" for="free">Free</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-5 col-6">
                                     <div class="row">
 
+                                       
+                                        @Html.RadioButtonFor(model => model.IsPaid, "true", new { @class = "form-control exampleInputEmail1", id = "paid" })
 
-                                        @Html.RadioButtonFor(model => model.IsPaid, "true", new { @class = "form-control exampleInputEmail1", name = "sell" })
-
-                                        <label class="label">Paid</label>
+                                        <label class="label" for="paid">Paid</label>
 
                                     </div>
                                 </div>
@@ -301,7 +303,7 @@
                         <div class="form-group">
                             <label class="label" for="exampleInputEmail1">Sell Price *</label>
 
-                            @Html.TextBoxFor(model => model.SellingPrice, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your Notes price", disabled = "disabled" })
+                            @Html.TextBoxFor(model => model.SellingPrice, new { @class = "form-control exampleInputEmail1", id = "price", placeholder = "Enter your Notes price", disabled = "disabled" })
                             @Html.ValidationMessageFor(model => model.SellingPrice, "", new { @class = "form-error" })
                         </div>
 
@@ -313,7 +315,7 @@
 
                                 <div class="hidepassword-image">
 
-                                    @Html.TextBoxFor(model => model.NotesPreview, new { @class = "form-control exampleInputEmail1", type = "file", accept = ".pdf" })
+                                    @Html.TextBoxFor(model => model.NotesPreview, new { @class = "form-control exampleInputEmail1", id = "note-preview", type = "file", accept = ".pdf"})
                                     @Html.ValidationMessageFor(model => model.NotesPreview, "", new { @class = "form-error" })
                                     <div class="uploadmypic text-center">
                                         <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
@@ -329,16 +331,42 @@
                 <!-- Button -->
                 <div class="row">
                     <div class="col-md-3 col-sm-6 col-6">
-                        <button type="submit" class="btn btn-primary btn-block login-btn text-uppercase text-center" id="btn"><b>SAVE</b></button>
+                        <button type="submit" class="btn btn-primary btn-block login-btn text-uppercase text-center" id="btn"><b>SUBMIT</b></button>
                     </div>
                     <div class="col-md-3 col-sm-6 col-6">
-                        <button type="submit" class="btn btn-primary btn-block login-btn text-uppercase text-center" id="btn" onclick="location.href=@Url.Action("PublishNote", new { id = @Model.ID })"><b>PUBLISH</b></button>
+
+                        <a class="btn btn-primary btn-block login-btn text-uppercase text-center" data-toggle="modal" data-target="#exampleModal" id="btn" role="button"><div style="padding-top:8px"><b>PUBLISH</b></div></a>
+
+                        <!-- publish Confirmation-Box -->
+
+                        <div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Publishing this note will send note to administrator for review,
+                                            once administrator review and approve then this note will be published to portal. Press yes to continue.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="submit" class="btn btn-primary" id="confirmationbutton" role="button" onclick="location.href='@Url.Action("PublishNoteRequest", new { id = @Model.ID })'">YES</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">NO</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- publish Confirmation-Box END -->
+
                     </div>
                 </div>
             </div>
         </div>
 
     </section>
-}
 
+}
 <!-- sell info ends -->

@@ -1,0 +1,300 @@
+﻿@model NotesMarketPlace.Models.UserProfile
+@{
+    ViewBag.Title = "User Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!-- user profile start -->
+<!-- upper section -->
+<section>
+    <div id="userprofile-img">
+        <div class="centerh2">
+
+            <h2>User Profile</h2>
+
+        </div>
+    </div>
+</section>
+
+@using (Html.BeginForm("UserProfile", "UserProfile", new { id = Model.UserID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.UserID)
+
+        <!-- personal detail -->
+        <section id="personal-details" class="user-profile content-box-md">
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading">
+                                <h3>Basic Profile Details</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">First Name*</label>
+                                        
+                                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control exampleInputEmail1", value = Model.FirstName, placeholder = "Enter your first name", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "form-error" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label" for="exampleInputEmail1">Last Name*</label>
+                                       
+                                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control exampleInputEmail1", value = Model.LastName, placeholder = "Enter your last name", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "form-error" })
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label" for="exampleInputEmail1">Email*</label>
+                                        @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your email address", type = "email", required = "required", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "form-error" })
+                                          </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">Date Of Birth</label>
+
+                                        <div class="hidepassword">
+                                            @Html.TextBoxFor(model => model.DOB, "{0:yyyy-MM-dd}", new { @class = "form-control exampleInputEmail1",@placeholder = "Enter your date of birth", onfocus = "(this.type='date')" ,onblur = "(this.type='text')"})
+
+                                            <img src="~/Content/Front/img/user-profile/calendar.png" alt="show">
+                                        </div>@Html.ValidationMessageFor(model => model.DOB, "", new { @class = "form-error" })
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">Gender</label>
+                                        @Html.DropDownListFor(model => model.Gender, new SelectList(Model.GenderList, "ID", "Value", Model.Gender), "Select your gender", new { @class = "form-control selectfield" })
+                                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "form-error" })
+                                      
+                                    </div>
+                                </div>tex
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">Phone Number</label>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-5 col-sm-5 col-3 col-xl-3 col-lg-4  nopadding">
+                                                    <div class="marginright">
+
+                                                        @Html.DropDownListFor(model => model.CountryCode, new SelectList(Model.CountryList, "CountryCode", "CountryCode", Model.CountryCode), new { @class = "form-control selectfield", required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.CountryCode, "", new { @class = "form-error" })
+                                                      
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-sm-7 col-9 col-xl-9 col-lg-8 nopadding">
+
+                                                   
+                                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your phone number", required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "form-error" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="upload-profile-pic">
+                                            <label class="label" for="exampleInputEmail1">Profile Picture</label>
+                                            @Html.TextBoxFor(model => model.ProfilePicture, new { @class = "form-control exampleInputEmail1", type = "file", accept = ".jpg , .jpeg , .png" })
+                                            @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "form-error" })
+                                            @if (!string.IsNullOrEmpty(Model.ProfilePictureUrl))
+                                            {
+                                                <p class="uploaded-data">To see your previously uploaded profile picture <a href="@Url.Content(Model.ProfilePictureUrl)" target="_blank">Click Here</a></p>
+                                            }
+                                            <div class="uploadmypic text-center">
+                                                <img class="img-fluid" src="~/Content/Front/img/user-profile/upload.png">
+                                                <h6>Upload a picture</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- user details ends-->
+        <!-- address detail ends-->
+        <section id="Address-details" class="user-profile content-box-md">
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="head">
+                                <h3>Address Details</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">Address Line 1 *</label>
+
+
+                                        @Html.TextBoxFor(model => model.AddressLine1, new { @class = "form-control uexampleInputEmail1", @placeholder = "Enter your address" })
+                                        @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "form-error", required = "required" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label" for="exampleInputEmail1">Address Line 2 *</label>
+                                        @Html.TextBoxFor(model => model.AddressLine2, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your address" })
+                                        @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "form-error" })
+
+                                        </div>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label" for="exampleInputEmail1">City *</label>
+                                        @Html.TextBoxFor(model => model.City, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your city", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "form-error" })
+
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">State *</label>
+                                        @Html.TextBoxFor(model => model.State, new { @class = "form-control exampleInputEmail1", id = "city", placeholder = "Enter your state", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "form-error" })
+
+                                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">ZipCode *</label>
+                                        @Html.TextBoxFor(model => model.ZipCode, new { @class = "form-control exampleInputEmail1 ", placeholder = "Enter your zipcode", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "form-error" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">Country *</label>
+
+                                        @Html.DropDownListFor(model => model.Country, new SelectList(Model.CountryList, "Name", "Name", Model.Country), "Select your Country", new { @class = "form-control selectfield", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "form-error" })
+                                      
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!--  address details ends-->
+        <!--academic detail-->
+        <section id="study-details" class="user-profile content-box-md">
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="head">
+                                <h3>University and College Details</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label">University</label> 
+                                        @Html.TextBoxFor(model => model.University, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your university" })
+                                        @Html.ValidationMessageFor(model => model.University, "", new { @class = "form-error" })
+
+                           
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+
+                                    <div class="form-group">
+                                        <label class="label" for="exampleInputEmail1">College*</label>
+                                        @Html.TextBoxFor(model => model.College, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your college" })
+                                        @Html.ValidationMessageFor(model => model.College, "", new { @class = "form-error" })
+                                        
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>submit</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+}
+         <!--academic detail-->

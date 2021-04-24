@@ -8,9 +8,16 @@ namespace NotesMarketPlace.Models
 {
     public class BuyerRequest
     {
-        public Context.Downloads TblDownload { get; set; }
-        public Context.Users TblUser { get; set; }
-        public Context.UserProfileDetail TblUserProfile { get; set; }
+        public int NoteID { get; set; }
+        public int DownloadID { get; set; }
+        public string Title { get; set; }
+        public string Category { get; set; }
+        public string Buyer { get; set; }
+        public string PhoneNo { get; set; }
+        public string SellType { get; set; }
+        public decimal? SellingPrice { get; set; }
+        public DateTime? DownloadedDate { get; set; }
+
     }
      
 }   

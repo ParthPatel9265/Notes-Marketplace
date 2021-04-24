@@ -1,4 +1,7 @@
-﻿@model IEnumerable<NotesMarketPlace.Models.SearchNotes>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<NotesMarketPlace.Models.SearchNotes>
 @{
     ViewBag.Title = "SearchNotes";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -42,7 +45,7 @@
                     <div class="col-md-2">
 
 
-                        @Html.DropDownList("type", new SelectList(@ViewBag.TypeList, "ID", "Name"), "Select Type", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("type", new SelectList(@ViewBag.TypeList, "ID", "Name"), "Select Type", new { @class = "form-control selectfield", id = "type" })
                     </div>
 
 
@@ -50,29 +53,29 @@
                     <div class="col-md-2">
 
 
-                        @Html.DropDownList("category", new SelectList(@ViewBag.CategoryList, "ID", "Name"), "Select Category", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("category", new SelectList(@ViewBag.CategoryList, "ID", "Name"), "Select Category", new { @class = "form-control selectfield", id = "category" })
 
                     </div>
                     <div class="col-md-2">
 
 
-                        @Html.DropDownList("university", new SelectList(@ViewBag.UniversityList), "Select University", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("university", new SelectList(@ViewBag.UniversityList), "Select University", new { @class = "form-control selectfield", id = "university" })
 
 
                     </div>
                     <div class="col-md-2">
 
 
-                        @Html.DropDownList("course", new SelectList(@ViewBag.CourseList), "Select Course", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("course", new SelectList(@ViewBag.CourseList), "Select Course", new { @class = "form-control selectfield", id = "course" })
                     </div>
 
 
                     <div class="col-md-2">
-                        @Html.DropDownList("country", new SelectList(@ViewBag.CountryList, "ID", "Name"), "Select Country", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("country", new SelectList(@ViewBag.CountryList, "ID", "Name"), "Select Country", new { @class = "form-control selectfield", id = "country" })
 
                     </div>
                     <div class="col-md-2">
-                        @Html.DropDownList("ratings", new SelectList(@ViewBag.RatingList, "Value", "Text"), "Select Rating", new { @class = "form-control selectfield" })
+                        @Html.DropDownList("ratings", new SelectList(@ViewBag.RatingList, "Value", "Text"), "Select Rating", new { @class = "form-control selectfield", id = "rating" })
 
                     </div>
 
@@ -104,16 +107,26 @@
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4">
 
                     <div class="bookclass">
-                        @*Book Image*@
-                        @if (@item.Note.DisplayPicture != null)
-                        {
-                            <img src="@Url.Content(item.Note.DisplayPicture)" alt="note" class="img-fluid">
-                        }
-                        else
-                        {
-                            <img src="~/Content/Default/defaultbook.jpg" alt="note" class="img-fluid">
+                        @{
+                            var dbobj = new NotesMarketPlace.Context.database1Entities();
+                            //var defaultbook = dbobj.SystemConfiguration.Select(x => x.DefaultNotePreview).FirstOrDefault();
                         }
 
+                        @*Book Image*@
+                        <div class="note-img">
+                            <a href="@Url.Action("NoteDetail", "SearchNotes",new { id = item.Note.ID })">
+                                @if (@item.Note.DisplayPicture != null)
+                                {
+                                    <img src="@Url.Content(item.Note.DisplayPicture)" alt="note" class="img-fluid">
+                                }
+                                else
+                                {
+
+                                    <img src="~/Content/Default/defaultbook.jpg" class="img-fluid " alt="note">
+
+                                }
+                            </a>
+                        </div>
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
@@ -212,87 +225,27 @@
 </section>
 
 <!-- Pagination -->
-
-@if (Model.Count() != 0)
-{
-    <nav>
+<nav>
+    <div class="container">
         <div class="row justify-content-center">
 
+           
+                @Html.PagedListPager(Model, page => Url.Action("SearchNotes", new { page, search = @ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating }), new PagedList.Mvc.PagedListRenderOptions
+           {
 
-            <ul class="pagination flex-wrap">
+               LiElementClasses = new[] { "page-item" },
+               UlElementClasses = new[] { "pagination justify-content-center" },
+               LinkToNextPageFormat = ">",
+               LinkToPreviousPageFormat = "<",
+               DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+               DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+               DisplayLinkToLastPage = PagedListDisplayMode.Never
 
-                <li class="page-item">
-                    @if (ViewBag.PageNumber == 1)
-                    {
-                        <a class="page-link" href="@Url.Action("Search",  new { search = ViewBag.Search , type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = @ViewBag.PageNumber })"><i class="fa fa-angle-left"></i></a>
-                    }
-                    else
-                    {
-                        <a class="page-link" href="@Url.Action("Search", new { search = ViewBag.Search , type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = @ViewBag.PageNumber - 1 })"><i class="fa fa-angle-left"></i></a>
-                    }
-                </li>
-
-                @{
-                    double? TotalPages = ViewBag.TotalPages;
-
-                    if (ViewBag.PageNumber != 1 && ViewBag.PageNumber - 2 > 1)
-                    {
-                        int page = Convert.ToInt32(@ViewBag.PageNumber) - 3;
-                        <li class="page-item">@Html.ActionLink("1", "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = 1 }, new { @class = "page-link" })</li>
-                        if (page != 1)
-                        {
-                            <li class="page-item more-pages-dots">@Html.ActionLink("...", "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = page }, new { @class = "page-link more-pages-dots" })</li>
-                        }
-                    }
-
-                    for (int i = 2; i > 0; i--)
-                    {
-                        if (ViewBag.PageNumber - i > 0)
-                        {
-                            int page = Convert.ToInt32(@ViewBag.PageNumber) - i;
-                            <li class="page-item">@Html.ActionLink(page.ToString(), "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = page }, new { @class = "page-link" })</li>
-                        }
-                    }
-
-                    <li class="page-item active">
-                        <a class="page-link">@ViewBag.PageNumber<span class="sr-only">(current)</span></a>
-                    </li>
-
-                    for (int i = 1; i < 3; i++)
-                    {
-                        if (ViewBag.PageNumber + i <= TotalPages)
-                        {
-                            int page = Convert.ToInt32(@ViewBag.PageNumber) + i;
-                            <li class="page-item">@Html.ActionLink(page.ToString(), "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = page }, new { @class = "page-link" })</li>
-                        }
-                    }
-
-                    if (ViewBag.PageNumber != TotalPages && ViewBag.PageNumber + 2 < TotalPages)
-                    {
-                        int page = Convert.ToInt32(@ViewBag.PageNumber) + 3;
-                        if (page != TotalPages)
-                        {
-                            <li class="page-item">@Html.ActionLink("...", "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = page }, new { @class = "page-link more-pages-dots" })</li>
-                        }
-                        <li class="page-item">@Html.ActionLink(TotalPages.ToString(), "Search", new { search = ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = TotalPages }, new { @class = "page-link" })</li>
-                    }
-                }
-
-                <li class="page-item">
-                    @if (ViewBag.PageNumber == TotalPages)
-                    {
-                        <a class="page-link" href="@Url.Action("Search", new { search = ViewBag.Search , type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = @ViewBag.PageNumber })"><i class="fa fa-angle-right"></i></a>
-                    }
-                    else
-                    {
-                        <a class="page-link" href="@Url.Action("Search", new { search = ViewBag.Search , type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating, page = @ViewBag.PageNumber + 1 })"><i class="fa fa-angle-right"></i></a>
-                    }
-                </li>
-
-            </ul>
-
-
+           })
+            
         </div>
-    </nav>
-}
+    </div>
+</nav>
+
+
 <!-- Pagination Ends -->

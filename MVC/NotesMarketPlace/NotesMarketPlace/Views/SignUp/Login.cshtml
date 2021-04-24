@@ -81,65 +81,68 @@
                             @Html.AntiForgeryToken()
 
                             <!-- email -->
-                    <div class="form-group">
-                        <label class="label" for="exampleInputEmail1">Email</label>
-                        
-                        @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
-                        @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
-                    </div>
+                            <div class="form-group">
+                                <label class="label" for="exampleInputEmail1">Email</label>
+
+                                @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
+                                @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
+                            </div>
 
                             <!-- password -->
-                    <div class="form-group">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-6 col-sm-6 col-md-6">
-                                    <label class="label exampleInputPassword1">Password</label>
+                            <div class="form-group">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-6 col-sm-6 col-md-6">
+                                            <label class="label exampleInputPassword1">Password</label>
 
+                                        </div>
+
+                                        <!-- Forgot Password -->
+                                        <div class="col-6 col-sm-6 col-md-6 text-right">
+                                            <label class="myforgotlabel"><a href="@Url.Action("ForgotPassword","SignUp")">Forgot Password?</a></label>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- Forgot Password -->
-                                <div class="col-6 col-sm-6 col-md-6 text-right">
-                                    <label class="myforgotlabel"><a href="@Url.Action("ForgotPassword","SignUp")">Forgot Password?</a></label>
-                                </div>
+                                <!-- eye icon  -->
+                                <div class="hidepassword">
+
+                                    @Html.PasswordFor(x => x.Password, new { @class = "form-control exampleInputPassword1", @id = "password-field", @placeholder = "Enter your password" })
+
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                </div>  @Html.ValidationMessageFor(x => x.Password, "", new { @class = "form-error" })
+
+
                             </div>
-                        </div>
-
-                        <!-- eye icon  -->
-                        <div class="hidepassword">
-                           
-                            @Html.PasswordFor(x => x.Password, new { @class = "form-control exampleInputPassword1", @id = "password-field", @placeholder = "Enter your password" })
-
-                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-
-                        </div>  @Html.ValidationMessageFor(x => x.Password, "", new { @class = "form-error" })
-
-                
-                    </div>
 
                             <!-- checkbox -->
 
-                    <div class="form-group form-check checkbox">
-                        
-                        @Html.ValidationMessageFor(x => x.RememberMe, "", new { @class = "form-error" })
-                        @Html.CheckBoxFor(x => x.RememberMe, new { @class = "form-check-input exampleCheck" })
-                        <label class="checkbox1" for="exampleCheck">Remember Me</label>
-                    </div>
+                            <div class="form-group form-check checkbox">
+
+                                @Html.ValidationMessageFor(x => x.RememberMe, "", new { @class = "form-error" })
+                                @Html.CheckBoxFor(x => x.RememberMe, new { @class = "form-check-input exampleCheck" })
+                                <label class="checkbox1" for="exampleCheck">Remember Me</label>
+                            </div>
 
                             <!-- button -->
                             <button type="submit" class="btn text-uppercase text-center" id="btn"><b>login</b></button>
                         }
-                            <p class="text-center text">Don't have an account?<a href="@Url.Action("SignUp","SignUp")"><span>Sign Up</span></a></p>
+                        <p class="text-center text">Don't have an account?<a href="@Url.Action("SignUp","SignUp")"><span>Sign Up</span></a></p>
 
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- login Page End -->
-
     <!-- JQuery -->
     <script src="~/Scripts/Front/js/jquery.min.js"></script>
 
+    <!-- validation -->
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="~/Scripts/Front/js/bootstrap/bootstrap.min.js"></script>
 

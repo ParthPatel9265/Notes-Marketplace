@@ -10,26 +10,24 @@ using NotesMarketPlace.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Web.UI.WebControls;
-
+using PagedList;
 
 namespace NotesMarketPlace.Controllers
 {
-
     public class SellNotesController : Controller
     {
         database1Entities dobj = new database1Entities();
 
         [HttpGet]
         [Authorize]
-        [Route("SellNotes")]
-        public ActionResult Dashboard(string search1, string search2, string sort1, string sort2, int page1=1, int page2=1)
+        [Route("SellNotes")] 
+        public ActionResult Dashboard(string search1, string search2, string sort1, string sort2, int? page1 , int? page2 )
         {
-            
+
             ViewBag.SellYourNotes = "active";
             ViewBag.Sort1 = sort1;
             ViewBag.Sort2 = sort2;
-            ViewBag.Page1 = page1;
-            ViewBag.Page2 = page2;
+            
             ViewBag.Search1 = search1;
             ViewBag.Search2 = search2;
 
@@ -41,45 +39,41 @@ namespace NotesMarketPlace.Controllers
             dashboard.MyDownloads = dobj.Downloads.Where(x => x.Downloader == user.ID && x.IsSellerHasAllowedDownload == true && x.AttachmentPath != null).Count();
             dashboard.MyRejectedNotes = dobj.NoteDetail.Where(x => x.SellerID == user.ID && x.Status == 10 && x.IsActive == true).Count();
             dashboard.BuyerRequest = dobj.Downloads.Where(x => x.Seller == user.ID && x.IsSellerHasAllowedDownload == false && x.AttachmentPath == null).Count();
- 
+
+            IEnumerable<NoteDetail> inprogress;
+            IEnumerable<NoteDetail> published;
+
             if (string.IsNullOrEmpty(search1))
             {
-                dashboard.InProgressNotes = dobj.NoteDetail.Where(x => x.SellerID == user.ID && (x.Status == 6 || x.Status == 7 || x.Status == 8));
+               inprogress = dobj.NoteDetail.Where(x => x.SellerID == user.ID && (x.Status == 6 || x.Status == 7 || x.Status == 8));
             }
             else
             {
-                search1 = search1.ToLower();
-                dashboard.InProgressNotes = dobj.NoteDetail.Where
-                                                                     (
-                                                                        x => x.SellerID == user.ID &&
-                                                                        (x.Status == 6 || x.Status == 7 || x.Status == 8) &&
-                                                                        (x.Title.ToLower().Contains(search1) || x.NoteCategories.Name.ToLower().Contains(search1) || x.ReferenceData.Value.ToLower().Contains(search1))
+                inprogress = dobj.NoteDetail.Where(x => x.SellerID == user.ID &&
+                                                                  (x.Status == 6 || x.Status == 7 || x.Status == 8) &&
+                                                                  (x.Title.ToLower().Contains(search1) || x.NoteCategories.Name.ToLower().Contains(search1) || x.ReferenceData.Value.ToLower().Contains(search1))
                                                                      );
             }
-           
+
             if (string.IsNullOrEmpty(search2))
             {
-                dashboard.PublishedNotes = dobj.NoteDetail.Where(x => x.SellerID == user.ID && x.Status == 9);
+                published = dobj.NoteDetail.Where(x => x.SellerID == user.ID && x.Status == 9);
             }
             else
             {
                 search2 = search2.ToLower();
-                dashboard.PublishedNotes = dobj.NoteDetail.Where
-                                                    (
-                                                        x => x.SellerID == user.ID &&
-                                                        x.Status == 9 &&
-                                                        (x.Title.ToLower().Contains(search2) || x.NoteCategories.Name.ToLower().Contains(search2) || x.SellingPrice.ToString().ToLower().Contains(search2))
-                                                    );
+                published = dobj.NoteDetail.Where(x => x.SellerID == user.ID &&
+                                                                 x.Status == 9 &&
+                                                                 (x.Title.ToLower().Contains(search2) || x.NoteCategories.Name.ToLower().Contains(search2) || x.SellingPrice.ToString().ToLower().Contains(search2))
+                                                                  );
             }
 
-            dashboard.InProgressNotes = SortTableInProgressNote(sort1, dashboard.InProgressNotes);
-            dashboard.PublishedNotes = SortTablePublishNote(sort2, dashboard.PublishedNotes);
-
-            ViewBag.TotalPagesInProgress = Math.Ceiling(dashboard.InProgressNotes.Count() / 5.0);
-            ViewBag.TotalPagesInPublished = Math.Ceiling(dashboard.PublishedNotes.Count() / 5.0);
-
-            dashboard.InProgressNotes = dashboard.InProgressNotes.Skip((page1 - 1) * 5).Take(5);
-            dashboard.PublishedNotes = dashboard.PublishedNotes.Skip((page2 - 1) * 5).Take(5);
+            inprogress = SortTableInProgressNote(sort1, inprogress);
+            published = SortTablePublishNote(sort2, published);
+           
+            dashboard.InProgressNotes = inprogress.ToList().AsQueryable().ToPagedList(page1 ?? 1, 5);
+          
+            dashboard.PublishedNotes = published.ToList().AsQueryable().ToPagedList(page2 ?? 1 , 5);
             return View(dashboard);
         }
 
@@ -204,7 +198,7 @@ namespace NotesMarketPlace.Controllers
         [Route("SellNotes/AddNotes")]
         public ActionResult AddNotes()
         {
-            
+
             AddNotes viewModel = new AddNotes
             {
                 NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList(),
@@ -219,31 +213,47 @@ namespace NotesMarketPlace.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [Route("SellNotes/AddNotes")]
-        public ActionResult AddNotes(AddNotes add)
+        public ActionResult AddNotes(AddNotes add,string command)
         {
-          
+
             if (add.UploadNotes[0] == null)
             {
                 ModelState.AddModelError("UploadNotes", "This field is required");
+                add.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
+                add.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
+                add.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
                 return View(add);
             }
-         
+
             if (add.IsPaid == true && add.NotesPreview == null)
             {
                 ModelState.AddModelError("NotesPreview", "This field is required if selling type is paid");
+                add.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
+                add.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
+                add.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
                 return View(add);
             }
-          
+            foreach (HttpPostedFileBase file in add.UploadNotes)
+            {
+                if (!System.IO.Path.GetExtension(file.FileName).Equals(".pdf"))
+                {
+                    ModelState.AddModelError("UploadNotes", "Only PDF Format is allowed");
+                    add.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
+                    add.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
+                    add.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
+                    return View(add);
+                }
+            }
             if (ModelState.IsValid)
             {
-                
+
                 NoteDetail sellnote = new NoteDetail();
 
                 Context.Users user = dobj.Users.FirstOrDefault(x => x.EmailID == User.Identity.Name);
 
                 sellnote.SellerID = user.ID;
                 sellnote.Title = add.Title;
-                sellnote.Status = 6;
+                sellnote.Status = command == "Save" ? 6 : 7;
                 sellnote.Category = add.Category;
                 sellnote.NoteType = add.NoteType;
                 sellnote.NumberofPages = add.NumberofPages;
@@ -262,13 +272,21 @@ namespace NotesMarketPlace.Controllers
                 {
                     sellnote.SellingPrice = 0;
                 }
+
+                if(sellnote.Status == 7)
+                {
+                    string sellername = user.FirstName + " " + user.LastName;
+                    PublishNoteRequestmail(sellnote.Title, sellername);
+                }
+                  
+
                 sellnote.CreatedDate = DateTime.Now;
                 sellnote.CreatedBy = user.ID;
                 sellnote.IsActive = true;
 
                 dobj.NoteDetail.Add(sellnote);
                 dobj.SaveChanges();
-  
+
                 sellnote = dobj.NoteDetail.Find(sellnote.ID);
                 if (add.DisplayPicture != null)
                 {
@@ -295,10 +313,9 @@ namespace NotesMarketPlace.Controllers
                 dobj.Entry(sellnote).Property(x => x.NotesPreview).IsModified = true;
                 dobj.SaveChanges();
 
-
                 foreach (HttpPostedFileBase file in add.UploadNotes)
                 {
-                    
+
                     if (file != null)
                     {
                         string notesattachementfilename = System.IO.Path.GetFileName(file.FileName);
@@ -323,6 +340,7 @@ namespace NotesMarketPlace.Controllers
                 }
 
                 return RedirectToAction("Dashboard", "SellNotes");
+
             }
             else
             {
@@ -334,6 +352,7 @@ namespace NotesMarketPlace.Controllers
                 };
 
                 return View(viewModel);
+
             }
         }
 
@@ -342,7 +361,7 @@ namespace NotesMarketPlace.Controllers
         [Route("SellNotes/EditNotes/{id}")]
         public ActionResult EditNotes(int id)
         {
-           
+
             Context.Users user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
             NoteDetail note = dobj.NoteDetail.Where(x => x.ID == id && x.IsActive == true && x.SellerID == user.ID).FirstOrDefault();
             NotesAttachments attachement = dobj.NotesAttachments.Where(x => x.NoteID == id).FirstOrDefault();
@@ -355,7 +374,7 @@ namespace NotesMarketPlace.Controllers
                     Title = note.Title,
                     Category = note.Category,
                     Picture = note.DisplayPicture,
-                    Note = attachement.FilePath,
+                    Note = attachement.FileName,
                     NumberofPages = note.NumberofPages,
                     Description = note.Description,
                     NoteType = note.NoteType,
@@ -369,7 +388,8 @@ namespace NotesMarketPlace.Controllers
                     Preview = note.NotesPreview,
                     NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList(),
                     NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList(),
-                    CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList()
+                    CountryList= dobj.Countries.Where(x => x.IsActive == true).ToList(),
+
                 };
 
                 return View(viewModel);
@@ -389,23 +409,23 @@ namespace NotesMarketPlace.Controllers
             if (ModelState.IsValid)
             {
                 var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
-              
+
                 var sellnote = dobj.NoteDetail.Where(x => x.ID == id && x.IsActive == true && x.SellerID == user.ID).FirstOrDefault();
-              
+
                 if (sellnote == null)
                 {
                     return HttpNotFound();
                 }
-                
+
                 if (notes.IsPaid == true && notes.Preview == null && sellnote.NotesPreview == null)
                 {
                     ModelState.AddModelError("NotesPreview", "This field is required if selling type is paid");
                     return View(notes);
                 }
-              
+
                 var notesattachement = dobj.NotesAttachments.Where(x => x.NoteID == notes.NoteID && x.IsActive == true).ToList();
 
-               
+
                 dobj.NoteDetail.Attach(sellnote);
                 sellnote.Title = notes.Title;
                 sellnote.Category = notes.Category;
@@ -433,7 +453,7 @@ namespace NotesMarketPlace.Controllers
 
                 if (notes.DisplayPicture != null)
                 {
-                    
+
                     if (sellnote.DisplayPicture != null)
                     {
                         string path = Server.MapPath(sellnote.DisplayPicture);
@@ -454,7 +474,7 @@ namespace NotesMarketPlace.Controllers
 
                 if (notes.NotesPreview != null)
                 {
-                   
+
                     if (sellnote.NotesPreview != null)
                     {
                         string path = Server.MapPath(sellnote.NotesPreview);
@@ -465,44 +485,44 @@ namespace NotesMarketPlace.Controllers
                         }
                     }
 
-                   
                     string notespreviewfilename = System.IO.Path.GetFileName(notes.NotesPreview.FileName);
                     string notespreviewpath = "~/Members/" + user.ID + "/" + sellnote.ID + "/";
                     NewDirectory(notespreviewpath);
                     string notespreviewfilepath = Path.Combine(Server.MapPath(notespreviewpath), notespreviewfilename);
                     sellnote.NotesPreview = notespreviewpath + notespreviewfilename;
                     notes.NotesPreview.SaveAs(notespreviewfilepath);
+              
                 }
 
-              
+
                 if (notes.UploadNotes[0] != null)
                 {
-                    
+
                     string path = Server.MapPath(notesattachement[0].FilePath);
                     DirectoryInfo dir = new DirectoryInfo(path);
                     EmptyFolder(dir);
 
-                  
+
                     foreach (var item in notesattachement)
                     {
                         NotesAttachments attachement = dobj.NotesAttachments.Where(x => x.ID == item.ID).FirstOrDefault();
                         dobj.NotesAttachments.Remove(attachement);
                     }
 
-                    
+
                     foreach (HttpPostedFileBase file in notes.UploadNotes)
                     {
-                        
+
                         if (file != null)
                         {
-                            
+
                             string notesattachementfilename = System.IO.Path.GetFileName(file.FileName);
                             string notesattachementpath = "~/Members/" + user.ID + "/" + sellnote.ID + "/Attachements/";
                             NewDirectory(notesattachementpath);
                             string notesattachementfilepath = Path.Combine(Server.MapPath(notesattachementpath), notesattachementfilename);
                             file.SaveAs(notesattachementfilepath);
 
-                           
+
                             NotesAttachments notesattachements = new NotesAttachments
                             {
                                 NoteID = sellnote.ID,
@@ -513,7 +533,7 @@ namespace NotesMarketPlace.Controllers
                                 IsActive = true
                             };
 
-                           
+
                             dobj.NotesAttachments.Add(notesattachements);
                             dobj.SaveChanges();
                         }
@@ -533,30 +553,30 @@ namespace NotesMarketPlace.Controllers
         [Route("SellNotes/DeleteDraft/{id}")]
         public ActionResult DeleteDraft(int id)
         {
-            
+
             NoteDetail note = dobj.NoteDetail.Where(x => x.ID == id && x.IsActive == true).FirstOrDefault();
-           
+
             if (note == null)
             {
                 return HttpNotFound();
             }
-          
+
             IEnumerable<NotesAttachments> noteattachement = dobj.NotesAttachments.Where(x => x.NoteID == id && x.IsActive == true).ToList();
-          
+
             if (noteattachement.Count() == 0)
             {
                 return HttpNotFound();
             }
-           
+
             string notefolderpath = Server.MapPath("~/Members/" + note.SellerID + "/" + note.ID);
             string noteattachmentfolderpath = Server.MapPath("~/Members/" + note.SellerID + "/" + note.ID + "/Attachements");
 
             DirectoryInfo notefolder = new DirectoryInfo(notefolderpath);
             DirectoryInfo attachementnotefolder = new DirectoryInfo(noteattachmentfolderpath);
-       
+
             EmptyFolder(attachementnotefolder);
             EmptyFolder(notefolder);
-           
+
             Directory.Delete(notefolderpath);
 
             dobj.NoteDetail.Remove(note);
@@ -568,20 +588,20 @@ namespace NotesMarketPlace.Controllers
             }
             dobj.SaveChanges();
 
-            return RedirectToAction("Dashboard","SellNotes");
+            return RedirectToAction("Dashboard", "SellNotes");
         }
 
+        [Route("SellNotes/Publish")]
         [Authorize]
-        [Route("Notes/Publish")]
         public ActionResult PublishNoteRequest(int id)
         {
             var note = dobj.NoteDetail.Find(id);
-          
+
             if (note == null)
             {
                 return HttpNotFound();
             }
-            
+
             var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
             string sellername = user.FirstName + " " + user.LastName;
 
@@ -592,24 +612,26 @@ namespace NotesMarketPlace.Controllers
                 note.ModifiedDate = DateTime.Now;
                 note.ModifiedBy = user.ID;
                 dobj.SaveChanges();
-                PublishNoteRequest(note.Title, sellername);
+                PublishNoteRequestmail(note.Title, sellername);
             }
 
             return RedirectToAction("Dashboard");
         }
 
-        public void PublishNoteRequest(string note, string seller)
+        public void PublishNoteRequestmail(string note, string seller)
         {
-            SystemConfiguration s = new SystemConfiguration();
+            var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+            var email2 = dobj.SystemConfiguration.Select(x => x.EmailID2).FirstOrDefault();
 
-            var fromEmail = new MailAddress(s.EmailID1);
-            var toEmail = new MailAddress(s.EmailID2);
-            var fromEmailPassword = "*****"; // Replace with actual password
+            var fromEmail = new MailAddress(email);
+            var toEmail = new MailAddress(email2);
+            //s.EmailID1 password
+            var fromEmailPassword = "####";
             string subject = seller + " sent his note for review";
 
             string body = "Hello Admins," +
-                "<br/><br/>TWe want to inform you that,"+ seller +" sent his note " +
-                "<br/>"+ note +"for review. Please look at the notes and take required actions."+
+                "<br/><br/>We want to inform you that," + seller + " sent his note " +
+                "<br/>" + note + " for review. Please look at the notes and take required actions." +
                 "<br/><br/>Regards,<br/>Notes Marketplace";
 
             var smtp = new SmtpClient
@@ -629,14 +651,14 @@ namespace NotesMarketPlace.Controllers
                 IsBodyHtml = true
             })
                 smtp.Send(message);
-        
-    }
+
+        }
 
         private void EmptyFolder(DirectoryInfo directory)
         {
             if (directory.GetFiles() != null)
             {
-                
+
                 foreach (FileInfo file in directory.GetFiles())
                 {
                     file.Delete();
@@ -645,7 +667,7 @@ namespace NotesMarketPlace.Controllers
 
             if (directory.GetDirectories() != null)
             {
-               
+
                 foreach (DirectoryInfo subdirectory in directory.GetDirectories())
                 {
                     EmptyFolder(subdirectory);
@@ -657,9 +679,9 @@ namespace NotesMarketPlace.Controllers
 
         private void NewDirectory(string folderpath)
         {
-            
+
             bool folderalreadyexists = Directory.Exists(Server.MapPath(folderpath));
-           
+
             if (!folderalreadyexists)
                 Directory.CreateDirectory(Server.MapPath(folderpath));
         }

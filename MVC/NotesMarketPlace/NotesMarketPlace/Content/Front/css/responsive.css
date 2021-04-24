@@ -320,8 +320,12 @@
      #ev .verify-content #btn {
          width: 450px;
      }
-    
-     .label,
+
+    .label {
+        font-size: 15px;
+        line-height: 15px;
+    }
+      
      .exampleInputEmail1:focus,
      .exampleInputPassword1:focus {
          font-size: 12px;
@@ -355,7 +359,7 @@
      }
 
      p {
-         font-size: 11px;
+         font-size: 13px;
          line-height: 15px;
 
      }
@@ -610,6 +614,24 @@
       
         top: -10px;
      }
+    .margin-top {
+        padding: 0 15px;
+    }
+
+    .margin-top p {
+            margin-bottom: 5px;
+        }
+
+    p span.first {
+                font-size: 15px;
+                line-height: 24px;
+            }
+
+     p span.last {
+                font-size: 15px;
+                line-height: 28px;
+            }
+
     
 
  }

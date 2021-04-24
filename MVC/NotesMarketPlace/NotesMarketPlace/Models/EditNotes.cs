@@ -14,19 +14,16 @@ namespace NotesMarketPlace.Models
 
         public int NoteID { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
+        [Required]
         
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
-       
+        [Required]
         public int Category { get; set; }
 
       
         public HttpPostedFileBase DisplayPicture { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
-       
         public HttpPostedFileBase[] UploadNotes { get; set; }
 
         
@@ -35,13 +32,9 @@ namespace NotesMarketPlace.Models
        
         public Nullable<int> NumberofPages { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
-       
+        [Required]
         public string Description { get; set; }
 
-
-
-       
         public string UniversityName { get; set; }
 
        
@@ -55,21 +48,19 @@ namespace NotesMarketPlace.Models
         
         public string Professor { get; set; }
 
-        [Required(ErrorMessage = "This field is required")]
+        
         public bool IsPaid { get; set; }
-
-       
 
         public Nullable<decimal> SellingPrice { get; set; }
 
        
         public HttpPostedFileBase NotesPreview { get; set; }
 
-        public IEnumerable<NoteCategories> NoteCategoryList { get; set; }
+        public List<NoteCategories> NoteCategoryList { get; set; }
 
-        public IEnumerable<NoteTypes> NoteTypeList { get; set; }
+        public List<NoteTypes> NoteTypeList { get; set; }
 
-        public IEnumerable<Countries> CountryList { get; set; }
+        public List<Countries> CountryList { get; set; }
         public string Note { get; set; }
 
         public string Picture { get; set; }

@@ -1,0 +1,287 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using NotesMarketPlace
+@model IPagedList<NotesMarketPlace.Models.MyDownloads> 
+@{
+    ViewBag.Title = "My Downloads";
+    Layout = "~/Views/Shared/_Layout.cshtml"; ;
+}
+
+<section id="publish-notes" class="mydownloads">
+    <div class="container">
+        @using (@Html.BeginForm("MyDownloads", "MyDownloads", FormMethod.Get))
+        {
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <h3>My Downloads</h3>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="row justify-content-end">
+                        <div class="hidepassword">
+                            <img src="~/Content/Front/img/Dashboard/search.jpg" class="searchimage doup">
+                            <input type="search" name="search"  value="@ViewBag.Search" class="form-control search-bar exampleInputEmail1" placeholder="Search">
+                        </div>
+                        <div class="btn-merge">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>Search</b></button>
+                        </div>.
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grid-table table-responsive-xl">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="align-middle text-center">SR NO.</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("NOTE TITLE", "MyDownloads", new { sort = ViewBag.Sort == null ? "Title_Desc" : (ViewBag.Sort == "Title_Asc" ? "Title_Desc" : "Title_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "MyDownloads", new { sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.Sort == "Category_Asc" ? "Category_Desc" : "Category_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("SELLER", "MyDownloads", new { sort = ViewBag.Sort == null ? "Seller_Desc" : (ViewBag.Sort == "Seller_Asc" ? "Seller_Desc" : "Seller_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("SELL TYPE", "MyDownloads", new { sort = ViewBag.Sort == null ? "Type_Desc" : (ViewBag.Sort == "Type_Asc" ? "Type_Desc" : "Type_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("PRICE", "MyDownloads", new { sort = ViewBag.Sort == null ? "Price_Desc" : (ViewBag.Sort == "Price_Asc" ? "Price_Desc" : "Price_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("DOWNLOADED DATE/TIME", "MyDownloads", new { sort = ViewBag.Sort == null ? "DownloadedDate_Asc" : (ViewBag.Sort == "DownloadedDate_Desc" ? "DownloadedDate_Asc" : "DownloadedDate_Desc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle"></th>
+                                <th scope="col" class="align-middle"></th>
+                                <th scope="col" class="align-middle"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr class="no-record">
+                                    <td colspan="10" class="text-center">No Record Found</td>
+                                </tr>
+                            }
+                            else
+                            {
+
+                                int srno = 0;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        @{ srno = srno + 1; }
+                                        <td class="align-middle text-center">@srno</td>
+                                        <td class="align-middle change-color">@item.Title</td>
+                                        <td class="align-middle">@item.Category</td>
+                                        <td class="align-middle">@item.Seller</td>
+                                        <td class="align-middle">@item.SellType</td>
+                                        @if (@item.Price != null)
+                                        {
+                                            <td class="align-middle">$@item.Price</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="align-middle">$0</td>
+                                        }
+                                        @if (@item.DownloadedDate == null)
+                                        {
+                                            <td class="align-middle">Download this book</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="align-middle">@item.DownloadedDate.Value.ToString("dd MMM yyyy, hh:mm:ss")</td>
+                                        }
+                                        <td class="align-middle">
+                                            <a type="button" href="@Url.Action("NoteDetail", "SearchNotes", new { id = item.NoteID })"><img src="~/Content/Front/img/Dashboard/eye.png" alt="view"></a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="dropdown">
+                                                <a type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
+                                                    <a class="dropdown-item" href="@Url.Action("DownloadNotes", "SearchNotes", new { noteid = @item.NoteID } )">Download Notes</a>
+                                                    @if (item.NoteDownloaded == true)
+                                                    {
+                                                        <a class="dropdown-item" href="#" type="submit" data-toggle="modal" data-target="#addreview-@item.DownloadID">Add Reviews/Feedback</a>
+                                                        <a class="dropdown-item" href="#" type="submit" data-toggle="modal" data-target="#reportspam-@item.DownloadID">Report as Inappropriate</a>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            @if (item.NoteDownloaded == true)
+                                            {
+
+                                                <!--Add Review Modal -->
+                                                <div class="modal fade modal-download exampleModal" id="addreview-@item.DownloadID" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="modal-content add-review">
+                                                                    <div class="modal-header">
+
+                                                                        <a type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <i class="fa fa-close 2x"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="modal-data">
+
+                                                                        <div class="modal-head text-left">
+                                                                            <h2>Add Review</h2>
+                                                                        </div>
+
+                                                                        <div class="middel-content text-left content-justify-left">
+                                                                            <!-- Ratings -->
+                                                                            @using (Html.BeginForm("AddReview", "MyDownloads", FormMethod.Post))
+                                                                            {
+
+                                                                                @Html.AntiForgeryToken()
+
+                                                                                <input name="AgainstDownloadsID" value="@item.DownloadID" hidden>
+                                                                                <input name="noteid" value="@item.NoteID" hidden>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <div class="rate">
+                                                                                            @Html.RadioButtonFor(model => item.Rating, 5, new { id = "star5-" + @item.DownloadID, Name = "Ratings" })
+                                                                                            <label for="star5-@item.DownloadID" title="text">5 stars</label>
+                                                                                            @Html.RadioButtonFor(model => item.Rating, 4, new { id = "star4-" + @item.DownloadID, Name = "Ratings" })
+                                                                                            <label for="star4-@item.DownloadID" title="text">4 stars</label>
+                                                                                            @Html.RadioButtonFor(model => item.Rating, 3, new { id = "star3-" + @item.DownloadID, Name = "Ratings" })
+                                                                                            <label for="star3-@item.DownloadID" title="text">3 stars</label>
+                                                                                            @Html.RadioButtonFor(model => item.Rating, 2, new { id = "star2-" + @item.DownloadID, Name = "Ratings" })
+                                                                                            <label for="star2-@item.DownloadID" title="text">2 stars</label>
+                                                                                            @Html.RadioButtonFor(model => item.Rating, 1, new { id = "star1-" + @item.DownloadID, Name = "Ratings" })
+                                                                                            <label for="star1-@item.DownloadID" title="text">1 star</label>
+                                                                                            @Html.ValidationMessageFor(model => item.Rating, "", new { @class = "text-invalid" })
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="row">
+                                                                                    <div class="col-12">
+                                                                                        <div class="form-group">
+                                                                                            <div class="textarea-input">
+                                                                                                <label class="label" for="exampleInputEmail1">Comments *</label>
+
+                                                                                                @Html.TextAreaFor(model => item.Comment, new { @class = "form-control exampleInputEmail1", Name = "Comments", placeholder = "comments...", required = "required" })
+                                                                                                @Html.ValidationMessageFor(model => item.Comment, "", new { @class = "form-error" })
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer justify-content-start">
+                                                                                    
+                                                                                        <button type="submit" class="btn text-uppercase btn-primary"><b>submit</b></button>
+                                                                                   
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!-- Add review end-->
+                                                <!-- Section Spam -->
+                                                <div class="modal fade exampleModal" id="reportspam-@item.DownloadID" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <a type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true"><i class="fa fa-close 2x"></i></span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="modal-data">
+                                                                        <div class="modal-head text-left">
+                                                                            <h2>@item.Title</h2>
+                                                                        </div>
+                                                                        <div class="middel-content text-left content-justify-left">
+                                                                            @using (@Html.BeginForm("SpamReport", "MyDownloads", FormMethod.Post, new { id = "spamreport-" + @item.DownloadID }))
+                                                                            {
+                                                                                @Html.AntiForgeryToken()
+
+                                                                                <input name="downloadid" value="@item.DownloadID" hidden>
+                                                                                <input name="noteid" value="@item.NoteID" hidden>
+
+                                                                                <div class="form-group" id="modal-spam-report">
+                                                                                    <label for="review-@item.DownloadID">Remarks *</label>
+                                                                                    <textarea class="form-control exampleInputEmail1" name="spamreport" id="spamreport-@item.DownloadID" placeholder="comments..." required></textarea>
+                                                                                </div>
+                                                                                <div class="modal-footer justify-content-start">
+
+                                                                                    <button type="submit" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#confirmation-@item.DownloadID" data-dismiss="modal" aria-label="Close">Report an issue</button>
+                                                                                    <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal" aria-label="Close">Cancel</button>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Section Spam END -->
+                                                <!--section confirmation box-->
+                                               
+                                                <div class="modal fade in" id="confirmation-@item.DownloadID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                               
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to mark this report as spam, you can not update it later?
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="$('#spamreport-'+@item.DownloadID).submit(); $(this).dialog('close');">YES</button>
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">NO</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Section Confirmation-Box END -->
+                                            }
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+<nav>
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            @Html.PagedListPager(Model, page => Url.Action("MyDownloads", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
+       {
+
+           LiElementClasses = new[] { "page-item" },
+           UlElementClasses = new[] { "pagination justify-content-center" },
+           LinkToNextPageFormat = ">",
+           LinkToPreviousPageFormat = "<",
+           DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+       })
+
+        </div>
+    </div>
+</nav>
+
+
