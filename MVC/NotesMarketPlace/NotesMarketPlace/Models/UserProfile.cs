@@ -13,16 +13,13 @@ namespace NotesMarketPlace.Models
         public int UserID { get; set; }
 
         [Required]
-        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Invalid Name")]
         public string FirstName { get; set; }
        
 
         [Required]
-        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Invalid Name")]
         public string LastName { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Use valid email address")]
         public string EmailID { get; set; }
 
        
@@ -34,20 +31,16 @@ namespace NotesMarketPlace.Models
         public string CountryCode { get; set; }
 
         [Required]
-        [RegularExpression("[0-9]*", ErrorMessage = "Invalid Mobile Number")]
         public string PhoneNumber { get; set; }
         public HttpPostedFileBase ProfilePicture { get; set; }
 
         [Required]
-        [MaxLength(100, ErrorMessage = "Address is too long")]
         public string AddressLine1 { get; set; }
 
         [Required]
-        [MaxLength(100, ErrorMessage = "Address is too long")]
         public string AddressLine2 { get; set; }
 
         [Required]
-        [MaxLength(50, ErrorMessage = "City name is too long")]
         public string City { get; set; }
 
         [Required]
@@ -59,10 +52,8 @@ namespace NotesMarketPlace.Models
         [Required]
         public string Country { get; set; }
 
-        [MaxLength(100, ErrorMessage = "University name is too long")]
         public string University { get; set; }
 
-        [MaxLength(100, ErrorMessage = "College name is too long")]
         public string College { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

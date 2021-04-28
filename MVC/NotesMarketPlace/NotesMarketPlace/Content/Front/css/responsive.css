@@ -272,7 +272,7 @@
          margin-right: 0;
      }
 
-     #exampleModal .model-data p {
+     #exampleModal .modal-data p {
          font-size: 14px;
          margin-bottom: 10px;
      }
@@ -285,24 +285,24 @@
      }
 
 
-     #exampleModal .model-data h2 {
+     #exampleModal .modal-data h2 {
          font-size: 18px;
          margin-top: 5px;
          margin-bottom: 5px;
      }
 
-     #exampleModal .model-data h3 {
+     #exampleModal .modal-data h3 {
          font-size: 16px;
          text-align: left
      }
 
-     #exampleModal .model-data img {
+     #exampleModal .modal-data img {
          height: 30px;
          width: 30px;
      }
 
      #exampleModal {
-         margin-top: 100px;
+         margin-top: 40px;
      }
 
      #searchfilter h3
@@ -594,7 +594,7 @@
          width: 350px !important;
      }
 
-     #exampleModal .model-data {
+     #exampleModal .modal-data {
          padding-bottom: 10px;
          padding-left: 10px;
          padding-right: 10px;

@@ -24,7 +24,7 @@ namespace NotesMarketPlace.Controllers
         public ActionResult Dashboard(string search1, string search2, string sort1, string sort2, int? page1 , int? page2 )
         {
 
-            ViewBag.SellYourNotes = "active";
+            ViewBag.SellNotes = "active";
             ViewBag.Sort1 = sort1;
             ViewBag.Sort2 = sort2;
             
@@ -386,6 +386,7 @@ namespace NotesMarketPlace.Controllers
                     IsPaid = note.IsPaid,
                     SellingPrice = note.SellingPrice,
                     Preview = note.NotesPreview,
+                   
                     NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList(),
                     NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList(),
                     CountryList= dobj.Countries.Where(x => x.IsActive == true).ToList(),
@@ -406,8 +407,6 @@ namespace NotesMarketPlace.Controllers
         [Route("SellNotes/EditNotes/{id}")]
         public ActionResult EditNotes(int id, EditNotes notes)
         {
-            if (ModelState.IsValid)
-            {
                 var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
 
                 var sellnote = dobj.NoteDetail.Where(x => x.ID == id && x.IsActive == true && x.SellerID == user.ID).FirstOrDefault();
@@ -417,12 +416,18 @@ namespace NotesMarketPlace.Controllers
                     return HttpNotFound();
                 }
 
-                if (notes.IsPaid == true && notes.Preview == null && sellnote.NotesPreview == null)
+                //if nnote is paid note
+                if (notes.IsPaid == true && notes.NotesPreview == null && sellnote.NotesPreview == null)
                 {
                     ModelState.AddModelError("NotesPreview", "This field is required if selling type is paid");
+                    notes.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
+                    notes.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
+                    notes.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
                     return View(notes);
                 }
 
+            if (ModelState.IsValid)
+            {
                 var notesattachement = dobj.NotesAttachments.Where(x => x.NoteID == notes.NoteID && x.IsActive == true).ToList();
 
 
@@ -470,6 +475,7 @@ namespace NotesMarketPlace.Controllers
                     string displaypicturefilepath = Path.Combine(Server.MapPath(displaypicturepath), displaypicturefilename);
                     sellnote.DisplayPicture = displaypicturepath + displaypicturefilename;
                     notes.DisplayPicture.SaveAs(displaypicturefilepath);
+                    dobj.SaveChanges();
                 }
 
                 if (notes.NotesPreview != null)
@@ -491,9 +497,15 @@ namespace NotesMarketPlace.Controllers
                     string notespreviewfilepath = Path.Combine(Server.MapPath(notespreviewpath), notespreviewfilename);
                     sellnote.NotesPreview = notespreviewpath + notespreviewfilename;
                     notes.NotesPreview.SaveAs(notespreviewfilepath);
+                    dobj.SaveChanges();
+                    
               
                 }
 
+                dobj.NoteDetail.Attach(sellnote);
+                dobj.Entry(sellnote).Property(x => x.DisplayPicture).IsModified = true;
+                dobj.Entry(sellnote).Property(x => x.NotesPreview).IsModified = true;
+                dobj.SaveChanges();
 
                 if (notes.UploadNotes[0] != null)
                 {
@@ -545,6 +557,10 @@ namespace NotesMarketPlace.Controllers
             else
             {
                 return RedirectToAction("EditNotes", new { id = notes.ID });
+                //notes.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
+                //notes.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
+                //notes.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
+                //return View(notes);
             }
 
         }
@@ -612,7 +628,7 @@ namespace NotesMarketPlace.Controllers
                 note.ModifiedDate = DateTime.Now;
                 note.ModifiedBy = user.ID;
                 dobj.SaveChanges();
-                PublishNoteRequestmail(note.Title, sellername);
+                //PublishNoteRequestmail(note.Title, sellername);
             }
 
             return RedirectToAction("Dashboard");

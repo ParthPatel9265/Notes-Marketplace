@@ -1,5 +1,6 @@
 ﻿@using NotesMarketPlace.Context
 @model NotesMarketPlace.Models.EditNotes
+
 @{
     ViewBag.Title = "Edit Notes";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,7 +50,7 @@
                                 <div class="form-group">
                                     <label class="label">Title *</label>
 
-                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your Notes title", required = "required" })
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control exampleInputEmail1", placeholder = "Enter your Notes title",  required = "required" })
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "form-error" })
                                 </div>
 
@@ -60,7 +61,7 @@
                                     <label class="label" for="exampleInputEmail1">Category *</label>
                                     <div class="hidepassword">
 
-                                        @Html.DropDownListFor(model => model.Category, new SelectList(Model.NoteCategoryList, "ID", "Name", Model.Category), "Select note category", new { @class = "form-control select-field", placeholder = "Select your Notes category", required = "required" })
+                                        @Html.DropDownListFor(model => model.Category, new SelectList(Model.NoteCategoryList, "ID", "Name", Model.Category), new { @class = "form-control select-field", placeholder = "Select your Notes category", id = "category", required = "required" })
 
                                     </div> @Html.ValidationMessageFor(model => model.Category, "", new { @class = "form-error" })
                                 </div>
@@ -281,8 +282,7 @@
                                 <div class="col-md-4 col-sm-5 col-4">
                                     <div class="row">
 
-                                 
-                                        @Html.RadioButtonFor(model => model.IsPaid, "false", new { @class = "form-control exampleInputEmail1", id = "free" })
+                                       @Html.RadioButtonFor(model => model.IsPaid, "false", new { @class = "form-control exampleInputEmail1", id = "free" })
 
                                         <label class="label" for="free">Free</label>
                                     </div>
@@ -290,7 +290,6 @@
                                 <div class="col-md-4 col-sm-5 col-6">
                                     <div class="row">
 
-                                       
                                         @Html.RadioButtonFor(model => model.IsPaid, "true", new { @class = "form-control exampleInputEmail1", id = "paid" })
 
                                         <label class="label" for="paid">Paid</label>

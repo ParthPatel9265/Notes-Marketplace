@@ -79,7 +79,7 @@ namespace NotesMarketplace.Controllers
             {
                 if (userprofilemodel.ProfilePicture != null)
                 {
-                    //image size is not more than 10MB 
+                    //image size limit 10MB
                     var profilepicsize = userprofilemodel.ProfilePicture.ContentLength;
                     if (profilepicsize > 10 * 1024 *1024)
                     {
@@ -94,7 +94,7 @@ namespace NotesMarketplace.Controllers
                
                 var profile = dbobj.UserProfileDetail.Where(x => x.UserID == user.ID).FirstOrDefault();
 
-                //edit userprofile  if profile is not null
+                //edit profile 
                 if (profile != null)
                 {
                     profile.DOB = userprofilemodel.DOB;
@@ -112,7 +112,7 @@ namespace NotesMarketplace.Controllers
                     profile.ModifiedDate = DateTime.Now;
                     profile.ModifiedBy = user.ID;
 
-                    // check if loggedin user's profile picture is not null and user upload new profile picture then delete old one
+                    // delete old profilepic
                     if (userprofilemodel.ProfilePicture != null && profile.ProfilePicture != null)
                     {
                         string path = Server.MapPath(profile.ProfilePicture);
@@ -130,27 +130,26 @@ namespace NotesMarketplace.Controllers
                         string fileextension = System.IO.Path.GetExtension(userprofilemodel.ProfilePicture.FileName);
                         string newfilename = "DP_" + DateTime.Now.ToString("ddMMyyyy_hhmmss") + fileextension;
                         string profilepicturepath = "~/Members/" + profile.UserID + "/";
-                        CreateDirectoryIfMissing(profilepicturepath);
+                        CreateNewDirectory(profilepicturepath);
                         string path = Path.Combine(Server.MapPath(profilepicturepath), newfilename);
                         profile.ProfilePicture = profilepicturepath + newfilename;
                         userprofilemodel.ProfilePicture.SaveAs(path);
                     }
 
-                    // update logged in user's profile and save
+                    
                     dbobj.Entry(profile).State = EntityState.Modified;
                     dbobj.SaveChanges();
 
-                    // update first name and lastname and save
                     user.FirstName = userprofilemodel.FirstName.Trim();
                     user.LastName = userprofilemodel.LastName.Trim();
                     dbobj.Entry(user).State = EntityState.Modified;
                     dbobj.SaveChanges();
 
                 }
-                // if profile is null then create user profile
+                // new userprofile
                 else
                 {
-                    // create new userprofile object
+                  
                     UserProfileDetail userprofile = new UserProfileDetail();
 
                     userprofile.UserID = user.ID;
@@ -176,27 +175,25 @@ namespace NotesMarketplace.Controllers
                         string fileextension = System.IO.Path.GetExtension(userprofilemodel.ProfilePicture.FileName);
                         string newfilename = "DP_" + DateTime.Now.ToString("ddMMyyyy_hhmmss") + fileextension;
                         string profilepicturepath = "~/Members/" + userprofile.UserID + "/";
-                        CreateDirectoryIfMissing(profilepicturepath);
+                        CreateNewDirectory(profilepicturepath);
                         string path = Path.Combine(Server.MapPath(profilepicturepath), newfilename);
                         userprofile.ProfilePicture = profilepicturepath + newfilename;
                         userprofilemodel.ProfilePicture.SaveAs(path);
                     }
 
-                    // save logged in user's profile
                     dbobj.UserProfileDetail.Add(userprofile);
                     dbobj.SaveChanges();
 
-                    // save firstname and lastname and save
                     user.FirstName = userprofilemodel.FirstName.Trim();
                     user.LastName = userprofilemodel.LastName.Trim();
                     dbobj.Entry(user).State = EntityState.Modified;
                     dbobj.SaveChanges();
                 }
 
-                // if userprofile is created or edited then redirect to search page
                 return RedirectToAction("SearchNotes", "SearchNotes");
             }
-            // if ModelState is invalid then redirect to userProfile page
+
+            //for invalid ModelState 
             else
             {
                 userprofilemodel.CountryList = dbobj.Countries.Where(x => x.IsActive == true).ToList();
@@ -206,11 +203,10 @@ namespace NotesMarketplace.Controllers
         }
 
         // Create Directory
-        private void CreateDirectoryIfMissing(string folderpath)
+        private void CreateNewDirectory(string folderpath)
         {
-            // check if directory is exists or not
+           
             bool folderalreadyexists = Directory.Exists(Server.MapPath(folderpath));
-            // if directory is not exists then create directory
             if (!folderalreadyexists)
                 Directory.CreateDirectory(Server.MapPath(folderpath));
         }

@@ -10,7 +10,7 @@ html {
 body {
     height: 100%;
     width: 100%;
-
+    
 }
 
 
@@ -679,7 +679,7 @@ Input[type=file]::-webkit-file-upload-button {
 
 #top-img {
     height: 620px;
-    width: 100%;
+    width: 100% ;
     position: relative;
     background-image: url("../img/home/banner-with-overlay.jpg");
     background-repeat: no-repeat;
@@ -1260,7 +1260,8 @@ a.page-link {
     color: #ffc700;
 }
 
-.exampleModal h3{
+.exampleModal h3,
+#exampleModal h3 {
     font-family: "Open Sans", sans-serif;
     font-size: 18px;
     font-weight: 600;
@@ -1268,39 +1269,39 @@ a.page-link {
     color: #333333;
 }
 
-.exampleModal h2{
+.exampleModal h2,
+#exampleModal h2 {
     font-size: 26px;
     line-height: 30px;
     font-weight: 600;
     margin-top: 20px;
     margin-bottom: 30px;
-    width:80%;
-  
 }
+ .exampleModal p,
+ #exampleModal p {
+        font-family: "Open Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        color: #333333;
+        margin-bottom: 30px;
+        margin-top: 0 !important;
+    }
 
-.exampleModal p{
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22px;
-    color: #333333;
-    margin-bottom: 30px;
-    margin-top: 0 !important;
-}
-
-.exampleModal p.para-4{
+.exampleModal p.para-4,
+#exampleModal p.para-4 {
         margin-bottom: 0;
     }
 
-.exampleModal{
-    margin-top: 150px;
+
+.exampleModal,
+#exampleModal{
+    margin-top: 70px;
+    
 }
-.exampleModal .modal-header{
-        border: none;
-    }
 
-
-.modal-data {
+    .exampleModal .modal-data,
+    #exampleModal .modal-data {
         padding-bottom: 30px;
         padding-left: 40px;
         padding-right: 55px;

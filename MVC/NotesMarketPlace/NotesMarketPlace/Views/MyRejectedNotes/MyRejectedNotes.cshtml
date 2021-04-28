@@ -1,0 +1,114 @@
+﻿@using PagedList;
+@using PagedList.Mvc; 
+@model IPagedList<NotesMarketPlace.Context.NoteDetail>
+
+@{
+    ViewBag.Title = "My Rejected Notes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- rejected note  -->
+<section id="publish-notes" class="mydownloads">
+    <div class="container">
+        @using (@Html.BeginForm("MyRejectedNotes", "MyRejectedNotes", FormMethod.Get))
+        {
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <h3>My Rejected Notes</h3>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="row justify-content-end">
+                        <div class="hidepassword">
+                            <img src="~/Content/Front/img/Dashboard/search.jpg" class="searchimage doup">
+                            <input type="search" value="@ViewBag.Search"  class="form-control search-bar exampleInputEmail1" placeholder="Search">
+                        </div>
+                        <div class="btn-merge">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>Search</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="grid-table table-responsive-xl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="align-middle text-center">SR NO.</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("NOTE TITLE", "MyRejectedNotes", new { sort = ViewBag.Sort == null ? "Title_Desc" : (ViewBag.SortOrder == "Title_Asc" ? "Title_Desc" : "Title_Asc"), search = ViewBag.Search })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "MyRejectedNotes", new { sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.SortOrder == "Category_Asc" ? "Category_Desc" : "Category_Asc"), search = ViewBag.Search})</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("REMARKS", "MyRejectedNotes", new { sort = ViewBag.Sort == null ? "Remark_Desc" : (ViewBag.SortOrder == "Remark_Asc" ? "Remark_Desc" : "Remark_Asc"), search = ViewBag.Search})</th>
+                                    <th scope="col" class="align-middle">CLONE</th>
+                                    <th scope="col" class="align-middle"></th>
+                                    <th scope="col" class="align-middle"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr class="no-record">
+                                        <td colspan="7" class="text-center">No Record Found</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    int srno = 0;
+                                    foreach (var item in Model)
+                                    {
+                            <tr>
+                                @{ srno = srno + 1; }
+                                <td class="align-middle text-center">@srno</td>
+                                <td class="align-middle change-color">@item.Title</td>
+                                <td class="align-middle">@item.NoteCategories.Name</td>
+                                <td class="align-middle">@item.AdminRemarks</td>
+                                <td class="align-middle"><a href="@Url.Action("CloneNote", "MyRejectedNotes", new { noteid = @item.ID })" class="change-color">clone</a></td>
+                                <td class="align-middle">
+                                    <div class="dropdown">
+                                        <a type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v "></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="@Url.Action("DownloadNotes", "SearchNotes", new { noteid = @item.ID })">Download Notes</a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                                    }
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+</section>
+<!-- rejected note ends -->
+<nav>
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            @Html.PagedListPager(Model, page => Url.Action("MyRejectedNotes", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
+       {
+
+           LiElementClasses = new[] { "page-item" },
+           UlElementClasses = new[] { "pagination justify-content-center" },
+           LinkToNextPageFormat = ">",
+           LinkToPreviousPageFormat = "<",
+           DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+       })
+
+        </div>
+    </div>
+</nav>
+
+

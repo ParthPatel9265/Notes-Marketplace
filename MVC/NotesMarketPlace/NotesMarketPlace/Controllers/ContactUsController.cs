@@ -31,9 +31,15 @@ namespace NotesMarketPlace.Controllers
                 dbobj.ContactUs.Add(obj);
                 SendEmailToAdmin(obj);
                 dbobj.SaveChanges();
+                ModelState.Clear();
+                return RedirectToAction("ContactUs");
             }
-            ModelState.Clear();
-            return RedirectToAction("ContactUs");
+           else
+            {
+                return View(model);
+
+            }
+           
         }
 
         [NonAction]

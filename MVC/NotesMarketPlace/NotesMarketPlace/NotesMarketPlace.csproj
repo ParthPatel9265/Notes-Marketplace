@@ -3679,6 +3679,7 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyDownloadsController.cs" />
+    <Compile Include="Controllers\MyRejectedNotesController.cs" />
     <Compile Include="Controllers\MySoldNotesController.cs" />
     <Compile Include="Controllers\SellNotesController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
@@ -3696,6 +3697,7 @@
     <Compile Include="Models\EditNotes.cs" />
     <Compile Include="Models\ForgotPassword.cs" />
     <Compile Include="Models\MyDownloads.cs" />
+    <Compile Include="Models\MyRejectedNotes.cs" />
     <Compile Include="Models\MySoldNotes.cs" />
     <Compile Include="Models\NoteStats.cs" />
     <Compile Include="Models\SearchNotes.cs" />
@@ -3858,6 +3860,7 @@
     <Content Include="Views\Shared\_LayoutforHome.cshtml" />
     <Content Include="Views\MyDownloads\MyDownloads.cshtml" />
     <Content Include="Views\MySoldNotes\MySoldNotes.cshtml" />
+    <Content Include="Views\MyRejectedNotes\MyRejectedNotes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

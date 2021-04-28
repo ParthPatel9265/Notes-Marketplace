@@ -29,7 +29,7 @@ namespace NotesMarketPlace.Controllers
             //user
             var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
 
-            // downlaoded notes of user
+            //user's downloaded notes 
             IEnumerable<MyDownloads> mydownloads = from download in dobj.Downloads
                                                    join users in dobj.Users on download.Seller equals users.ID
                                                    join review in dobj.NotesReview on download.ID equals review.AgainstDownloadsID into r
@@ -50,6 +50,7 @@ namespace NotesMarketPlace.Controllers
                                                        Rating = notereview.Ratings,
                                                        Comment = notereview.Comments
                                                    };
+
 
             // if search is not empty then search
             if (!string.IsNullOrEmpty(search))

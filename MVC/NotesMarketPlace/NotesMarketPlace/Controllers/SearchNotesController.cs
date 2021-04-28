@@ -402,7 +402,7 @@ namespace NotesMarketPlace.Controllers
             dobj.Downloads.Add(download);
             dobj.SaveChanges();
 
-            TempData["value"] = "Records";
+            TempData["ShowModal"] = 1;
             //mail 
             //Mailforpaid(download, user);
 

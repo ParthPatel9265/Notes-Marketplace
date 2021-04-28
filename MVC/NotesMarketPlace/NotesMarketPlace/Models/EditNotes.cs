@@ -56,11 +56,11 @@ namespace NotesMarketPlace.Models
        
         public HttpPostedFileBase NotesPreview { get; set; }
 
-        public List<NoteCategories> NoteCategoryList { get; set; }
+        public IEnumerable<NoteCategories> NoteCategoryList { get; set; }
 
-        public List<NoteTypes> NoteTypeList { get; set; }
+        public IEnumerable<NoteTypes> NoteTypeList { get; set; }
 
-        public List<Countries> CountryList { get; set; }
+        public IEnumerable<Countries> CountryList { get; set; }
         public string Note { get; set; }
 
         public string Picture { get; set; }
