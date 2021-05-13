@@ -1,0 +1,103 @@
+﻿@model NotesMarketPlace.Models.AddAdministrator
+@{
+    ViewBag.Title = "Add Administrator";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!-- add administrator start-->
+@using (Html.BeginForm("AddAdministrator", "AdminSettings", FormMethod.Post, new { @class = "user-details-form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <section id="personal-details" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Add Administrator</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <label class="label">First Name*</label>
+                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control exampleInputEmail1", id = "first-name", placeholder = "Enter your first name", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-invalid" })
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Last Name*</label>
+                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control exampleInputEmail1", id = "last-name", placeholder = "Enter your last name", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-invalid" })
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Email*</label>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control exampleInputEmail1", id = "email", type = "email", placeholder = "Enter your email address", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-invalid" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+
+                                <!-- Phone Number -->
+                                <div class="form-group">
+                                    <label class="label">Phone Number</label>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-5 col-3 col-xl-3 col-lg-4  nopadding">
+                                                <div class="marginright">
+                                                    @Html.DropDownListFor(model => model.CountryCode, new SelectList(@Model.CountryCodeList), new { @class = "form-control selectfield", id = "country-code", required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.CountryCode, "", new { @class = "text-invalid" })
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7 col-9 col-xl-9 col-lg-8 nopadding">
+                                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control exampleInputEmail1", id = "phone-number", placeholder = "Enter your phone number", required = "required" })
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-invalid" })
+                                              
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2 col-sm-6">
+                                <button type="submit" class="btn text-uppercase text-center" id="btn"><b>submit</b></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+    <!-- add administrator ends-->

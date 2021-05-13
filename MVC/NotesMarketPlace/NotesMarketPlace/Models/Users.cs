@@ -13,23 +13,28 @@ namespace NotesMarketPlace.Models
         public int ID { get; set; }
         public int RoleID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Invalid Name")]
+        [MaxLength(50, ErrorMessage = "Name is too long")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
+        [RegularExpression("[A-Za-z ]*", ErrorMessage = "Invalid Name")]
+        [MaxLength(50, ErrorMessage = "Name is too long")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Use valid email address")]
         [EmailAddress]
         public string EmailID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [RegularExpression(@"(?=.*\d)(?=.*[A-Za-z]).{6,}",ErrorMessage = "Invalid Password")]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         [NotMapped]
-        [Compare("Password", ErrorMessage = "Incorrect Password")]
+        [Compare("Password", ErrorMessage = "Confirm password is not match with password")]
         public string ConfirmPassword { get; set; }
 
         public bool IsEmailVerified { get; set; }

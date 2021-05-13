@@ -1,0 +1,262 @@
+﻿
+@using PagedList.Mvc;
+@model NotesMarketPlace.Models.MemberDetail
+
+@{
+    ViewBag.Title = "Member Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- details -->
+<section id="notes-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12">
+                <div class="heading">
+                    <h3>Member Details</h3>
+                </div>
+                <div class="row member-data">
+                    <div class="col-lg-2 col-md-12 col-sm-12 col-12 docenter">
+                        @if (Model.ProfilePicture != null)
+                        {
+
+                            <img src="@Url.Content(Model.ProfilePicture)" class="img-fluid">
+                        }
+                        else
+                        {
+                            <img src="~/Content/Default/defaultuser.jpg" class="img-fluid">
+                        }
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-12 member-info-left">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>First Name:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.FirstName</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Last Name:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.LastName</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Email:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.Email</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>DOB:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                @if (Model.DOB != null)
+                                {
+                                    <p class="member-personal-info">@Model.DOB.Value.ToString("dd-MM-yyyy")</p>
+                                }
+                                else
+                                {
+                                    <p class="member-personal-info"></p>
+                                }
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Phone Number:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.PhoneNumberCountryCode @Model.PhoneNumber</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>College / University:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.College</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-12 member-info-right">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Address 1:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.Address1</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Address 2:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.Address2</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>City:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.City</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>State:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.State</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Country:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.Country</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 col-5">
+                                <p>Zip Code:</p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-7 col-7">
+                                <p class="member-personal-info">@Model.ZipCode</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- details ends-->
+
+<div class="content-box-md">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- notes -->
+<div class="outerbox">
+    <section id="publish-notes" class="member-margin member-notes">
+        <div class="container">
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <h3>Notes</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="grid-table table-responsive-xl">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="align-middle text-center">SR NO.</th>
+
+                                    <th scope="col" class="align-middle">@Html.ActionLink("NOTE TITLE", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "Title_Desc" : (ViewBag.Sort == "Title_Asc" ? "Title_Desc" : "Title_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.Sort == "Category_Asc" ? "Category_Desc" : "Category_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("STATUS", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "Status_Desc" : (ViewBag.Sort == "Status_Asc" ? "Status_Desc" : "Status_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("DOWNLOADED NOTES", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "DownloadedNotes_Desc" : (ViewBag.Sort == "DownloadedNotes_Asc" ? "DownloadedNotes_Desc" : "DownloadedNotes_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("TOTAL EARNING", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "TotalEarning_Desc" : (ViewBag.Sort == "TotalEarning_Asc" ? "TotalEarning_Desc" : "TotalEarning_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("DATE ADDED", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "DateAdded_Desc" : (ViewBag.Sort == "DateAdded_Asc" ? "DateAdded_Desc" : "DateAdded_Asc") })</th>
+                                    <th scope="col" class="align-middle">@Html.ActionLink("PUBLISHED DATE", "MemberDetail", new { member = ViewBag.Member, sort = ViewBag.Sort == null ? "PublishedDate_Desc" : (ViewBag.Sort == "PublishedDate_Asc" ? "PublishedDate_Desc" : "PublishedDate_Asc") })</th>
+
+                                    <th scope="col" class="align-middle"></th>
+                                    <th scope="col" class="align-middle"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Notes.Count() == 0)
+                                {
+                                    <tr class="no-record">
+                                        <td colspan="10" class="text-center">No Record Found</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    int srno = 0;
+                                    if (ViewBag.PageNumber == null)
+                                    {
+                                        srno = 0;
+                                    }
+                                    else
+                                    {
+                                        srno = (ViewBag.Pagenumber - 1) * 5;
+                                    }
+                                    foreach (var item in Model.Notes)
+                                    {
+
+                                        <tr>
+                                            @{ srno = srno + 1; }
+                                            <td class="align-middle text-center">@srno</td>
+                                            <td class="align-middle getpurple"><a href="@Url.Action("NoteDetail", "Admin", new { noteid = @item.ID })">@item.Title</a></td>
+                                            <td class="align-middle">@item.Category</td>
+                                            <td class="align-middle">@item.Status</td>
+                                            <td class="align-middle getpurple text-center"><a href="@Url.Action("DownloadedNotes", "AdminNotes", new { selectednote = item.ID })">@item.DownloadedNotes</a></td>
+
+                                            @if (item.TotalEarning != null)
+                                            {
+                                                <td class="align-middle text-center">$@item.TotalEarning</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="align-middle text-center">$0</td>
+                                            }
+                                            <td class="align-middle">@item.DateAdded.Value.ToString("dd-MM-yyyy, hh:mm")</td>
+                                            @if (item.PublishedDate != null)
+                                            {
+                                                <td class="align-middle text-center">@item.PublishedDate</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="align-middle text-center">NA</td>
+
+                                            }
+                                            <td class="align-middle">
+                                                <div class="dropdown">
+                                                    <a type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/Content/Admin/img/images/dots.png">
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="@Url.Action("AdminDownloadNote", "Admin", new { noteid = @item.ID })" role="button">Download Notes</a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    </div>
+    <!-- notes ends -->
+    <!-- Pagination -->
+    <nav>
+        <div class="container">
+            <div class="row justify-content-center">
+
+
+                @Html.PagedListPager(Model.Notes, page => Url.Action("MemberDetail", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort}), new PagedList.Mvc.PagedListRenderOptions
+              {
+                 
+                  LinkToNextPageFormat = ">",
+                  LinkToPreviousPageFormat = "<",
+                  MaximumPageNumbersToDisplay = 5,
+                  DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+                  DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                  DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+              })
+            </div>
+        </div>
+
+    </nav>
+    <!-- Pagination Ends -->

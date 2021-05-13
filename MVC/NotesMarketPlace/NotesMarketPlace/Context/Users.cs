@@ -17,7 +17,6 @@ namespace NotesMarketPlace.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
-            this.AdminDetail = new HashSet<AdminDetail>();
             this.Downloads = new HashSet<Downloads>();
             this.Downloads1 = new HashSet<Downloads>();
             this.Downloads2 = new HashSet<Downloads>();
@@ -27,6 +26,7 @@ namespace NotesMarketPlace.Context
             this.SpamReport = new HashSet<SpamReport>();
             this.Stats = new HashSet<Stats>();
             this.UserProfileDetail = new HashSet<UserProfileDetail>();
+            this.AdminDetail = new HashSet<AdminDetail>();
         }
     
         public int ID { get; set; }
@@ -43,8 +43,6 @@ namespace NotesMarketPlace.Context
         public Nullable<System.Guid> SecretCode { get; set; }
         public bool IsActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdminDetail> AdminDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Downloads> Downloads { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,5 +62,7 @@ namespace NotesMarketPlace.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileDetail> UserProfileDetail { get; set; }
         public virtual UserRole UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminDetail> AdminDetail { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace NotesMarketPlace.Models
 {
     public class ForgotPassword
     {
-        [Required(ErrorMessage ="Email is required")]
+        [Required(ErrorMessage = "This field is required")]
         [EmailAddress]
         public string EmailID { get; set; }
     }

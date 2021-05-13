@@ -11,15 +11,17 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.UI.WebControls;
 using PagedList;
+using System.Web.Security;
 
 namespace NotesMarketPlace.Controllers
 {
+    [OutputCache(Duration = 0)]
     public class SellNotesController : Controller
     {
         database1Entities dobj = new database1Entities();
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SellNotes")] 
         public ActionResult Dashboard(string search1, string search2, string sort1, string sort2, int? page1 , int? page2 )
         {
@@ -27,7 +29,7 @@ namespace NotesMarketPlace.Controllers
             ViewBag.SellNotes = "active";
             ViewBag.Sort1 = sort1;
             ViewBag.Sort2 = sort2;
-            
+           
             ViewBag.Search1 = search1;
             ViewBag.Search2 = search2;
 
@@ -194,7 +196,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SellNotes/AddNotes")]
         public ActionResult AddNotes()
         {
@@ -210,7 +212,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [ValidateAntiForgeryToken]
         [Route("SellNotes/AddNotes")]
         public ActionResult AddNotes(AddNotes add,string command)
@@ -357,7 +359,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SellNotes/EditNotes/{id}")]
         public ActionResult EditNotes(int id)
         {
@@ -402,7 +404,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [ValidateAntiForgeryToken]
         [Route("SellNotes/EditNotes/{id}")]
         public ActionResult EditNotes(int id, EditNotes notes)
@@ -557,15 +559,12 @@ namespace NotesMarketPlace.Controllers
             else
             {
                 return RedirectToAction("EditNotes", new { id = notes.ID });
-                //notes.NoteCategoryList = dobj.NoteCategories.Where(x => x.IsActive == true).ToList();
-                //notes.NoteTypeList = dobj.NoteTypes.Where(x => x.IsActive == true).ToList();
-                //notes.CountryList = dobj.Countries.Where(x => x.IsActive == true).ToList();
-                //return View(notes);
+               
             }
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SellNotes/DeleteDraft/{id}")]
         public ActionResult DeleteDraft(int id)
         {
@@ -607,8 +606,8 @@ namespace NotesMarketPlace.Controllers
             return RedirectToAction("Dashboard", "SellNotes");
         }
 
+        [Authorize(Roles = "Member")]
         [Route("SellNotes/Publish")]
-        [Authorize]
         public ActionResult PublishNoteRequest(int id)
         {
             var note = dobj.NoteDetail.Find(id);
@@ -628,7 +627,7 @@ namespace NotesMarketPlace.Controllers
                 note.ModifiedDate = DateTime.Now;
                 note.ModifiedBy = user.ID;
                 dobj.SaveChanges();
-                //PublishNoteRequestmail(note.Title, sellername);
+                PublishNoteRequestmail(note.Title, sellername);
             }
 
             return RedirectToAction("Dashboard");
@@ -642,7 +641,7 @@ namespace NotesMarketPlace.Controllers
             var fromEmail = new MailAddress(email);
             var toEmail = new MailAddress(email2);
             //s.EmailID1 password
-            var fromEmailPassword = "####";
+            var fromEmailPassword = "######";//replace with original password
             string subject = seller + " sent his note for review";
 
             string body = "Hello Admins," +

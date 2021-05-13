@@ -1,0 +1,147 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<NotesMarketPlace.Models.ManageCategory>
+@{
+    ViewBag.Title = "Manage Category";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<!-- manage category   -->
+<section id="publish-notes" class="mydownloads">
+    <div class="container">
+        @using (Html.BeginForm("ManageCategory", "AdminSettings", FormMethod.Get))
+        {
+
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <h3>Manage Category</h3>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+
+                    <button type="button" class="btn text-uppercase text-center addbutton" onclick="location.href='@Url.Action("AddCategory", "AdminSettings")'"><b>Add Category</b></button>
+
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 manage">
+                    <div class="row justify-content-end">
+                        <div class="hidepassword">
+                            <img src="~/Content/Admin/img/Dashboard/search.jpg" class="searchimage doup">
+                            <input type="search" value="@ViewBag.Search" name="search" class="form-control search-bar InputEmail1" placeholder="Search">
+                        </div>
+                        <div class="btn-merge">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>Search</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grid-table table-responsive-xl">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="align-middle text-center">SR NO.</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "ManageCategory", new { sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.Sort == "Category_Asc" ? "Category_Desc" : "Category_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("DESCRIPTION", "ManageCategory", new { sort = ViewBag.Sort == null ? "Description_Desc" : (ViewBag.Sort == "Description_Asc" ? "Description_Desc" : "Description_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("DATE ADDED", "ManageCategory", new { sort = ViewBag.Sort == null ? "DateAdded_Asc" : (ViewBag.Sort == "DateAdded_Desc" ? "DateAdded_Asc" : "DateAdded_Desc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("ADDED BY", "ManageCategory", new { sort = ViewBag.Sort == null ? "AddedBy_Desc" : (ViewBag.Sort == "AddedBy_Asc" ? "AddedBy_Desc" : "AddedBy_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle text-center">@Html.ActionLink("ACTIVE", "ManageCategory", new { sort = ViewBag.Sort == null ? "Active_Desc" : (ViewBag.Sort == "Active_Asc" ? "Active_Desc" : "Active_Asc"), search = ViewBag.Search })</th>
+                                <th scope="col" class="align-middle">ACTION</th>
+                                <th scope="col" class="align-middle"></th>
+
+                            </tr>
+
+
+
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr class="no-record">
+                                    <td colspan="8" class="text-center">No Record Found</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                int srno = 0;
+                                if (ViewBag.PageNumber == null)
+                                {
+                                    srno = 0;
+                                }
+                                else
+                                {
+                                    srno = (ViewBag.Pagenumber - 1) * 5;
+                                }
+                                foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        @{ srno = srno + 1; }
+                                        <td class="align-middle text-center">@srno</td>
+                                        <td class="align-middle">@item.Category</td>
+                                        <td class="align-middle">@item.Description</td>
+                                        <td class="align-middle">@item.DateAdded.ToString("dd-MM-yyyy, hh:mm")</td>
+                                        <td class="align-middle">@item.AddedBy</td>
+                                        <td class="align-middle text-center">@item.Active</td>
+                                        <td class="align-middle">
+                                            <a href="@Url.Action("EditCategory", "AdminSettings", new { id = @item.ID })"><img src="~/Content/Admin/img/images/edit.png"></a><a data-toggle="modal" data-target="#deletecategory-@item.ID" role="button"><img src="~/Content/Admin/img/images/delete.png" class="margin-l-delete"></a>
+
+                                            <!--delete confirmation box-->
+
+                                            <div class="modal fade in" id="deletecategory-@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to make this category inactive?
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="location.href='@Url.Action("DeleteCategory", "AdminSettings", new { id = @item.ID })'">YES</button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">NO</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- delete Confirmation-Box END -->
+
+                                        </td>
+                                        <td></td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--manage category ends -->
+<!-- Pagination -->
+<nav>
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            @Html.PagedListPager(Model, page => Url.Action("ManageCategory", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
+       {
+           
+           LinkToNextPageFormat = ">",
+           LinkToPreviousPageFormat = "<",
+           MaximumPageNumbersToDisplay = 5,
+           DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+       })
+        </div>
+    </div>
+
+</nav>
+<!-- Pagination Ends -->

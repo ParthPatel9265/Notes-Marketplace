@@ -1,44 +1,10 @@
 ﻿@model NotesMarketPlace.Models.Users
-<!DOCTYPE html>
-<html lang="en">
+@{
+    ViewBag.Title = "Email Verification";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
 
-<head>
-    <!-- meta tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width-device-width, initial-scale=1">
-
-    <!-- title -->
-    <title>Email Verification</title>
-
-    <!-- icon -->
-    <link rel="Icon" href="~/Content/Front/img/favicon/favicon.ico">
-
-    <!-- font -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- font awesome -->
-    <link rel="stylesheet" href="~/Content/Front/css/font-awesome/css/font-awesome.min.css">
-
-    <!-- bootstrap css  -->
-    <link rel="stylesheet" href="~/Content/Front/css/bootstrap/bootstrap.min.css">
-
-    <!-- custom css -->
-    <link rel="stylesheet" href="~/Content/Front/css/style.css">
-
-    <!-- responsive css -->
-    <link rel="stylesheet" href="~/Content/Front/css/responsive.css">
-
-    <style>
-        .form-error {
-            color: red;
-        }
-    </style>
-</head>
-
-<body>
-
-    <section id="ev">
+<section id="ev">
         <div class="container">
 
             <div class="row">
@@ -59,23 +25,5 @@
                 </div>
             </div>
         </div>
+</section>
 
-    </section>
-
-    <!-- JQuery -->
-    <script src="~/Scripts/Front/js/jquery.min.js"></script>
-
-    <!-- validation -->
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="~/Scripts/Front/js/bootstrap/bootstrap.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="~/Scripts/Front/js/script.js"></script>
-
-
-</body>
-</html>

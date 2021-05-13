@@ -10,19 +10,17 @@ using PagedList;
 using PagedList.Mvc;
 namespace NotesMarketplace.Controllers
 {
+    [OutputCache(Duration = 0)]
     public class BuyerRequestController : Controller
     {
          database1Entities dobj = new database1Entities();
 
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("BuyerRequest")]
         public ActionResult BuyerRequest(string search, string sort, int? page )
         {
-          
             ViewBag.BuyerRequest = "active";
-
-           
             ViewBag.Sort = sort;
             ViewBag.Search = search;
             ViewBag.PageNumber = page;
@@ -155,7 +153,7 @@ namespace NotesMarketplace.Controllers
             return table;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("BuyerRequest/AllowDownload/{id}")]
         public ActionResult AllowDownload(int id)
         {
@@ -177,8 +175,7 @@ namespace NotesMarketplace.Controllers
                 download.ModifiedDate = DateTime.Now;
                 dobj.SaveChanges();
 
-                
-                //AllowDownloadTemplate(download, user);
+                AllowDownloadTemplate(download, user);
 
                 return RedirectToAction("BuyerRequest");
 
@@ -198,11 +195,11 @@ namespace NotesMarketplace.Controllers
             var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
             var fromEmail = new MailAddress(email);
             var toEmail = new MailAddress(downloader.EmailID);
-            var fromEmailPassword = "*****"; // Replace with actual password
+            var fromEmailPassword = "*****"; // Replace with original password
             string subject = seller.FirstName + "Allows you to download a note";
 
-            string body = "Hello"+ downloader.FirstName+","+
-                "<br/><br/>We would like to inform you that,"+ seller.FirstName+ "Allows you to download a note " +
+            string body = "Hello "+ downloader.FirstName+","+
+                "<br/><br/>We would like to inform you that,"+ seller.FirstName+ " Allows you to download a note " +
                 "<br/> Please login and see My Download tabs to download particular note." +
                 "<br/><br/>Regards,<br/>Notes Marketplace";
 

@@ -97,130 +97,131 @@
         <div class="row">
 
             @if (@ViewBag.ResultCount == 0)
-            {
-                <h4>No record found</h4>
-            }
-            @foreach (var item in Model)
-            {
+              {   <div class="col-md-12">
+                    <h4>No record found</h4>
+                   </div>
+                }
+                    @foreach (var item in Model)
+                    {
 
-                //Book 1
-                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4">
+                        //Book 1
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4">
 
-                    <div class="bookclass">
-                        @{
-                            var dbobj = new NotesMarketPlace.Context.database1Entities();
-                            //var defaultbook = dbobj.SystemConfiguration.Select(x => x.DefaultNotePreview).FirstOrDefault();
-                        }
-
-                        @*Book Image*@
-                        <div class="note-img">
-                            <a href="@Url.Action("NoteDetail", "SearchNotes",new { id = item.Note.ID })">
-                                @if (@item.Note.DisplayPicture != null)
-                                {
-                                    <img src="@Url.Content(item.Note.DisplayPicture)" alt="note" class="img-fluid">
+                            <div class="bookclass">
+                                @{
+                                    var dbobj = new NotesMarketPlace.Context.database1Entities();
+                                    //var defaultbook = dbobj.SystemConfiguration.Select(x => x.DefaultNotePreview).FirstOrDefault();
                                 }
-                                else
-                                {
 
-                                    <img src="~/Content/Default/defaultbook.jpg" class="img-fluid " alt="note">
+                                @*Book Image*@
+                                <div class="note-img">
+                                    <a href="@Url.Action("NoteDetail", "SearchNotes",new { id = item.Note.ID })">
+                                        @if (@item.Note.DisplayPicture != null)
+                                        {
+                                            <img src="@Url.Content(item.Note.DisplayPicture)" alt="note" class="img-fluid">
+                                        }
+                                        else
+                                        {
 
-                                }
-                            </a>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
+                                            <img src="~/Content/Default/defaultbook.jpg" class="img-fluid " alt="note">
 
-
-                                    <div class="bookclass-content">
-
-                                        @*Book Name*@
-                                        <div class="book-heading">
-                                            @if (User.Identity.IsAuthenticated)
-                                            {
-                                                <h6><a href="@Url.Action("NoteDetail", "SearchNotes", new { id = item.Note.ID })">@item.Note.Title</a></h6>}
-                                            else
-                                            {
-                                                <h6><a href="@Url.Action("Login", "SignUp", new { id = item.Note.ID })">@item.Note.Title</a></h6>
-                                            }
-                                        </div>
+                                        }
+                                    </a>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
 
 
-                                        @*Book Info*@
-                                        <div class="book-details">
+                                            <div class="bookclass-content">
 
-                                            @if (@item.Note.UniversityName == null)
-                                            {
-
-                                                <p class="sub-text"><i class="fa fa-university"></i> @item.Note.Countries.Name</p>
-                                            }
-                                            else
-                                            {
-
-                                                <p class="sub-text"><i class="fa fa-university"></i>@item.Note.UniversityName, @item.Note.Countries.Name</p>
-                                            }
-                                            @if (@item.Note.NumberofPages == null)
-                                            {
-
-                                                <p class="sub-text"><i class="fa fa-book"></i> Unknown</p>
-                                            }
-                                            else
-                                            {
-
-                                                <p class="sub-text"><i class="fa fa-book"></i> @item.Note.NumberofPages Pages</p>
-                                            }
-
-
-                                            <p class="sub-text"><i class="fa fa-calendar"></i> @item.Note.PublishedDate.Value.ToString("MMM dd yyyy")</p>
-
-                                            @if (@item.TotalSpam == 0)
-                                            {
-
-                                                <p class="inappropriate-mark"><i class="fa fa-flag"></i><span> 0 Users marked this note inappropriate</span></p>
-                                            }
-                                            else
-                                            {
-                                                <p class="inappropriate-mark"><i class="fa fa-flag"></i><span> @item.TotalSpam Users marked this note inappropriate</span></p>
-
-                                            }
-                                        </div>
-
-                                        @*Book Rating*@
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-12 col-xl-7 col-lg-8">
-                                                <div class="rate">
-                                                    @for (int i = 0; i < 5; i++)
+                                                @*Book Name*@
+                                                <div class="book-heading">
+                                                    @if (User.Identity.IsAuthenticated)
                                                     {
-                                                        if (i < item.AverageRating)
-                                                        {
-                                                            <i class="fa fa-star"></i>
-                                                        }
-                                                        else
-                                                        {
-                                                            <i class="fa fa-star-o"></i>
-                                                        }
+                                                        <h6><a href="@Url.Action("NoteDetail", "SearchNotes", new { id = item.Note.ID })">@item.Note.Title</a></h6>}
+                                                    else
+                                                    {
+                                                        <h6><a href="@Url.Action("Login", "SignUp", new { id = item.Note.ID })">@item.Note.Title</a></h6>
+                                                    }
+                                                </div>
+
+
+                                                @*Book Info*@
+                                                <div class="book-details">
+
+                                                    @if (@item.Note.UniversityName == null)
+                                                    {
+
+                                                        <p class="sub-text"><i class="fa fa-university"></i> @item.Note.Countries.Name</p>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <p class="sub-text"><i class="fa fa-university"></i>@item.Note.UniversityName, @item.Note.Countries.Name</p>
+                                                    }
+                                                    @if (@item.Note.NumberofPages == null)
+                                                    {
+
+                                                        <p class="sub-text"><i class="fa fa-book"></i> Unknown</p>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <p class="sub-text"><i class="fa fa-book"></i> @item.Note.NumberofPages Pages</p>
                                                     }
 
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4">
-                                                <div class="review-text">
 
-                                                    <p>@item.TotalRating reviews</p>
+                                                    <p class="sub-text"><i class="fa fa-calendar"></i> @item.Note.PublishedDate.Value.ToString("MMM dd yyyy")</p>
+
+                                                    @if (@item.TotalSpam == 0)
+                                                    {
+
+                                                        <p class="inappropriate-mark"><i class="fa fa-flag"></i><span> 0 Users marked this note inappropriate</span></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="inappropriate-mark"><i class="fa fa-flag"></i><span> @item.TotalSpam Users marked this note inappropriate</span></p>
+
+                                                    }
                                                 </div>
+
+                                                @*Book Rating*@
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-xl-7 col-lg-8">
+                                                        <div class="rate">
+                                                            @for (int i = 0; i < 5; i++)
+                                                            {
+                                                                if (i < item.AverageRating)
+                                                                {
+                                                                    <i class="fa fa-star"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa fa-star-o"></i>
+                                                                }
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4">
+                                                        <div class="review-text">
+
+                                                            <p>@item.TotalRating reviews</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-
-                    </div>
+                    }
                 </div>
-            }
-        </div>
-    </div>
+            </div>
 
 </section>
 
@@ -233,8 +234,6 @@
                 @Html.PagedListPager(Model, page => Url.Action("SearchNotes", new { page, search = @ViewBag.Search, type = ViewBag.Type, category = ViewBag.Category, university = ViewBag.University, course = ViewBag.Course, country = ViewBag.Country, ratings = ViewBag.Rating }), new PagedList.Mvc.PagedListRenderOptions
            {
 
-               LiElementClasses = new[] { "page-item" },
-               UlElementClasses = new[] { "pagination justify-content-center" },
                LinkToNextPageFormat = ">",
                LinkToPreviousPageFormat = "<",
                DisplayEllipsesWhenNotShowingAllPageNumbers = false,

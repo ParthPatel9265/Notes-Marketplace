@@ -1,0 +1,281 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using NotesMarketPlace.Models;
+
+@model NotesMarketPlace.Models.AdminDashboard
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Dashboard Upper -->
+<section id="dashboard">
+
+    <div class="container">
+
+        <!-- dashboard heading & add note button -->
+        <div class="row dashboard-title">
+
+            <!-- Title -->
+            <div class="col-md-6 col-sm-12 col-12">
+                <div class="dashboard-heading">
+                    <h2>Dashboard</h2>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Dashboard content -->
+        <div class="dashboard-content">
+            <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="row stats-of-notes">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+
+
+                            <!-- Number of notes sell -->
+                            <div class="right-dashboard text-center">
+                                <h4><b>@Model.NotesInReview</b></h4>
+                                <p>
+                                    Number of Notes in Review for Publish<br>
+                                </p>
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+
+                            <!-- Number of notes sell -->
+                            <div class="right-dashboard text-center">
+                                <h4><b>@Model.NotesDownloaded</b></h4>
+                                <p>Number of New Downloaded<br>(Last 7 days)</p>
+
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+
+                            <!-- Number of notes sell -->
+                            <div class="right-dashboard text-center">
+                                <h4><b>@Model.NewRegistration</b></h4>
+                                <p>Number of New Registration<br>(Last 7 days)</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- Dashboard Upper ends-->
+<!-- Dashboard Publish -->
+<section id="publish-notes">
+    <div class="container">
+
+        @using (Html.BeginForm("Dashboard", "Admin", FormMethod.Get))
+        {
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                    <h3>PublishedNotes</h3>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                    <div class="row justify-content-end select-input-margin">
+                        <div class="hidepassword">
+                            <img src="~/Content/Admin/img/Dashboard/search.jpg" class="searchimage doup">
+                            <input type="search" name="search" value="@ViewBag.Search" class="form-control search-bar exampleInputEmail1" placeholder="Search">
+                        </div>
+                        <div class="btn-merge">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>Search</b></button>
+
+                        </div>
+                        <div>
+                            @Html.DropDownList("month", new SelectList(@ViewBag.MonthList, "Value", "Text", @ViewBag.Month),"select month", new { @class = "form-control selectfield seller-name select-margin", id = "dashboard-month" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row admindash">
+            <div class="col-md-12">
+                <div class="grid-table table-responsive-xl">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th scope="col" class="align-middle text-center">SR NO.</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("TITLE", "Dashboard", new { sort = ViewBag.Sort == null ? "Title_Desc" : (ViewBag.Sort == "Title_Asc" ? "Title_Desc" : "Title_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "Dashboard", new { sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.Sort == "Category_Asc" ? "Category_Desc" : "Category_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("ATTACHMENT SIZE", "Dashboard", new { sort = ViewBag.Sort == null ? "FileSize_Desc" : (ViewBag.Sort == "FileSize_Asc" ? "FileSize_Desc" : "FileSize_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("SELL TYPE", "Dashboard", new { sort = ViewBag.Sort == null ? "SellType_Desc" : (ViewBag.Sort == "SellType_Asc" ? "SellType_Desc" : "SellType_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("PRICE", "Dashboard", new { sort = ViewBag.Sort == null ? "Price_Desc" : (ViewBag.Sort == "Price_Asc" ? "Price_Desc" : "Price_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("PUBLISHER", "Dashboard", new { sort = ViewBag.Sort == null ? "Publisher_Desc" : (ViewBag.Sort == "Publisher_Asc" ? "Publisher_Desc" : "Publisher_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("PUBLISH DATE", "Dashboard", new { sort = ViewBag.Sort == null ? "PublishedDate_Desc" : (ViewBag.Sort == "PublishedDate_Asc" ? "PublishedDate_Desc" : "PublishedDate_Asc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("NUMBER OF DOWNLOAD", "Dashboard", new { sort = ViewBag.Sort == null ? "Downloads_Asc" : (ViewBag.Sort == "Downloads_Desc" ? "Downloads_Asc" : "Downloads_Desc"), search = ViewBag.Search, seller = ViewBag.Seller, month = ViewBag.Month })</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PublishedNotesLists.Count() == 0)
+                            {
+                                <tr class="no-record">
+                                    <td colspan="10" class="text-center">No Record Found</td>
+                                </tr>
+                            }
+                            else
+
+                            {
+                                int srno = 0;
+                                if (ViewBag.PageNumber == null)
+                                {
+                                    srno = 0;
+                                }
+                                else
+                                {
+                                    srno = (ViewBag.Pagenumber - 1) * 5;
+                                }
+
+                                foreach (var item in Model.PublishedNotesLists)
+                                {
+                                    <tr>
+                                         @{ srno = srno + 1; }
+                                        <td class="align-middle text-center">@srno</td>
+                                        <td class="align-middle"><a class="changecolor" href="@Url.Action("NoteDetail", "Admin", new { noteid = @item.ID })">@item.Title</a></td>
+                                        <td class="align-middle">@item.Category</td>
+                                        <td class="align-middle text-center">@item.FileSizeKBMB</td>
+                                        <td class="align-middle text-center">@item.SellType</td>
+                                        @if (item.SellType.Equals("Paid"))
+                                        {
+                                            <td class="align-middle text-center">$@item.Price</td>
+                                }
+                                        else
+                                        {
+                                            <td class="align-middle text-center">$0</td>
+                                        }
+
+                                        <td class="align-middle text-center">@item.Publisher</td>
+                                        <td class="align-middle text-center">@item.PublishedDate.ToString("dd-MM-yyyy hh:mm")</td>
+                                        <td class="align-middle text-center"><a class="changecolor" href="@Url.Action("DownloadedNotes", "AdminNotes", new { selectednote = @item.ID })">@item.Downloads</a></td>
+                                        <td class="align-middle">
+                                            <div class="row text-center">
+                                                <div class="dropdown">
+                                                    <a type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img src="~/Content/Admin/img/images/dots.png">
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="@Url.Action("AdminDownloadNote", "Admin", new { noteid = @item.ID })">Download Notes</a>
+                                                        <a class="dropdown-item" href="@Url.Action("NoteDetail", "Admin", new { noteid = @item.ID })">View More Detail</a>
+
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#unpublished-@item.ID">Unpublish</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Section Spam -->
+                                            <div class="modal fade exampleModal" id="unpublished-@item.ID" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="row">
+                                                        <div class="col-xl-12">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <a type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true"><i class="fa fa-close 2x"></i></span>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="modal-data">
+                                                                    <div class="modal-head text-left">
+                                                                        <h2>@item.Title</h2>
+                                                                    </div>
+                                                                    <div class="middel-content text-left content-justify-left">
+                                                                            @using (@Html.BeginForm("UnPublishNote", "Admin", FormMethod.Post, new { id = "unpublish-" + @item.ID }))
+                                                                            {
+                                                                                    @Html.AntiForgeryToken()
+
+                                                                                    <input name="noteid" value="@item.ID" hidden>
+                                                                                    <div class="form-group" id="modal-spam-report">
+
+                                                                                        <label for="unpublish-remark-@item.ID">Remarks *</label>
+
+                                                                                        <textarea class="form-control exampleInputEmail1" name="unpublish-remark" id="unpublish-remark-@item.ID" placeholder="remarks..." required></textarea>
+
+                                                                                    </div>
+
+                                                                                    <div class="modal-footer justify-content-start">
+                                                                                        <button type="submit" class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#confirmation-@item.ID" data-dismiss="modal" aria-label="Close">Unpublish</button>
+
+                                                                                        <button type="button" class="btn btn-primary text-uppercase" data-dismiss="modal" aria-label="Close">Cancel</button>
+
+                                                                                    </div>
+                                                                            }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Section Spam END -->
+                                            <!--section confirmation box-->
+
+                                            <div class="modal fade in" id="confirmation-@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to Unpublish this note?
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                            <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="$('#unpublish-'+@item.ID).submit(); $(this).dialog('close');">YES</button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">NO</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Section Confirmation-Box END -->
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- Dashboard Publish end-->
+<!-- Pagination -->
+<nav>
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            @Html.PagedListPager(Model.PublishedNotesLists, page => Url.Action("Dashboard", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort , month = @ViewBag.Month }), new PagedList.Mvc.PagedListRenderOptions
+       {
+          
+           LinkToNextPageFormat = ">",
+           LinkToPreviousPageFormat = "<",
+           MaximumPageNumbersToDisplay = 5,
+           DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+       })
+        </div>
+        </div>
+   
+</nav>
+<!-- Pagination Ends -->

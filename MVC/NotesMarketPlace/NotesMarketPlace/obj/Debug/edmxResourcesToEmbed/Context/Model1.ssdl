@@ -6,9 +6,10 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="AdminID" Type="int" Nullable="false" />
+    <Property Name="CountryCode" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="ProfilePicture" Type="varchar" MaxLength="500" />
-    <Property Name="SecondaryEmail" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="SecondaryEmail" Type="varchar" MaxLength="30" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="ModifiedDate" Type="datetime" />
@@ -155,7 +156,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Value" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Datavalue" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="RefCategory" Type="varchar" MaxLength="100" Nullable="false" />

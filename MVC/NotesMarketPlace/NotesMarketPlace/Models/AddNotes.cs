@@ -15,22 +15,24 @@ namespace NotesMarketPlace.Models
         public int ID { get; set; }
         public int NoteID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
+        [MaxLength(100, ErrorMessage = "Note Title is too long")]
         public string Title { get; set; }
 
-        [Required]      
+        [Required(ErrorMessage = "This field is required")]
         public int Category { get; set;}
  
         public HttpPostedFileBase DisplayPicture { get; set; }
-       
-        [Required] 
+
+        [Required(ErrorMessage = "This field is required")]
         public HttpPostedFileBase[] UploadNotes { get; set; }
 
         public Nullable<int> NoteType { get; set; }
 
+        [RegularExpression("[0-9]*", ErrorMessage = "Only numeric entry allowed")]
         public Nullable<int> NumberofPages { get; set; }
 
-        [Required]        
+        [Required(ErrorMessage = "This field is required")]
         public string Description { get; set; }
 
         public string UniversityName { get; set; }

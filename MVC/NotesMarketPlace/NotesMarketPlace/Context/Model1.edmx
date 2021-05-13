@@ -4,16 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminDetail">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AdminID" Type="int" Nullable="false" />
+          <Property Name="CountryCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ProfilePicture" Type="varchar" MaxLength="500" />
-          <Property Name="SecondaryEmail" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="SecondaryEmail" Type="varchar" MaxLength="30" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
@@ -160,7 +161,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Value" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Datavalue" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="RefCategory" Type="varchar" MaxLength="100" Nullable="false" />
@@ -627,27 +628,10 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AdminDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AdminID" Type="Int32" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProfilePicture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="SecondaryEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_AdminDetail_Users" FromRole="AdminDetail" ToRole="Users" />
-        </EntityType>
         <EntityType Name="ContactUs">
           <Key>
             <PropertyRef Name="ID" />
@@ -930,7 +914,6 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="SecretCode" Type="Guid" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AdminDetail" Relationship="Self.FK_AdminDetail_Users" FromRole="Users" ToRole="AdminDetail" />
           <NavigationProperty Name="Downloads" Relationship="Self.FK_Downloads_NoteDetail" FromRole="Users" ToRole="Downloads" />
           <NavigationProperty Name="Downloads1" Relationship="Self.FK_Downloads_Users" FromRole="Users" ToRole="Downloads" />
           <NavigationProperty Name="Downloads2" Relationship="Self.FK_Downloads_Users1" FromRole="Users" ToRole="Downloads" />
@@ -941,19 +924,8 @@
           <NavigationProperty Name="Stats" Relationship="Self.FK_Stats_Users" FromRole="Users" ToRole="Stats" />
           <NavigationProperty Name="UserProfileDetail" Relationship="Self.FK_UserProfileDetail_Users" FromRole="Users" ToRole="UserProfileDetail" />
           <NavigationProperty Name="UserRole" Relationship="Self.FK_Users_UserRole" FromRole="Users" ToRole="UserRole" />
+          <NavigationProperty Name="AdminDetail" Relationship="database1Model.FK_AdminDetail_Users" FromRole="Users" ToRole="AdminDetail" />
         </EntityType>
-        <Association Name="FK_AdminDetail_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="AdminDetail" Type="Self.AdminDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AdminDetail">
-              <PropertyRef Name="AdminID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NoteDetail_Countries">
           <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
           <End Role="NoteDetail" Type="Self.NoteDetail" Multiplicity="*" />
@@ -1195,7 +1167,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="database1Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AdminDetail" EntityType="Self.AdminDetail" />
           <EntitySet Name="ContactUs" EntityType="Self.ContactUs" />
           <EntitySet Name="Countries" EntityType="Self.Countries" />
           <EntitySet Name="Downloads" EntityType="Self.Downloads" />
@@ -1211,10 +1182,6 @@
           <EntitySet Name="UserProfileDetail" EntityType="Self.UserProfileDetail" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK_AdminDetail_Users" Association="Self.FK_AdminDetail_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="AdminDetail" EntitySet="AdminDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_NoteDetail_Countries" Association="Self.FK_NoteDetail_Countries">
             <End Role="Countries" EntitySet="Countries" />
             <End Role="NoteDetail" EntitySet="NoteDetail" />
@@ -1295,29 +1262,47 @@
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="AdminDetail" EntityType="database1Model.AdminDetail" />
+          <AssociationSet Name="FK_AdminDetail_Users" Association="database1Model.FK_AdminDetail_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdminDetail" EntitySet="AdminDetail" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AdminDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminID" Type="Int32" Nullable="false" />
+          <Property Name="CountryCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SecondaryEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="database1Model.FK_AdminDetail_Users" FromRole="AdminDetail" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_AdminDetail_Users">
+          <End Type="database1Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="database1Model.AdminDetail" Role="AdminDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AdminDetail">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="database1ModelStoreContainer" CdmEntityContainer="database1Entities">
-          <EntitySetMapping Name="AdminDetail">
-            <EntityTypeMapping TypeName="database1Model.AdminDetail">
-              <MappingFragment StoreEntitySet="AdminDetail">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
-                <ScalarProperty Name="SecondaryEmail" ColumnName="SecondaryEmail" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ContactUs">
             <EntityTypeMapping TypeName="database1Model.ContactUs">
               <MappingFragment StoreEntitySet="ContactUs">
@@ -1583,6 +1568,23 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="SecretCode" ColumnName="SecretCode" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminDetail">
+            <EntityTypeMapping TypeName="database1Model.AdminDetail">
+              <MappingFragment StoreEntitySet="AdminDetail">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="SecondaryEmail" ColumnName="SecondaryEmail" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -13,15 +13,26 @@ using PagedList;
 using PagedList.Mvc;
 namespace NotesMarketPlace.Controllers
 {
+    [OutputCache(Duration = 0)]
     public class SearchNotesController : Controller
     {
         readonly private database1Entities dobj = new database1Entities();
 
-        [HttpGet] 
+        [HttpGet]
+        [AllowAnonymous]
         [Route("SearchNotes")]
         public ActionResult SearchNotes(string search, string type, string category, string university, string course, string country, string ratings, int? page )
         {
-            
+            //if logged in user's userrole is not member then redirect to admin dashboard
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
+                if (user.RoleID != dobj.UserRole.Where(x => x.Name.ToLower() == "member").Select(x => x.ID).FirstOrDefault())
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+            }
+
             ViewBag.SearchNotes = "active";
             ViewBag.Search = search;
             ViewBag.Category = category;
@@ -138,13 +149,20 @@ namespace NotesMarketPlace.Controllers
         }
 
 
-        [Authorize]
-        [HttpGet] 
+        [AllowAnonymous]    
         [Route("SearchNotes/NoteDetail/{id}")]
         public ActionResult NoteDetail(int id)
         {
             var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
-            
+
+            // if logged in user's role is not member then redirect to admin dashboard
+            if (User.Identity.IsAuthenticated)
+            {
+                if (user.RoleID != dobj.UserRole.Where(x => x.Name.ToLower() == "member").Select(x => x.ID).FirstOrDefault())
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+            }
             var NoteDetail = dobj.NoteDetail.Where(x => x.ID == id && x.IsActive == true).FirstOrDefault();
            
             if (NoteDetail == null)
@@ -214,7 +232,7 @@ namespace NotesMarketPlace.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SearchNotes/NoteDetail/{noteid}/Download")]
         public ActionResult DownloadNotes(int noteid)
         {
@@ -369,7 +387,7 @@ namespace NotesMarketPlace.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("SearchNotes/NoteDetail/{noteid}/Request")]     
         public ActionResult RequestPaidNotes(int noteid)
         {
@@ -414,9 +432,7 @@ namespace NotesMarketPlace.Controllers
             var downloader = dobj.Users.Where(x => x.ID == download.Downloader).FirstOrDefault();
             var seller = dobj.Users.Where(x => x.ID == download.Seller).FirstOrDefault();
 
-            var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
-           
-            var fromEmail = new MailAddress(email);
+            var fromEmail = new MailAddress(dobj.SystemConfiguration.FirstOrDefault().EmailID1);
             var toEmail = new MailAddress(seller.EmailID);
             var fromEmailPassword = "****"; // Replace with actual password
             string subject = seller.FirstName + "wants to purchase your notes";

@@ -93,32 +93,25 @@
 @media (min-width: 1200px) {
     .extra-margin1 {
         position: relative;
-        transform: translateX(185px);
+        transform: translateX(15px);
     }
 
     .extra-margin2 {
         position: relative;
-        transform: translateX(95px);
+        transform: translateX(15px);
     }
 
     .extra-margin3 {
         position: relative;
-        transform: translateX(55px);
+        transform: translateX(15px);
     }
 
     .extra-margin4 {
         position: relative;
-        transform: translateX(80px);
+        transform: translateX(15px);
     }
-
-}
-
-/*===============================
-            Upto 391
-================================*/
-@media (min-width: 1200px) {
-    .select-input-margin {
-        margin-right: 0px;
+    .manage{
+        padding-right:0px !important;
     }
 
 }
@@ -153,7 +146,12 @@
     .responsive-hidepassword-padding-bottom-90pct {
         padding-bottom: 135%;
     }
-
+    .member-data img {
+        margin-bottom: 30px;
+    }
+    .manage {
+        padding-right: 0px !important;
+    }
 }
 
 /*===============================
@@ -218,7 +216,24 @@
 
     #dashboard .stats-of-notes > div:first-child p {
         margin-bottom: 52px;
+
     }
+    .member-data img {
+        margin-bottom: 30px;
+        width:30%;
+      
+    }
+    .member-info-right{
+        margin-top:20px;
+    }
+    .member-info-left {
+        border-right: none;
+        border-bottom: 1px solid #d1d1d1;
+        margin-top:20px ;
+        padding-bottom:10px;
+    }
+
+  
 }
 
 /*===============================
@@ -419,6 +434,20 @@
         {
         font-size: 13px;
     }
+   .member-info-left {
+        border-bottom: 1px solid #d1d1d1;
+        border-right: none;
+    }
+
+    .member-info-right,
+   .member-info-left {
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .member-data p {
+        margin-bottom: 10px
+    }
 
     /* Footer */
 
@@ -487,8 +516,10 @@
     .docenter {
         text-align: center;
     }
-
-    #note-details h3,
+    .main-data{
+        margin-top:5px;
+    }
+    #notes-detail h3,
     #notes-preview h3 {
         text-align: center;
     }
@@ -516,21 +547,72 @@
         margin-bottom: 30px;
     }
 
-    
-
     .right-data {
         
         text-align: right;
         margin-top: 20px;
     }
 
-    #note-details img {
+    #notes-detail img {
         margin-top: 20px;
+        width:35%;
     }
 
     .left-data {
         text-align: left;
         margin-top: 20px;
+    }
+    .margin-top {
+        padding: 0 15px;
+    }
+
+    .margin-top p {
+            margin-bottom: 5px;
+        }
+
+    p span.first {
+        font-size: 15px;
+        line-height: 24px;
+    }
+
+    p span.last {
+        font-size: 15px;
+        line-height: 28px;
+    }
+
+    .member-data p {
+        margin-bottom: 10px
+    }
+    .member-data img {
+        width:158px !important;
+    }
+   .member-data {
+        margin-bottom: 0;
+    }
+     .member-info-left {
+        border-bottom: 1px solid #d1d1d1;
+        border-right: none;
+    }
+
+     .member-info-right,
+   .member-info-left {
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+
+ .member-data {
+        margin-bottom: 0;
+    }
+
+  .member-info-left p,
+ .member-info-right p {
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+  p.member-personal-info {
+        font-size: 15px;
+        line-height: 18px;
     }
 
 }
@@ -549,12 +631,18 @@
     #publish-notes Input[type=email] {
         width: 100%;
     }
+    #progress-notes Input[type=search],
+    #publish-notes Input[type=search] {
+        width: 100%;
+    }
+
 
     #note-details .right-data h5,
     .numofreview {
         font-size: 16px !important;
     }
 
+    
 }
 
 /*===============================
@@ -584,21 +672,17 @@
         width: 130px;
         margin: 0;
     }
+    .review-userpic {
+        padding-right: 0;
+        padding-left:0;
+    }
 }
     
 /*===============================
             Upto 391
 ================================*/
 @media (max-width: 391px) {
-    #note-details .left-data h5 {
-        font-size: 14px !important;
-
-    }
-
-    #note-details .right-data h5,
-    .numofreview {
-        font-size: 14px !important;
-    }
+   
 
     #notes-preview .rate-fa i {
         font-size: 13px;
@@ -613,6 +697,7 @@
     #publish-notes #btn {
         width: 90%;
     }
+   
 }
 
 @media (max-width: 359px) {
@@ -643,31 +728,6 @@
 @media (max-width: 323px){
     footer p{
         font-size: 11px;
-    }
-}
-
-
-@media (max-width: 432px){
-    #note-details .left-data h5
-    { 
-        font-size:14px !important; 
-    }
-    
-    #note-details .right-data h5
-    { 
-        font-size:14px !important; 
-    }
-}
-
-@media (max-width: 372px){
-    #note-details .left-data h5
-    { 
-        font-size:10px !important; 
-    }
-    
-    #note-details .right-data h5
-    { 
-        font-size:10px !important; 
     }
 }
 

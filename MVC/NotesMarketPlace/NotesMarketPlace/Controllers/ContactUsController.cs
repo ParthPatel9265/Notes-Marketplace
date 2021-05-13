@@ -1,4 +1,5 @@
 ﻿using NotesMarketPlace.Context;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
@@ -7,16 +8,48 @@ namespace NotesMarketPlace.Controllers
 {
     public class ContactUsController : Controller
     {
-        database1Entities dbobj = new database1Entities();
+        database1Entities dobj = new database1Entities();
       
         [HttpGet]
+        [AllowAnonymous]
         [Route("ContactUs")]
         public ActionResult ContactUs()
         {
-            return View();
+
+            //if logged in user's userrole is not member then redirect to admin dashboard
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
+                if (user.RoleID != dobj.UserRole.Where(x => x.Name.ToLower() == "member").Select(x => x.ID).FirstOrDefault())
+                {
+                    return RedirectToAction("Dashboard", "Admin");
+                }
+            }
+            // viewbag for active class in navigation
+            ViewBag.Contactus = "active";
+            // check if user is authenticated then we need to show full name and email
+            if (User.Identity.IsAuthenticated)
+            {
+                // if user is authenticated then get user
+                var user = dobj.Users.Where(x => x.EmailID == User.Identity.Name).FirstOrDefault();
+                // create contact us viewmodel
+                Models.ContactUs viewmodel = new Models.ContactUs();
+
+                viewmodel.FullName = user.FirstName + " " + user.LastName;
+                viewmodel.EmailID = user.EmailID;
+                // return viewmodel
+                return View(viewmodel);
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         [Route("ContactUs")]
         public ActionResult ContactUs(Models.ContactUs model)
         {
@@ -28,9 +61,9 @@ namespace NotesMarketPlace.Controllers
                 obj.Subjects = model.Subjects;
                 obj.Comments = model.Comments;
 
-                dbobj.ContactUs.Add(obj);
+                dobj.ContactUs.Add(obj);
                 SendEmailToAdmin(obj);
-                dbobj.SaveChanges();
+                dobj.SaveChanges();
                 ModelState.Clear();
                 return RedirectToAction("ContactUs");
             }
@@ -45,10 +78,12 @@ namespace NotesMarketPlace.Controllers
         [NonAction]
         public void SendEmailToAdmin(Context.ContactUs obj)
         {
-            SystemConfiguration s = new SystemConfiguration();
-            var fromEmail = new MailAddress(s.EmailID1); 
-            var toEmail = new MailAddress(s.EmailID2);
-            var fromEmailPassword = "*****"; 
+            var email = dobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+            var email2 = dobj.SystemConfiguration.Select(x => x.EmailID2).FirstOrDefault();
+
+            var fromEmail = new MailAddress(email); 
+            var toEmail = new MailAddress(email2);
+            var fromEmailPassword = "#######"; //Replace with original password
             string subject = obj.FullName + " - Query";
 
             string body = "Hello," +

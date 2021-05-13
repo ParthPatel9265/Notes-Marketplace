@@ -25,7 +25,6 @@ namespace NotesMarketPlace.Context
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdminDetail> AdminDetail { get; set; }
         public virtual DbSet<ContactUs> ContactUs { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Downloads> Downloads { get; set; }
@@ -41,5 +40,6 @@ namespace NotesMarketPlace.Context
         public virtual DbSet<UserProfileDetail> UserProfileDetail { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<AdminDetail> AdminDetail { get; set; }
     }
 }

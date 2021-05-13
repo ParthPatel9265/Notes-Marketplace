@@ -250,9 +250,7 @@
 
             @Html.PagedListPager(Model.InProgressNotes, page1 => Url.Action("Dashboard", new { page1, search1 = @ViewBag.Search1, sort1 = @ViewBag.Sort1, search2 = @ViewBag.Search2, sort2 = @ViewBag.Sort2 }), new PagedList.Mvc.PagedListRenderOptions
             {
-                ContainerDivClasses = new[] { "container" },
-                LiElementClasses = new[] { "page-item" },
-                UlElementClasses = new[] { "pagination justify-content-center" },
+               
                 LinkToNextPageFormat = ">",
                 LinkToPreviousPageFormat = "<",
                 MaximumPageNumbersToDisplay = 5,
@@ -364,8 +362,6 @@
             @Html.PagedListPager(Model.PublishedNotes, page2 => Url.Action("Dashboard", new { page2, search1 = @ViewBag.Search1, sort1 = @ViewBag.Sort1, search2 = @ViewBag.Search2, sort2 = @ViewBag.Sort2 }), new PagedList.Mvc.PagedListRenderOptions
             {
 
-                LiElementClasses = new[] { "page-item" },
-                UlElementClasses = new[] { "pagination justify-content-center" },
                 LinkToNextPageFormat = ">",
                 LinkToPreviousPageFormat = "<",
                 DisplayEllipsesWhenNotShowingAllPageNumbers = false,

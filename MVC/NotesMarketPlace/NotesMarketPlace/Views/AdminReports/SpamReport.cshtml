@@ -1,0 +1,152 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+
+@model IPagedList<NotesMarketPlace.Models.SpamReportModel>
+@{
+    ViewBag.Title = "Spam Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<!-- spam report -->
+<section id="publish-notes" class="mydownloads">
+    <div class="container">
+        @using (Html.BeginForm("SpamReport", "AdminReports", FormMethod.Get))
+        {
+
+            <div class="row top-table">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                    <h3>Spam Report</h3>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 manage">
+                    <div class="row justify-content-end">
+                        <div class="hidepassword">
+                            <img src="~/Content/Admin/img/Dashboard/search.jpg" class="searchimage doup">
+                            <input type="search" name="search" value="@ViewBag.Search" class="form-control search-bar exampleInputEmail1" placeholder="Search">
+                        </div>
+                        <div class="btn-merge">
+                            <button type="submit" class="btn text-uppercase text-center" id="btn"><b>Search</b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="grid-table table-responsive-xl">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="align-middle text-center">SR NO.</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("REPORTED BY", "SpamReport", new { sort = ViewBag.Sort == null ? "ReportedBy_Desc" : (ViewBag.Sort == "ReportedBy_Asc" ? "ReportedBy_Desc" : "ReportedBy_Asc"), search = ViewBag.Search, page = ViewBag.PageNumber })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("NOTE TITLE", "SpamReport", new { sort = ViewBag.Sort == null ? "Title_Desc" : (ViewBag.Sort == "Title_Asc" ? "Title_Desc" : "Title_Asc"), search = ViewBag.Search, page = ViewBag.PageNumber })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("CATEGORY", "SpamReport", new { sort = ViewBag.Sort == null ? "Category_Desc" : (ViewBag.Sort == "Category_Asc" ? "Category_Desc" : "Category_Asc"), search = ViewBag.Search, page = ViewBag.PageNumber })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("DATE ADDED", "SpamReport", new { sort = ViewBag.Sort == null ? "DateAdded_Asc" : (ViewBag.Sort == "DateAdded_Desc" ? "DateAdded_Asc" : "DateAdded_Desc"), search = ViewBag.Search, page = ViewBag.PageNumber })</th>
+                                <th scope="col" class="align-middle">@Html.ActionLink("REMARK", "SpamReport", new { sort = ViewBag.Sort == null ? "Remark_Desc" : (ViewBag.Sort == "Remark_Asc" ? "Remark_Desc" : "Remark_Asc"), search = ViewBag.Search, page = ViewBag.PageNumber })</th>
+                                <th scope="col" class="align-middle text-center">ACTION</th>
+                                <th scope="col" class="align-middle"></th>
+                                <th scope="col" class="align-middle"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr class="no-record">
+                                    <td colspan="9" class="text-center">No Record Found</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                int srno = 0;
+                                if (ViewBag.PageNumber == null)
+                                {
+                                    srno = 0;
+                                }
+                                else
+                                {
+                                    srno = (ViewBag.Pagenumber - 1) * 5;
+                                }
+                                foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        @{ srno = srno + 1; }
+                                        <td class="align-middle text-center">@srno</td>
+                                        <td class="align-middle">@item.ReportedBy</td>
+                                        <td class="align-middle changecolor"><a href="@Url.Action("NoteDetail", "Admin", new { noteid = @item.NoteID })">@item.NoteTitle</a></td>
+                                        <td class="align-middle">@item.Category</td>
+                                        <td class="align-middle">@item.DateAdded.ToString("dd-MM-yyyy hh:mm")</td>
+                                        <td class="align-middle">@item.Remark</td>
+                                        <td class="align-middle text-center">
+                                            <a data-toggle="modal" data-target="#confirmation-@item.ID" role="button"><img src="~/Content/Admin/img/images/delete.png"></a>
+                                            <!--delete confirmation box-->
+
+                                            <div class="modal fade in" id="confirmation-@item.ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete reported issue?
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="location.href='@Url.Action("DeleteSpamReport", "AdminReports", new { id = @item.ID })'">YES</button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">NO</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- delete Confirmation-Box END -->
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="dropdown">
+                                                <a type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <img src="~/Content/Admin/img/images/dots.png">
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="@Url.Action("AdminDownloadNote", "Admin", new { noteid = @item.NoteID })">Download Notes</a>
+                                                    <a class="dropdown-item" href="@Url.Action("NoteDetail", "Admin", new { noteid = @item.NoteID })">View More Detail</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- spam report ends-->
+
+
+<nav>
+    <div class="container">
+        <div class="row justify-content-center">
+
+
+            @Html.PagedListPager(Model, page => Url.Action("SpamReport", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
+       {
+
+
+           LinkToNextPageFormat = ">",
+           LinkToPreviousPageFormat = "<",
+           DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+           DisplayLinkToLastPage = PagedListDisplayMode.Never
+
+       })
+
+        </div>
+    </div>
+</nav>
+
+

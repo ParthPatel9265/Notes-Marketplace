@@ -97,8 +97,6 @@
             @Html.PagedListPager(Model, page => Url.Action("MyRejectedNotes", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
        {
 
-           LiElementClasses = new[] { "page-item" },
-           UlElementClasses = new[] { "pagination justify-content-center" },
            LinkToNextPageFormat = ">",
            LinkToPreviousPageFormat = "<",
            DisplayEllipsesWhenNotShowingAllPageNumbers = false,

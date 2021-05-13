@@ -9,12 +9,14 @@ namespace NotesMarketPlace.Models
 {
     public class ChangePassword
     {
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public string OldPassword { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is required")]
         [RegularExpression(@"(?=.*\d)(?=.*[A-Za-z]).{6,}", ErrorMessage = "Invalid Password format.")]
         public string NewPassword { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is required")]
         [NotMapped]
         [Compare("NewPassword", ErrorMessage = "Incorrect Password")]
         public string ConfirmPassword { get; set; }

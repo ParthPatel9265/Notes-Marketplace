@@ -1,6 +1,6 @@
 ﻿@using PagedList;
 @using PagedList.Mvc;
-@using NotesMarketPlace
+
 @model IPagedList<NotesMarketPlace.Models.MyDownloads> 
 @{
     ViewBag.Title = "My Downloads";
@@ -270,8 +270,7 @@
             @Html.PagedListPager(Model, page => Url.Action("MyDownloads", new { page, search = @ViewBag.Search, sort = @ViewBag.Sort }), new PagedList.Mvc.PagedListRenderOptions
        {
 
-           LiElementClasses = new[] { "page-item" },
-           UlElementClasses = new[] { "pagination justify-content-center" },
+       
            LinkToNextPageFormat = ">",
            LinkToPreviousPageFormat = "<",
            DisplayEllipsesWhenNotShowingAllPageNumbers = false,

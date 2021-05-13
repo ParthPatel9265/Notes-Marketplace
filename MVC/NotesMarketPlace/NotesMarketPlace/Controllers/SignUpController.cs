@@ -16,6 +16,7 @@ namespace NotesMarketPlace.Controllers
         database1Entities dbobj = new database1Entities();
      
         [HttpGet]
+        [AllowAnonymous]
         [Route("SignUp")]
         public ActionResult SignUp()
         {
@@ -23,6 +24,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Route("SignUp")]
         public ActionResult SignUp(Models.Users model)
@@ -59,7 +61,7 @@ namespace NotesMarketPlace.Controllers
             
         }
 
-        [NonAction]
+        [NonAction]  
         public bool IsEmailExist(string emailID)
         {
             using (database1Entities dbobj = new database1Entities())
@@ -91,10 +93,10 @@ namespace NotesMarketPlace.Controllers
         {
             var verifyUrl = "/EmailVerification/" + SecretCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-            var fromEmail = new MailAddress("parthpatel9265@gmail.com");
+            var email = dbobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+            var fromEmail = new MailAddress(email);
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "******"; // Replace with actual password
+            var fromEmailPassword = "******"; // Replace with original password
             string subject = "Note Marketplace - Email Verification";
 
             string body = "Hello " + username + "," +
@@ -122,19 +124,19 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("Login")]
         public ActionResult Login()
         {
-           
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Route("Login")]
         public ActionResult Login(Models.Users user, string ReturnUrl = "")
         {
-           
             using (database1Entities dbobj = new database1Entities())
             {
                 var v = dbobj.Users.Where(a => a.EmailID == user.EmailID).FirstOrDefault();
@@ -144,7 +146,7 @@ namespace NotesMarketPlace.Controllers
                     {
                         if (string.Compare( user.Password, v.Password) == 0)
                         {
-                            int timeout = user.RememberMe ? 525600 : 20;
+                            int timeout = user.RememberMe ? 525600 : 20; // 525600 minute = 1 year
                             var ticket = new FormsAuthenticationTicket(user.EmailID, user.RememberMe, timeout);
                             string encrypted = FormsAuthentication.Encrypt(ticket);
                             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
@@ -152,23 +154,32 @@ namespace NotesMarketPlace.Controllers
                             cookie.HttpOnly = true;
                             Response.Cookies.Add(cookie);
 
-                            var upobj = dbobj.UserProfileDetail.Where(a => a.UserID == v.ID).FirstOrDefault();
-                            if (upobj == null)
+                            if (v.RoleID == 3)
                             {
-                                return RedirectToAction("UserProfile", "UserProfile");
-                            }
-                            else if (!String.IsNullOrEmpty(ReturnUrl))
-                            {
-                                return Redirect(ReturnUrl);
+                                
+                                var upobj = dbobj.UserProfileDetail.Where(a => a.UserID == v.ID).FirstOrDefault();
+                                if (upobj == null)
+                                {
+                                    return RedirectToAction("UserProfile", "UserProfile");
+                                }
+                                else if (!String.IsNullOrEmpty(ReturnUrl))
+                                {
+                                    return Redirect(ReturnUrl);
+                                }
+                                else
+                                {
+                                    return RedirectToAction("SearchNotes", "SearchNotes");
+                                }
                             }
                             else
                             {
-                                return RedirectToAction("Dashboard", "SellNotes");
+                                return RedirectToAction("Dashboard", "Admin");
+
                             }
                         }
                         else
                         {
-                           
+                          
                             ModelState.AddModelError("Password", "Invalid Password");
                             return View(user);
                         }
@@ -188,7 +199,7 @@ namespace NotesMarketPlace.Controllers
             }  
         }
 
-        [Authorize]
+        [Authorize(Roles = "SuperAdmin,Admin,Member")]
         [Route("Logout")]
         public ActionResult Logout()
         {
@@ -197,6 +208,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
+        
         [Route("ForgotPassword")]
         public ActionResult ForgotPassword()
         {
@@ -204,6 +216,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpPost]
+        
         [Route("ForgotPassword")]
         public ActionResult ForgotPassword(Models.ForgotPassword model)
         {
@@ -233,9 +246,10 @@ namespace NotesMarketPlace.Controllers
         [NonAction]
         public void SendPassword(string emailID, string pwd)
         {
-            var fromEmail = new MailAddress("parthpatel9265@gmail.com");
+            var email = dbobj.SystemConfiguration.Select(x => x.EmailID1).FirstOrDefault();
+            var fromEmail = new MailAddress(email);
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "*****"; 
+            var fromEmailPassword = "*****"; //replace with original 
             string subject = "Note Marketplace - Forgot Password";
 
             string body = "Hello," +
@@ -262,7 +276,8 @@ namespace NotesMarketPlace.Controllers
                 smtp.Send(message);
         }
 
-        [Authorize]
+        [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin,Member")]
         [Route("ChangePassword")]
         public ActionResult ChangePassword()
         {
@@ -270,6 +285,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin,Admin,Member")]
         [Route("ChangePassword")]
         public ActionResult ChangePassword(Models.ChangePassword model)
         {

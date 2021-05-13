@@ -13,12 +13,14 @@ using System.Net;
 
 namespace NotesMarketPlace.Controllers
 {
+    [OutputCache(Duration = 0)]
+    [RoutePrefix("User")]
     public class MyDownloadsController : Controller
     {
         readonly private database1Entities dobj = new database1Entities();
         // GET: MyDownloads
 
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("MyDownloads")]
         public ActionResult MyDownloads(string search, string sort, int? page)
         {
@@ -153,7 +155,7 @@ namespace NotesMarketPlace.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("Note/AddReview")]
         public ActionResult AddReview(NotesReview notereview)
         {
@@ -221,7 +223,7 @@ namespace NotesMarketPlace.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("Note/ReportSpam")]
         public ActionResult SpamReport(FormCollection form)
         {

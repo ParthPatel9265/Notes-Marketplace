@@ -1,0 +1,155 @@
+﻿@model NotesMarketPlace.Models.SystemConfigurationModel
+@{
+    ViewBag.Title = "Manage System Configuration";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<!--manage system configuration -->
+
+
+
+    @using (@Html.BeginForm("ManageSystemConfigurations", "AdminSettings", FormMethod.Post, new { @class = "user-details-form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <section id="personal-details" class="user-profile content-box-md">
+            <div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading">
+                                <h3>Manage System Configuration</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+                                        <label class="label label1" for="exampleInputEmail1">Support email address *</label>
+                                        @Html.TextBoxFor(model => model.EmailID1, new { @class = "form-control exampleInputEmail1", id = "support-email-address", type = "email", placeholder = "Enter email address", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.EmailID1, "", new { @class = "form-error" })
+
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+                                        <label class="label label1">Support phone number *</label>
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control exampleInputEmail1", id = "support-phone-number", placeholder = "Enter phone number", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "form-error" })
+                                    
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+                                        <label class="label label1" for="exampleInputEmail1">Email Address(es)(for various events system will send notification to these users) *</label>
+                                      
+                                        @Html.TextBoxFor(model => model.EmailID2, new { @class = "form-control exampleInputEmail1 ", id = "events-email-address", type = "email", placeholder = "Enter email address", required = "required" })
+                                        @Html.ValidationMessageFor(model => model.EmailID2, "", new { @class = "form-error" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+                                        <label class="label label1">Facebook URL</label>
+                            
+                                        @Html.TextBoxFor(model => model.FacebookURL, new { @class = "form-control exampleInputEmail1", id = "facebook", type = "url", placeholder = "Enter facebook url" })
+                                        @Html.ValidationMessageFor(model => model.FacebookURL, "", new { @class = "form-error" })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+                                        <label class="label label1">Twitter URL</label>
+                                       
+                                        @Html.TextBoxFor(model => model.TwitterURL, new { @class = "form-control exampleInputEmail1", id = "twitter", type = "url", placeholder = "Enter twitter url" })
+                                        @Html.ValidationMessageFor(model => model.TwitterURL, "", new { @class = "form-error" })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-7">
+
+                                    <div class="form-group">
+
+                                        <label class="label label1">LinkedIn URL</label>
+                                        @Html.TextBoxFor(model => model.LinkedInURL, new { @class = "form-control exampleInputEmail1", id = "linkedin", type = "url", placeholder = "Enter linkedin url" })
+                                        @Html.ValidationMessageFor(model => model.LinkedInURL, "", new { @class = "form-error" })
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <div class="upload-profile-pic">
+                                            <label class="label label1" for="exampleInputEmail1">Default image for notes (if seller do not upload)</label>
+
+                                            @Html.TextBoxFor(model => model.DefaultNotePreview, new { @class = "form-control exampleInputEmail1", id = "default-notes-picture", type = "file" })
+                                            @Html.ValidationMessageFor(model => model.DefaultNotePreview, "", new { @class = "form-error" })
+                                            
+                                            <div class="uploadmypic text-center">
+                                                <img class="img-fluid" src="~/Content/Admin/img/user-profile/upload.png">
+                                                <h6>Upload a picture</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <div class="upload-profile-pic">
+                                            <label class="label label1" for="exampleInputEmail1">Default profile picture (if seller do not upload)</label>
+
+                                            @Html.TextBoxFor(model => model.DefaultProfilePicture, new { @class = "form-control exampleInputEmail1", id = "default-profile-picture", type = "file" })
+                                            @Html.ValidationMessageFor(model => model.DefaultProfilePicture, "", new { @class = "form-error" })
+
+                                          
+                                            <div class="uploadmypic text-center">
+                                                <img class="img-fluid" src="~/Content/Admin/img/user-profile/upload.png">
+                                                <h6>Upload a picture</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-2 col-sm-3">
+                                    <button type="submit" class="btn text-uppercase text-center" id="btn"><b>submit</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    }
+<!-- manage system configuration ends  -->

@@ -9,16 +9,18 @@ namespace NotesMarketPlace.Models
     public class ContactUs
     {
         public int ID { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is required")]
         public string FullName { get; set; }
-        [Required]
-        [EmailAddress]
+
+        [Required(ErrorMessage = "This field is required")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Use valid email address")]
         public string EmailID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public string Subjects { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field is required")]
         public string Comments { get; set; }
     }
 }

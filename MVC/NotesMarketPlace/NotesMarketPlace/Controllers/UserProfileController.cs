@@ -14,14 +14,16 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 
 namespace NotesMarketplace.Controllers
-{ 
+{
+    [OutputCache(Duration = 0)]
+    [RoutePrefix("User")]
     public class UserProfileController : Controller
     {
          database1Entities dbobj = new database1Entities();
 
         [HttpGet]
-        [Authorize]
-        [Route("UserProfile")]
+        [Authorize(Roles = "Member")]
+        [Route("Profile")]
         public ActionResult UserProfile()
         {
             
@@ -68,8 +70,8 @@ namespace NotesMarketplace.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        [Route("UserProfile")]
+        [Authorize(Roles = "Member")]
+        [Route("Profile")]
         public ActionResult UserProfile(UserProfile userprofilemodel)
         {
         

@@ -1,22 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="database1ModelStoreContainer" CdmEntityContainer="database1Entities">
-    <EntitySetMapping Name="AdminDetail">
-      <EntityTypeMapping TypeName="database1Model.AdminDetail">
-        <MappingFragment StoreEntitySet="AdminDetail">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="AdminID" ColumnName="AdminID" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
-          <ScalarProperty Name="SecondaryEmail" ColumnName="SecondaryEmail" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ContactUs">
       <EntityTypeMapping TypeName="database1Model.ContactUs">
         <MappingFragment StoreEntitySet="ContactUs">
@@ -282,6 +266,23 @@
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="SecretCode" ColumnName="SecretCode" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdminDetail">
+      <EntityTypeMapping TypeName="database1Model.AdminDetail">
+        <MappingFragment StoreEntitySet="AdminDetail">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="SecondaryEmail" ColumnName="SecondaryEmail" />
+          <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+          <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

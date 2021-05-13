@@ -121,20 +121,13 @@
 
          margin: 0 10px;
      }
-  /*
-     #notes .review-text {
-         -webkit-transform: translate(-50%, 90%);
-         transform: translate(-50%, 90%);
 
-     }*/
      .responsive-hidepassword-padding-bottom-90pct {
          padding-bottom: 135%;
      }
 
 
-   /*  #notes .review-text p {
-         font-size: 11px;
-     }*/
+  
 
      #notes .book-heading {
          min-height: 90px;
@@ -174,19 +167,16 @@
          min-height: 100px;
      }
 
-     .review-text {
-         text-align: center;
-     }
-
+    
      .rate {
         
         float: left; 
         top: -10px;
      }
     .review-text {
-        
+        text-align: center;
         margin-top: 0px;
-        float: left ;
+        float: left;
         margin-right: 15px;
         margin-top: 7px
     }
@@ -577,8 +567,11 @@
      .docenter {
         text-align: center;
      }
+    .main-data {
+        margin-top: 5px;
+    }
 
-     #note-details h3,
+     #notes-detail h3,
      #notes-preview h3 {
         text-align: center;
      }
@@ -641,21 +634,12 @@
 ================================*/
  @media (max-width: 450px) {
      
-
-     #note-details .left-data h5 {
-         font-size: 16px;
-
-     }
         
      #progress-notes Input[type=email],
      #publish-notes Input[type=email] {
          width: 100%;
      }
      
-     #note-details .right-data h5,
-     .numofreview {
-         font-size: 16px !important;
-     }
      #ev #btn {
          width: 300px !important;
      }
@@ -697,6 +681,10 @@
          width: 130px;
          margin: 0;
      }
+    .review-userpic {
+        padding-right: 0;
+        padding-left: 0;
+    }
 
  }
  
@@ -704,16 +692,7 @@
             Upto 391
 ================================*/
  @media (max-width: 391px) {
-     #note-details .left-data h5 {
-         font-size: 14px !important;
-
-     }
-
-     #note-details .right-data h5,
-     .numofreview {
-         font-size: 14px !important;
-     }
-
+    
      #notes-preview .rate-fa i {
          font-size: 13px;
      }
@@ -775,28 +754,4 @@
     left: 5%;
     top: 35%;
 }
-}
-
-@media (max-width: 432px){
-    #notes-detail .left-data h5
-    { 
-        font-size:14px !important; 
-    }
-    
-    #notes-detail .right-data h5
-    { 
-        font-size:14px !important; 
-    }
-}
-
-@media (max-width: 372px){
-    #notes-detail .left-data h5
-    { 
-        font-size:10px !important; 
-    }
-    
-    #notes-detail .right-data h5
-    { 
-        font-size:10px !important; 
-    }
 }

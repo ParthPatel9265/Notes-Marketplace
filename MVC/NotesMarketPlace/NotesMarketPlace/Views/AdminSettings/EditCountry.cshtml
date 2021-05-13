@@ -1,0 +1,66 @@
+﻿@model NotesMarketPlace.Models.AddCountry
+@{
+    ViewBag.Title = "Add Country";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- add country -->
+@using (Html.BeginForm("AddCountry", "AdminSettings", FormMethod.Post, new { @class = "user-details-form" }))
+{
+
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ID)
+
+    <section id="personal-details" class="user-profile content-box-md">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading">
+                            <h3>Add Country</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <div class="col-md-6 col-sm-6">
+                                <!-- First Name -->
+                                <div class="form-group">
+                                    <label class="label">Country Name *</label>
+
+                                    @Html.TextBoxFor(model => model.CountryName, new { @class = "form-control exampleInputEmail1", id = "country-name", placeholder = "Enter country name", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.CountryName, "", new { @class = "form-error" })
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <!-- Last Name -->
+                                <div class="form-group">
+                                    <label class="label" for="exampleInputEmail1">Country Code*</label>
+                                    @Html.TextBoxFor(model => model.CountryCode, new { @class = "form-control exampleInputEmail1", id = "country-code", placeholder = "Enter country code", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.CountryCode, "", new { @class = "form-error" })
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2 col-sm-3">
+                                <button type="submit" class="btn text-uppercase text-center" id="btn"><b>submit</b></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- add country ends-->

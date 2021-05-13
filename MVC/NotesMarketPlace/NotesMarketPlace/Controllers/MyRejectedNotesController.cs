@@ -11,11 +11,15 @@ using System.IO;
 using System.IO.Compression;
 namespace NotesMarketPlace.Controllers
 {
+    [OutputCache(Duration = 0)]
+    [RoutePrefix("User")]
     public class MyRejectedNotesController : Controller
     {
          database1Entities dobj = new database1Entities();
         // GET: MyRejectedNotes
-
+        [HttpGet]
+        [Authorize(Roles = "Member")]
+        [Route("MyRejectedNotes")]
         public ActionResult MyRejectedNotes(string search, string sort, int?page)
         {
            
@@ -97,7 +101,7 @@ namespace NotesMarketPlace.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Member")]
         [Route("MyRejectedNotes/{noteid}/Clone")]
         public ActionResult CloneNote(int noteid)
         {

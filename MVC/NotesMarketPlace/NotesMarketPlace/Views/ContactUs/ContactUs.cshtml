@@ -34,6 +34,13 @@
         .form-error {
             color: red;
         }
+
+       .input-validation-error
+        {
+            border-color: #ff3636 !important;
+            background: none !important;
+        }   
+
     </style>
 
 </head>
@@ -141,71 +148,72 @@
     </section>
     <!-- Heading -->
     <!-- form -->
-    
-        @using (Html.BeginForm("ContactUs", "ContactUs", FormMethod.Post, new { @class = "user-details-form" }))
-        {
 
-            <section id="personal-details" class="user-profile  contact-us content-box-md">
+    @using (Html.BeginForm("ContactUs", "ContactUs", FormMethod.Post, new { @class = "user-details-form" }))
+    {
+        @Html.AntiForgeryToken()
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="heading">
-                                <h3>Get In Touch</h3>
-                                <p>Let us know how to get back to you</p>
-                            </div>
-                        </div>
+    <section id="personal-details" class="user-profile  contact-us content-box-md">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading">
+                        <h3>Get In Touch</h3>
+                        <p>Let us know how to get back to you</p>
                     </div>
-                    <div class="row">
+                </div>
+            </div>
+            <div class="row">
 
 
-                        <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12">
 
 
-                            <div class="form-group">
-                                <label class="label">Full Name *</label>
+                    <div class="form-group">
+                        <label class="label">Full Name *</label>
 
-                                @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "form-error" })
-                                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your full name" })
-                            </div>
-
-                            <div class="form-group">
-                                <label class="label">Email Address *</label>
-
-                                @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
-                                @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
-                            </div>
-
-                            <div class="form-group">
-                                <label class="label">Subject *</label>
-
-                                @Html.ValidationMessageFor(x => x.Subjects, "", new { @class = "form-error" })
-                                @Html.TextBoxFor(x => x.Subjects, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your subject" })
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-
-                                <div class="textarea-input">
-                                    <label class="label" for="exampleInputEmail1">Comments/Questions *</label>
-
-                                    @Html.ValidationMessageFor(x => x.Comments, "", new { @class = "form-error" })
-                                    @Html.TextAreaFor(x => x.Comments, new { @class = "form-control exampleInputEmail1", @placeholder = "Comments..." })
-
-                                </div>
-                            </div>
-                        </div>
-
+                        @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "form-error" })
+                        @Html.TextBoxFor(x => x.FullName, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your full name" })
                     </div>
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6 col-6">
-                            <button type="submit" class="btn btn-primary btn-block text-uppercase text-center" id="btn"><b>submit</b></button>
+
+                    <div class="form-group">
+                        <label class="label">Email Address *</label>
+
+                        @Html.ValidationMessageFor(x => x.EmailID, "", new { @class = "form-error" })
+                        @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your email address" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Subject *</label>
+
+                        @Html.ValidationMessageFor(x => x.Subjects, "", new { @class = "form-error" })
+                        @Html.TextBoxFor(x => x.Subjects, new { @class = "form-control exampleInputEmail1", @placeholder = "Enter your subject" })
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+
+                        <div class="textarea-input">
+                            <label class="label" for="exampleInputEmail1">Comments/Questions *</label>
+
+                            @Html.ValidationMessageFor(x => x.Comments, "", new { @class = "form-error" })
+                            @Html.TextAreaFor(x => x.Comments, new { @class = "form-control exampleInputEmail1", @placeholder = "Comments..." })
+
                         </div>
                     </div>
                 </div>
-            </section>
-        }
+
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-6">
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase text-center" id="btn"><b>submit</b></button>
+                </div>
+            </div>
+        </div>
+    </section>
+}
     <!-- contact us form -->
     <!-- footer -->
     <footer class="footer-at-end">

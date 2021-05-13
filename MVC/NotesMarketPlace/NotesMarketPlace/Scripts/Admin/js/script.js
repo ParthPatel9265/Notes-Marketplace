@@ -86,6 +86,66 @@ $(document).ready(function () {
     }
 });
 
+/* ======================================
+             Rejected Notes
+  ===================================== */
+$(document).ready(function () {
+
+    $("#rejectednotes-seller").change(function () {
+        this.form.submit();
+    });
+
+});
+
+/* =====================================
+            Published Notes
+   ===================================== */
+$(document).ready(function () {
+
+    $("#publishednotes-seller").change(function () {
+        this.form.submit();
+    });
+
+});
+
+/* ======================================
+          Downloaded Notes
+  ===================================== */
+$(document).ready(function () {
+
+    $("#downloadednotes-note").change(function () {
+        this.form.submit();
+    });
+    $("#downloadednotes-seller").change(function () {
+        this.form.submit();
+    });
+    $("#downloadednotes-buyer").change(function () {
+        this.form.submit();
+    });
+
+});
+
+/* ======================================
+       Notes Under Review Notes
+ ========================================*/
+$(document).ready(function () {
+
+    $("#notesunderreview-seller").change(function () {
+        this.form.submit();
+    });
+
+});
+
+/* ====================================
+            Dashboard
+======================================*/
+$(document).ready(function () {
+
+    $("#dashboard-month").change(function () {
+        this.form.submit();
+    });
+
+});
 
 
 

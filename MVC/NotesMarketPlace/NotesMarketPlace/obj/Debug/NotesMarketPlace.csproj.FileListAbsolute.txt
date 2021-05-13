@@ -59,3 +59,4 @@ C:\Users\parth\source\repos\NotesMarketPlace\NotesMarketPlace\bin\PagedList.dll
 C:\Users\parth\source\repos\NotesMarketPlace\NotesMarketPlace\bin\PagedList.Mvc.dll
 C:\Users\parth\source\repos\NotesMarketPlace\NotesMarketPlace\bin\PagedList.xml
 C:\Users\parth\source\repos\NotesMarketPlace\NotesMarketPlace\bin\PagedList.Mvc.xml
+C:\Users\parth\source\repos\NotesMarketPlace\NotesMarketPlace\bin\Microsoft.VisualStudio.DebuggerVisualizers.dll

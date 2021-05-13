@@ -9,12 +9,15 @@ using PagedList;
 using PagedList.Mvc;
 namespace NotesMarketPlace.Controllers
 {
+    [OutputCache(Duration = 0)]
+    [RoutePrefix("User")]
     public class MySoldNotesController : Controller
     {
 
         database1Entities dobj = new database1Entities();
         // GET: MySoldNotes
-        [Authorize]
+        [HttpGet]
+        [Authorize(Roles = "Member")]
         [Route("MySoldNotes")]
         public ActionResult MySoldNotes(string search,string sort,int?page)
         {
@@ -61,7 +64,7 @@ namespace NotesMarketPlace.Controllers
             var soldnote = new List<MySoldNotes>();
             soldnote = mysoldnotes.ToList();
 
-            return View(soldnote.ToList().AsQueryable().ToPagedList(page ?? 1, 10));
+            return View(soldnote.ToList().AsQueryable().ToPagedList(page ?? 1,10));
         }
 
         
